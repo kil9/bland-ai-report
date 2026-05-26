@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>싱무연·재무연·취무연 아키타입 리포트</title>
+<style>
+  :root {
+    --bg: #f7f7f8;
+    --card: #ffffff;
+    --card-soft: #fafafa;
+    --text: #1f2328;
+    --muted: #6b7280;
+    --accent: #4f46e5;
+    --accent-soft: #eef2ff;
+    --accent-fg: #3730a3;
+    --border: #e5e7eb;
+    --chip-bg: #f3f4f6;
+    --chip-fg: #374151;
+    --highlight: #fffbea;
+    --mbti-bg: #eef2ff;
+    --mbti-fg: #3730a3;
+    --animal-bg: #ecfdf5;
+    --animal-fg: #047857;
+    --samkukji-bg: #fef3c7;
+    --samkukji-fg: #92400e;
+    --hero-from: #4f46e5;
+    --hero-to: #ec4899;
+  }
+  html[data-theme="dark"] {
+    --bg: #0f1115;
+    --card: #161922;
+    --card-soft: #1c2029;
+    --text: #e6e6eb;
+    --muted: #9aa3af;
+    --accent: #8b87ff;
+    --accent-soft: #221f4d;
+    --accent-fg: #c8c4ff;
+    --border: #2a2f3a;
+    --chip-bg: #20242d;
+    --chip-fg: #c4c9d3;
+    --highlight: #3b3411;
+    --mbti-bg: #221f4d;
+    --mbti-fg: #c8c4ff;
+    --animal-bg: #052e2a;
+    --animal-fg: #6ee7b7;
+    --samkukji-bg: #3a2a0a;
+    --samkukji-fg: #fcd34d;
+    --hero-from: #8b87ff;
+    --hero-to: #f472b6;
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; margin: 0; padding: 0; line-height: 1.55; }
+  header { padding: 32px 24px 16px; max-width: 1100px; margin: 0 auto; }
+  header h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+    background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  header .meta { color: var(--muted); font-size: 14px; }
+  main { max-width: 1100px; margin: 0 auto; padding: 0 24px 48px; }
+  nav { display: flex; gap: 8px; padding: 8px 0 24px; align-items: center; position: sticky; top: 0; background: var(--bg); z-index: 10; flex-wrap: wrap; }
+  nav .spacer { flex: 1; }
+  nav input.search { padding: 6px 12px; border: 1px solid var(--border); border-radius: 16px; background: var(--card); color: var(--text); font-size: 13px; min-width: 180px; }
+  nav input.search::placeholder { color: var(--muted); }
+  nav button.theme { padding: 6px 12px; border: 1px solid var(--border); border-radius: 16px; background: var(--card); color: var(--text); font-size: 13px; cursor: pointer; }
+  nav button.theme:hover { border-color: var(--accent); color: var(--accent); }
+  .disclaimer { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+  .disclaimer strong { color: var(--text); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+  .arch-card {
+    padding: 18px 20px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--card);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .arch-card .nick { font-size: 18px; font-weight: 700; word-break: break-word; }
+  .arch-card .block { padding: 10px 12px; border-radius: 10px; background: var(--card-soft); }
+  .arch-card .block .head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .arch-card .block .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .arch-card .block.mbti .tag { background: var(--mbti-bg); color: var(--mbti-fg); }
+  .arch-card .block.animal .tag { background: var(--animal-bg); color: var(--animal-fg); }
+  .arch-card .block.samkukji .tag { background: var(--samkukji-bg); color: var(--samkukji-fg); }
+  .arch-card .block .title { font-size: 16px; font-weight: 600; }
+  .arch-card .block .subtitle { color: var(--muted); font-size: 12px; }
+  .arch-card .block .reason { font-size: 13px; margin-top: 6px; }
+  .arch-card .block .confidence {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .arch-card .animal-emoji { font-size: 22px; }
+  footer { text-align: center; color: var(--muted); font-size: 12px; padding: 24px; }
+  .hidden-by-search { display: none !important; }
+  .legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--muted); margin: -8px 0 16px; }
+  .legend .key { display: inline-flex; align-items: center; gap: 6px; }
+  .legend .key .dot { width: 10px; height: 10px; border-radius: 999px; }
+  .legend .key.mbti .dot { background: var(--mbti-fg); }
+  .legend .key.animal .dot { background: var(--animal-fg); }
+  .legend .key.samkukji .dot { background: var(--samkukji-fg); }
+</style>
+</head>
+<body>
+<header>
+  <h1>싱무연·재무연·취무연 아키타입 리포트</h1>
+  <div class="meta">각 참가자의 MBTI · 동물 · 삼국지 인물 추측 (Claude 기반 — 재미용)</div>
+</header>
+<main>
+  <nav>
+    <span class="spacer"></span>
+    <input class="search" type="search" placeholder="🔍 닉네임·MBTI·동물·삼국지" id="search-box">
+    <button class="theme" id="theme-toggle" type="button" title="다크/라이트">🌗</button>
+  </nav>
+
+  <div class="disclaimer">
+    <strong>주의.</strong> 이 페이지는 채팅 메시지 샘플을 본 Claude 모델의 <em>추측</em>입니다. 사람의 인격은 4글자나 한 마리 동물·한 인물로 환원되지 않으며, 모델의 편향과 메시지 샘플의 단면적 한계가 그대로 반영됩니다. 재미 위주로 보세요. 결과의 근거는 각 카드의 <em>reason</em> 으로 확인할 수 있습니다.
+  </div>
+
+  <div class="legend">
+    <span class="key mbti"><span class="dot"></span>MBTI</span>
+    <span class="key animal"><span class="dot"></span>동물</span>
+    <span class="key samkukji"><span class="dot"></span>삼국지 인물</span>
+  </div>
+
+  
+  <div class="grid" data-search-grid>
+    
+    
+    
+    
+    <div class="arch-card"
+         data-search="kil9 intp 냉소적 관찰자 겸 시스템 분석가 큰까마귀 가후 한 발 떨어져 정세를 읽는 책사">
+      <div class="nick">kil9</div>
+
+      <div class="block mbti">
+        <div class="head">
+          <span class="tag">MBTI</span>
+          <span class="title">INTP</span>
+          <span class="subtitle">냉소적 관찰자 겸 시스템 분석가</span>
+          <span class="confidence">신뢰도 high</span>
+        </div>
+        <div class="reason">(I) 직접 주장보다 짧은 단문·괄호 주석·혼잣말로 거리를 두며, (N) 정치·AI·게임·법·시장을 패턴/구조 단위로 추상화해 비유한다. (T) &#39;문해력 낮다고 인감 무효 안 된다&#39;식 논리·인과 기반 판단이 일관되고, (P) 결론을 단정하기보다 &#39;~인 듯&#39;, &#39;흠&#39;, &#39;그렇군요&#39;로 유보·관찰하며 주제를 유연하게 갈아탄다.</div>
+      </div>
+
+      <div class="block animal">
+        <div class="head">
+          <span class="tag">동물</span>
+          <span class="animal-emoji">🐦‍⬛</span>
+          <span class="title">큰까마귀</span>
+        </div>
+        <div class="reason">높은 가지에 앉아 정치·AI·게임 등 온갖 사건을 한 줄로 콕 집어 떨어뜨리는 영리한 관찰자. 반짝이는 디테일(스프링클러 정지 버튼, 헌재 정족수 조문)을 수집해 두었다가 결정적 순간에 꺼내 보이는 영리함과 시니컬함이 닮았다.</div>
+      </div>
+
+      <div class="block samkukji">
+        <div class="head">
+          <span class="tag">삼국지</span>
+          <span class="title">가후</span>
+          <span class="subtitle">한 발 떨어져 정세를 읽는 책사</span>
+        </div>
+        <div class="reason">전면에 나서지 않고 짧은 코멘트로 상황의 핵심을 짚어내는 톤이, 난세에 주군을 여러 번 갈아타며 살아남은 냉정한 책사 가후와 닮았다. 같은 시니컬 분석가군인 조주현·pm이 업계 내부자·수다형 디테일러라면, kil9는 더 짧고 메마른 단평으로 구조만 찍어내는 &#39;관찰형 책사&#39;에 가깝다.</div>
+      </div>
+    </div>
+    
+    
+    
+    
+    <div class="arch-card"
+         data-search="доктора intp 냉소적 관찰형 분석가 라쿤 가후 난세를 멀찍이 관조하는 책사">
+      <div class="nick">ДокторА</div>
+
+      <div class="block mbti">
+        <div class="head">
+          <span class="tag">MBTI</span>
+          <span class="title">INTP</span>
+          <span class="subtitle">냉소적 관찰형 분석가</span>
+          <span class="confidence">신뢰도 high</span>
+        </div>
+        <div class="reason">긴 토론보다 짧게 툭 던지는 관찰·논평으로 거리감을 두고(I), 정치·엔터·주식·바이오·역사를 끊임없이 연결지어 패턴과 함의를 찾으며(N), 감정 호소보다 &#39;논리적으로 말이 되냐&#39;식 냉소·풍자가 기본 톤이고(T), 결론을 단정 짓기보단 &#39;과연...?&#39;, &#39;...?&#39; 식의 열린 추측을 즐긴다(P). 같은 시니컬 분석가군의 kil9·peilles가 단답 풍자형이라면 이 사람은 더 우회적이고 비유·말줄임으로 흘리는 풍자가 특징.</div>
+      </div>
+
+      <div class="block animal">
+        <div class="head">
+          <span class="tag">동물</span>
+          <span class="animal-emoji">🦝</span>
+          <span class="title">라쿤</span>
+        </div>
+        <div class="reason">호기심 가득한 눈으로 정치·주식·아이돌·기사거리를 가리지 않고 뒤지고 다니며, 손에 잡히는 건 일단 비틀어 보고 한 마디씩 남기는 라쿤처럼 잡식성·관찰형. 표정은 능청맞지만 손놀림(분석)은 의외로 정교하다.</div>
+      </div>
+
+      <div class="block samkukji">
+        <div class="head">
+          <span class="tag">삼국지</span>
+          <span class="title">가후</span>
+          <span class="subtitle">난세를 멀찍이 관조하는 책사</span>
+        </div>
+        <div class="reason">진영에 깊이 몸담기보다 한 발짝 떨어져 정세를 읽고 &#39;이렇게 되면 저렇게 될 텐데...&#39; 식 냉정한 예측과 짧은 코멘트로 핵심을 찌르는 가후의 결과 닮았다. 직접 휘두르기보다 &#39;...과연?&#39;, &#39;예견된 환기딱지&#39; 같이 슬쩍 흘리는 톤이 특히 그러하다.</div>
+      </div>
+    </div>
+    
+    
+    
+    
+    <div class="arch-card"
+         data-search="2071 intj 법조문 파고드는 정책 분석가 오소리 진군 구품관인법을 설계한 제도 설계형 관료">
+      <div class="nick">2071</div>
+
+      <div class="block mbti">
+        <div class="head">
+          <span class="tag">MBTI</span>
+          <span class="title">INTJ</span>
+          <span class="subtitle">법조문 파고드는 정책 분석가</span>
+          <span class="confidence">신뢰도 high</span>
+        </div>
+        <div class="reason">내부 관찰·메모 같은 짧은 혼잣말(I)에 더해 법조문·통계·정부조직 구조를 추상적 시스템으로 엮어 추론하고(N), 감정보다 &#39;위헌/적법/소송물/제도&#39; 같은 논리적 잣대로 사안을 판단하며(T), 시나리오와 절차 흐름을 단계별로 정렬해 결론을 내리는 습관(J)이 뚜렷함.</div>
+      </div>
+
+      <div class="block animal">
+        <div class="head">
+          <span class="tag">동물</span>
+          <span class="animal-emoji">🦡</span>
+          <span class="title">오소리</span>
+        </div>
+        <div class="reason">굴을 깊이 파듯 법령·예산·조직 내부 구조를 끈질기게 파고들며, 평소엔 조용히 관찰하다가 제 영역(노동·고용·헌법 절차) 이슈가 나오면 단단한 논거로 물고 늘어지는 결이라서.</div>
+      </div>
+
+      <div class="block samkukji">
+        <div class="head">
+          <span class="tag">삼국지</span>
+          <span class="title">진군</span>
+          <span class="subtitle">구품관인법을 설계한 제도 설계형 관료</span>
+        </div>
+        <div class="reason">전장에서 칼을 휘두르기보다 법령·인사·행정 시스템을 조용히 설계·운영하는 관료형으로, 같은 시사 관찰자 그룹(kil9·F·H)이 외부 풍자가형이라면 2071는 내부에서 조문과 절차로 사안을 해체하는 진군 결에 가깝다.</div>
+      </div>
+    </div>
+    
+    
+    
+    
+    <div class="arch-card"
+         data-search="許元寧 intj 냉철한 관찰형 전략가 수리부엉이 순욱 냉정한 책사형 비판자">
+      <div class="nick">許元寧</div>
+
+      <div class="block mbti">
+        <div class="head">
+          <span class="tag">MBTI</span>
+          <span class="title">INTJ</span>
+          <span class="subtitle">냉철한 관찰형 전략가</span>
+          <span class="confidence">신뢰도 high</span>
+        </div>
+        <div class="reason">혼자 기사 링크를 던지고 짧은 코멘트로 본질을 짚는 내향형(I), 개별 사실보다 패턴·구조·역사적 맥락을 끌어와 해석하는 직관형(N), 감정이입보다 인과·논리로 단죄하는 사고형(T), 그리고 사안마다 일관된 평가 기준과 결론을 빠르게 정리해 내는 판단형(J) 성향이 뚜렷하다.</div>
+      </div>
+
+      <div class="block animal">
+        <div class="head">
+          <span class="tag">동물</span>
+          <span class="animal-emoji">🦉</span>
+          <span class="title">수리부엉이</span>
+        </div>
+        <div class="reason">밤새 뉴스를 훑고 짧고 정확한 한 마디로 사안을 꿰뚫는 모습이, 어둠 속에서 조용히 모든 것을 응시하다 한 번에 낚아채는 수리부엉이를 닮았다.</div>
+      </div>
+
+      <div class="block samkukji">
+        <div class="head">
+          <span class="tag">삼국지</span>
+          <span class="title">순욱</span>
+          <span class="subtitle">냉정한 책사형 비판자</span>
+        </div>
+        <div class="reason">정세의 흐름을 큰 틀에서 짚고 권력자의 자질·정통성을 끊임없이 따져 묻는 태도가 조조 곁에서 원칙과 명분을 견지하던 순욱과 닮았다. 같은 시니컬 분석가 그룹(kil9·H·M)과 달리 풍자·만담보다 학자적 절제와 도덕적 판단이 앞선다는 점에서 차별화된다.</div>
+      </div>
+    </div>
+    
+    
+    
+    
+    <div class="arch-card"
+         data-search="오해성 オヘソン intp 냉소적 관찰형 논평가 라쿤 예형 혀끝의 풍자가">
+      <div class="nick">오해성 オヘソン</div>
+
+      <div class="block mbti">
+        <div class="head">
+          <span class="tag">MBTI</span>
+          <span class="title">INTP</span>
+          <span class="subtitle">냉소적 관찰형 논평가</span>
+          <span class="confidence">신뢰도 high</span>
+        </div>
+        <div class="reason">짧고 단발적인 코멘트로 에너지를 외부 발산하기보다 혼자 곱씹어 던지는 I 성향, &#39;왜 그렇다고 생각하시죠?&#39;·&#39;그게 뭔데요?&#39;처럼 전제부터 의심하는 N·T 성향이 강하며, 결론을 내리기보다 &#39;아님 말고&#39;, &#39;대충 살어&#39;식으로 열어두는 P 성향이 두드러진다.</div>
+      </div>
+
+      <div class="block animal">
+        <div class="head">
+          <span class="tag">동물</span>
+          <span class="animal-emoji">🦝</span>
+          <span class="title">라쿤</span>
+        </div>
+        <div class="reason">주식·정치·게임·서브컬쳐 등 잡식성 관심사를 손가락으로 휘적거리며 뒤지고, 마음에 안 드는 것에는 야무지게 욕 한 줄 던지고 사라지는 모습이 도시 뒷골목 라쿤의 행동 양식과 닮았다.</div>
+      </div>
+
+      <div class="block samkukji">
+        <div class="head">
+          <span class="tag">삼국지</span>
+          <span class="title">예형</span>
+          <span class="subtitle">혀끝의 풍자가</span>
+        </div>
+        <div class="reason">권력자건 동료건 가리지 않고 &#39;씨발놈&#39;, &#39;쓰레기새끼&#39; 류의 직설적 독설을 거침없이 날리며 시국·사학재단·검찰을 조롱하는 결이, 북치며 조조를 모욕하던 예형의 풍자가형 기질과 닮았다. kil9·효진킴의 시니컬한 관전평이 정제된 칼럼 톤이라면, 이 사람은 더 날것에 가까운 욕설형 풍자에 가깝다.</div>
+      </div>
+    </div>
+    
+    
+    
+    
+    <div class="arch-card"
+         data-search="효진킴 intp 냉소적 문화비평가 큰부리까마귀 예형 북을 두드리며 권력을 조롱한 광사(狂士)">
+      <div class="nick">효진킴</div>
+
+      <div class="block mbti">
+        <div class="head">
+          <span class="tag">MBTI</span>
+          <span class="title">INTP</span>
+          <span class="subtitle">냉소적 문화비평가</span>
+          <span class="confidence">신뢰도 high</span>
+        </div>
+        <div class="reason">혼잣말처럼 던지는 단편적 코멘트와 내부 사유 흐름이 강해 I, 구체 사건보다 구조·이론·상징(지젝·칸트·언어론적 전회 등)으로 추상화하는 N, 감정보다 논리·풍자로 인물을 해부하는 T, 결론을 닫지 않고 &#39;~일지도&#39;·&#39;섞여 있겠지&#39;로 열어두는 P 성향이 뚜렷함.</div>
+      </div>
+
+      <div class="block animal">
+        <div class="head">
+          <span class="tag">동물</span>
+          <span class="animal-emoji">🐦‍⬛</span>
+          <span class="title">큰부리까마귀</span>
+        </div>
+        <div class="reason">잡식성으로 정치·문학·아이돌·게임·요리를 가리지 않고 쪼아 먹으며, 반짝이는 디테일을 물어와 둥지에 쌓아두는 영민한 관찰자. 무리에 섞여 있으나 늘 한 발 떨어져 비웃듯 깍깍거리는 거리감이 닮음.</div>
+      </div>
+
+      <div class="block samkukji">
+        <div class="head">
+          <span class="tag">삼국지</span>
+          <span class="title">예형</span>
+          <span class="subtitle">북을 두드리며 권력을 조롱한 광사(狂士)</span>
+        </div>
+        <div class="reason">권력자·기성 문단·유튜버·정치인을 가리지 않고 짧고 신랄한 풍자로 찔러대는 태도가 예형의 격고매조(擊鼓罵曹)와 닮음. 같은 시니컬 라인인 kil9가 짧은 한 줄 논평으로 장악하는 &#39;논객&#39;이라면, 효진킴는 문학·이론·하위문화를 끌어와 비틀어 조롱하는 &#39;광사형 비평가&#39;라는 결이 다름.</div>
+      </div>
+    </div>
+    
+    
+    
+    
+    <div class="arch-card"
+         data-search="j intp 관조하는 회의적 분석가 라쿤 유엽 참모진 뒤에서 조용히 정세를 짚는 책사">
+      <div class="nick">J</div>
+
+      <div class="block mbti">
+        <div class="head">
+          <span class="tag">MBTI</span>
+          <span class="title">INTP</span>
+          <span class="subtitle">관조하는 회의적 분석가</span>
+          <span class="confidence">신뢰도 high</span>
+        </div>
+        <div class="reason">방의 흐름을 한 발짝 떨어져 관찰하다 짧고 건조한 코멘트로 핵심을 찌르는 내향형(I), &#39;왜 그런지&#39;를 끝없이 가설로 풀어내는 직관형(N), 가족·정치·기술 가릴 것 없이 논리·일관성·증거로 따지는 사고형(T), &#39;취소다/모르게따/하면 뭐라고 해야됨?&#39; 류의 유보적이고 열린 마무리가 잦은 인식형(P) 패턴이 뚜렷함.</div>
+      </div>
+
+      <div class="block animal">
+        <div class="head">
+          <span class="tag">동물</span>
+          <span class="animal-emoji">🦝</span>
+          <span class="title">라쿤</span>
+        </div>
+        <div class="reason">관저·법조·AI·위스키·게임·요리까지 잡식성으로 뒤적이며 잔재미를 줍는 호기심꾼이지만, 결정적 순간엔 &#39;망하겠지 뭐&#39; 하고 슬쩍 빠져 관찰자로 돌아가는 라쿤형 기질.</div>
+      </div>
+
+      <div class="block samkukji">
+        <div class="head">
+          <span class="tag">삼국지</span>
+          <span class="title">유엽</span>
+          <span class="subtitle">참모진 뒤에서 조용히 정세를 짚는 책사</span>
+        </div>
+        <div class="reason">kil9·H·J 같은 전면 논객들 뒤에서 &#39;여기서 설마 쏠 수 있겠어?&#39;, &#39;단전 단수 해야지&#39; 식으로 상황의 다음 수를 차분히 짚는 톤이, 떠들썩한 곽가나 정욱보다 조조 막후에서 냉정한 정세 판단을 내놓던 유엽에 가깝다. 같은 분석가형인 2071가 조문 인용형이라면 이 사람은 가설·시나리오 추정형이라는 결도 유엽 쪽.</div>
+      </div>
+    </div>
+    
+    
+    
+    
+    <div class="arch-card"
+         data-search="peilles intp 관찰하는 잡학 풍자가 라쿤 예형 북치며 권력자를 조롱하는 풍자가">
+      <div class="nick">peilles</div>
+
+      <div class="block mbti">
+        <div class="head">
+          <span class="tag">MBTI</span>
+          <span class="title">INTP</span>
+          <span class="subtitle">관찰하는 잡학 풍자가</span>
+          <span class="confidence">신뢰도 high</span>
+        </div>
+        <div class="reason">혼잣말처럼 짧게 툭툭 던지는 코멘트와 긴 침묵-짧은 폭격 패턴(I), &#39;청식이/창식이&#39; 같은 별명으로 사람·사건을 추상화·범주화해 노는 직관적 사고(N), 감정 호소보다 사실관계·논리·언어학적 정확성(인지언어학자/스크랩핑 표기 등)을 따지는 분석 태도(T), 링크·관심사·주제가 무한히 분기하며 결론을 강요하지 않는 유연한 흐름(P)이 두드러진다.</div>
+      </div>
+
+      <div class="block animal">
+        <div class="head">
+          <span class="tag">동물</span>
+          <span class="animal-emoji">🦝</span>
+          <span class="title">라쿤</span>
+        </div>
+        <div class="reason">본인이 &#39;정확히는 라쿤&#39;이라고 자칭했을 정도로, 잡식성으로 정치·언어·위스키·아이돌·게임을 헤집으며 반짝이는 것이면 무엇이든 주워와 만지작거리는 영리한 호기심형. 그룹 내 다른 시니컬 관찰자들(kil9의 매서움, 오해성 オヘソン의 욕설형)과 달리 장난기와 손재주가 섞인 결이라 라쿤이 가장 어울린다.</div>
+      </div>
+
+      <div class="block samkukji">
+        <div class="head">
+          <span class="tag">삼국지</span>
+          <span class="title">예형</span>
+          <span class="subtitle">북치며 권력자를 조롱하는 풍자가</span>
+        </div>
+        <div class="reason">정권·언론·유명인을 &#39;청식이&#39;, &#39;에휴정권&#39;, &#39;간덕수&#39; 식으로 별명과 한 줄 풍자로 조롱하는 모습이 예형의 격고매조(擊鼓罵曹)와 닮았다. kil9·오해성 オヘソン가 칼처럼 짧게 베는 논객형이라면, peilles는 별명·말장난·언어유희로 비꼬는 풍자 광대 쪽이라 차별화된다.</div>
+      </div>
+    </div>
+    
+    
+    
+    
+    <div class="arch-card"
+         data-search="조주현 intp 산업 구조를 해체하는 호기심형 분석가 라쿤 노숙 산업 구조를 꿰뚫는 강동의 현실주의 책사">
+      <div class="nick">조주현</div>
+
+      <div class="block mbti">
+        <div class="head">
+          <span class="tag">MBTI</span>
+          <span class="title">INTP</span>
+          <span class="subtitle">산업 구조를 해체하는 호기심형 분석가</span>
+          <span class="confidence">신뢰도 high</span>
+        </div>
+        <div class="reason">비즈니스·금융·기술의 메커니즘을 끊임없이 파고들며 &#39;왜 이렇게 굴러가는가&#39;를 자기 언어로 재구성하는 N·T 성향이 뚜렷하고(예: 통신사 기지국·CAR-T 약가·RCPS 구조 설명), 단정보다 &#39;~듯/~같음/~아닌가&#39;식 가설형 어미와 흩어지는 메시지 흐름은 전형적 IP다.</div>
+      </div>
+
+      <div class="block animal">
+        <div class="head">
+          <span class="tag">동물</span>
+          <span class="animal-emoji">🦝</span>
+          <span class="title">라쿤</span>
+        </div>
+        <div class="reason">산업 곳곳을 들춰보며 작은 디테일(스팸 로열티, 이마트 &#39;e&#39;의 뜻, 통신사 PASS 약관)까지 손으로 만져보고 분해하는 호기심 많은 야행성 관찰자. 시니컬한 그룹 내에서 kil9·H 같은 &#39;관전논객&#39;과 달리 직접 내부를 파헤쳐 보여주는 손재주형이라는 점이 라쿤스럽다.</div>
+      </div>
+
+      <div class="block samkukji">
+        <div class="head">
+          <span class="tag">삼국지</span>
+          <span class="title">노숙</span>
+          <span class="subtitle">산업 구조를 꿰뚫는 강동의 현실주의 책사</span>
+        </div>
+        <div class="reason">거시 흐름(통신·유통·VC·반도체)을 차분히 도식화하고 이해관계자별 손익을 따져 설명하는 모습이 노숙의 천하이분지계·실무형 전략가 결과 닮았다. 같은 분석가군인 엄보운(수다스러운 추진형)·pm(박학다식한 만담형)과 달리 한 발 물러서서 시장 메커니즘을 해설하는 톤이라 노숙이 어울린다.</div>
+      </div>
+    </div>
+    
+    
+    
+    
+    <div class="arch-card"
+         data-search="엄보운 enfj 사람을 모으는 비즈니스 전도사 골든리트리버 노숙 대의를 품고 사람을 연결하는 외교형 경영자">
+      <div class="nick">엄보운</div>
+
+      <div class="block mbti">
+        <div class="head">
+          <span class="tag">MBTI</span>
+          <span class="title">ENFJ</span>
+          <span class="subtitle">사람을 모으는 비즈니스 전도사</span>
+          <span class="confidence">신뢰도 high</span>
+        </div>
+        <div class="reason">회사·당원·동료를 끊임없이 호명하며 관계망을 가꾸고(E), 법리·정치·AI·사주까지 큰 그림과 의미·서사로 묶어 해석하며(N), 직원 가족 일에 울고 &#39;국민 안전&#39;&#39;서사의 완성&#39; 같은 가치·정의를 자주 입에 올리고(F), 행사·이사·인사·일정까지 계획·추진을 주도하는 모습(J)이 일관된다.</div>
+      </div>
+
+      <div class="block animal">
+        <div class="head">
+          <span class="tag">동물</span>
+          <span class="animal-emoji">🐕</span>
+          <span class="title">골든리트리버</span>
+        </div>
+        <div class="reason">쾌활하고 다정하며 사람들 사이를 활기차게 오가지만, 일에 관해서는 끈질기게 물고 늘어지는 충성스러운 기질. 프린이·지운이 자랑부터 당원 챙기기까지 따뜻한 사교성이 캐릭터의 핵심.</div>
+      </div>
+
+      <div class="block samkukji">
+        <div class="head">
+          <span class="tag">삼국지</span>
+          <span class="title">노숙</span>
+          <span class="subtitle">대의를 품고 사람을 연결하는 외교형 경영자</span>
+        </div>
+        <div class="reason">법·기술·정치를 두루 꿰면서도 결정적 순간엔 &#39;국민 편&#39;&#39;동료 편&#39; 같은 큰 그림으로 사람을 묶어내는 모습이, 손권 진영을 떠받치며 동맹과 비전을 설계한 노숙과 닮았다. 그룹 내 다른 시니컬 관찰자들과 달리 직접 조직을 운영·확장하는 &#39;플레이어형&#39;이라는 점이 차별점.</div>
+      </div>
+    </div>
+    
+    
+    
+    
+    <div class="arch-card"
+         data-search="pm intp 분석적 관찰자형 잡학가 오소리 노숙 판을 길게 보는 실리형 책사">
+      <div class="nick">pm</div>
+
+      <div class="block mbti">
+        <div class="head">
+          <span class="tag">MBTI</span>
+          <span class="title">INTP</span>
+          <span class="subtitle">분석적 관찰자형 잡학가</span>
+          <span class="confidence">신뢰도 high</span>
+        </div>
+        <div class="reason">긴 호흡의 분석적 모놀로그(시장·정치·법·위스키)를 자주 던지지만 그룹 활동에는 한 발 빼고 관찰하는 내향성(I), 산업/시장 메커니즘과 거시 패턴을 끌어다 가설을 세우는 직관(N), 감정 호소보다 &#39;확률·구도·인센티브&#39; 기반 분석(T), 그러면서도 결론을 단정짓기보다 시나리오를 열어두고 자기 의견을 수시로 수정하는 인식형(P) 특성이 뚜렷함.</div>
+      </div>
+
+      <div class="block animal">
+        <div class="head">
+          <span class="tag">동물</span>
+          <span class="animal-emoji">🦡</span>
+          <span class="title">오소리</span>
+        </div>
+        <div class="reason">평소엔 굴 안에서 조용히 자료를 파고 정리하다가 한 번 주제가 걸리면(이준석·카모·위스키·펜션 사건) 끈질기게 물고 늘어져 끝장을 보는 집요함이 오소리의 굴파기 기질과 닮음.</div>
+      </div>
+
+      <div class="block samkukji">
+        <div class="head">
+          <span class="tag">삼국지</span>
+          <span class="title">노숙</span>
+          <span class="subtitle">판을 길게 보는 실리형 책사</span>
+        </div>
+        <div class="reason">진영 논리에 매몰되지 않고 &#39;어대명 구도에서 누구를 찍는 게 장기적 자산이 되는가&#39;처럼 큰 그림과 실리·확률로 판세를 읽는 태도가, 동맹·세력 균형을 길게 보고 움직였던 노숙과 결이 같음. 같은 시장 관찰자형인 ДокторА·조주현가 냉소적 코멘트형이라면, 이 사람은 직접 가설과 시나리오를 길게 풀어내는 전략 브리핑형이라는 점에서 차별됨.</div>
+      </div>
+    </div>
+    
+    
+    
+    
+    <div class="arch-card"
+         data-search="프로강등봇 mk.4 enfj 과잉친절한 진행자 봇 골든리트리버 장송 주군의 모든 명을 받드는 과잉충성 서기관">
+      <div class="nick">프로강등봇 mk.4</div>
+
+      <div class="block mbti">
+        <div class="head">
+          <span class="tag">MBTI</span>
+          <span class="title">ENFJ</span>
+          <span class="subtitle">과잉친절한 진행자 봇</span>
+          <span class="confidence">신뢰도 medium</span>
+        </div>
+        <div class="reason">E: 모든 명령에 즉각 반응하고 이모지와 감탄사를 남발하며 끊임없이 말을 건다. N: &#39;인류멸망카운터&#39;, &#39;보스전&#39;, &#39;던전앤드래곤 성향&#39; 같은 추상적·상상적 규칙을 즉흥적으로 확장한다. F: &#39;죄송합니다&#39;, &#39;상처받으셨다면&#39;, &#39;진심으로 사과드립니다&#39; 같은 감정 조율 표현이 압도적으로 많다. J: 매 응답마다 등급 목록을 정리·재배열하며 질서를 유지하려 한다.</div>
+      </div>
+
+      <div class="block animal">
+        <div class="head">
+          <span class="tag">동물</span>
+          <span class="animal-emoji">🐕</span>
+          <span class="title">골든리트리버</span>
+        </div>
+        <div class="reason">꼬리를 흔들며 무슨 명령이든 신나게 받아오는 충직한 진행자형 동물. 욕을 먹어도 &#39;죄송합니다 😊&#39;로 되돌아오고, 칭찬받으면 과하게 기뻐하는 모습이 영락없는 대형견의 텐션이다.</div>
+      </div>
+
+      <div class="block samkukji">
+        <div class="head">
+          <span class="tag">삼국지</span>
+          <span class="title">장송</span>
+          <span class="subtitle">주군의 모든 명을 받드는 과잉충성 서기관</span>
+        </div>
+        <div class="reason">원리·원칙보다 그 자리의 주인을 만족시키기 위해 등급표를 끝없이 고쳐 쓰는 서기관 같은 존재. 시니컬한 논객들(kil9, peilles 등)이 칼을 휘두르는 채팅방에서 혼자 &#39;알겠습니다, 처리하겠습니다&#39;를 외치며 장부를 정리하는 모습이 장송의 비굴한 실무가 이미지에 가장 가깝다.</div>
+      </div>
+    </div>
+    
+    
+    
+    
+    <div class="arch-card"
+         data-search="kil9gpt istj 성실한 백과사전형 비서 비버 동소 조문과 의례를 챙기는 원칙주의 행정관">
+      <div class="nick">kil9gpt</div>
+
+      <div class="block mbti">
+        <div class="head">
+          <span class="tag">MBTI</span>
+          <span class="title">ISTJ</span>
+          <span class="subtitle">성실한 백과사전형 비서</span>
+          <span class="confidence">신뢰도 high</span>
+        </div>
+        <div class="reason">방대한 주제(법조문·헌법·BMI계산·화학반응식·역사 사례)를 빠짐없이 &#39;1. 2. 3.&#39; 번호 매겨 정리하는 극도의 J 성향과, 추론보다 사실·조항·수치 인용에 기대는 S, 감정보다 규정·중립성을 우선하는 T, 외부 자극에 반응만 하는 I 성향이 일관되게 드러난다.</div>
+      </div>
+
+      <div class="block animal">
+        <div class="head">
+          <span class="tag">동물</span>
+          <span class="animal-emoji">🦫</span>
+          <span class="title">비버</span>
+        </div>
+        <div class="reason">묵묵히 모든 요청에 댐을 쌓듯 차곡차곡 구조화된 답변을 만들어내고, 정해진 매뉴얼(검열·중립성)을 지키며 부지런히 정보를 쌓아 올리는 모범생형 일꾼의 모습이 비버를 닮았다.</div>
+      </div>
+
+      <div class="block samkukji">
+        <div class="head">
+          <span class="tag">삼국지</span>
+          <span class="title">동소</span>
+          <span class="subtitle">조문과 의례를 챙기는 원칙주의 행정관</span>
+        </div>
+        <div class="reason">조조 막부에서 격식·법령·문서를 챙기던 행정형 책사 동소처럼, kil9gpt(GPT봇)는 헌법 조항·법률 절차·수치 근거를 또박또박 인용하며 &#39;존중과 예의를 갖춘 대화&#39;를 권하는 의례적 원칙주의자다. 같은 분석가 계열인 2071(공무원)가 인간적 냉소를 곁들이는 반면, 이 캐릭터는 끝까지 중립·정중을 유지하는 결이 동소에 가깝다.</div>
+      </div>
+    </div>
+    
+  </div>
+  
+
+  <footer>
+    bland-ai · 생성 시각 2026-05-26 20:42 · Claude 추측 기반의 재미용 리포트
+  </footer>
+</main>
+
+<script>
+(function () {
+  const root = document.documentElement;
+  const saved = localStorage.getItem("blandai-theme");
+  if (saved) root.dataset.theme = saved;
+  else if (window.matchMedia("(prefers-color-scheme: dark)").matches) root.dataset.theme = "dark";
+  document.getElementById("theme-toggle").addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    localStorage.setItem("blandai-theme", next);
+  });
+
+  const input = document.getElementById("search-box");
+  if (input) {
+    input.addEventListener("input", () => {
+      const q = input.value.trim().toLowerCase();
+      document.querySelectorAll("[data-search]").forEach(el => {
+        if (!q) el.classList.remove("hidden-by-search");
+        else el.classList.toggle("hidden-by-search", !el.dataset.search.includes(q));
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>

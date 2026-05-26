@@ -40,10 +40,13 @@
   }
   .hero .subtitle { color: var(--muted); font-size: 15px; }
   main { max-width: 760px; margin: 0 auto; padding: 24px 24px 48px; }
-  .card { display: block; padding: 22px 24px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 14px; text-decoration: none; color: inherit; transition: border-color 0.15s, transform 0.15s; }
+  .card { display: block; padding: 22px 24px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 14px; text-decoration: none; color: inherit; transition: border-color 0.15s, transform 0.15s; position: relative; }
   .card:hover { border-color: var(--accent); transform: translateY(-1px); }
   .card h2 { margin: 0 0 6px; font-size: 19px; }
   .card .meta { color: var(--muted); font-size: 13px; }
+  .card .badge { position: absolute; top: 16px; right: 18px; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: linear-gradient(135deg, #4f46e5, #ec4899); color: #fff; }
+  .section-label { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin: 18px 0 8px; padding-left: 4px; }
+  .section-label:first-child { margin-top: 0; }
   .progress { margin-top: 28px; padding: 18px 22px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; font-size: 13px; color: var(--text); }
   .progress strong { font-size: 14px; }
   .progress ul { margin: 10px 0 0; padding-left: 20px; list-style: none; }
@@ -63,9 +66,13 @@
 </div>
 <div class="hero">
   <h1>bland-ai 리포트</h1>
-  <p class="subtitle">LINE 채팅 로그에서 추출한 인터랙티브 리포트 — 2026-05-26 17:52 갱신</p>
+  <p class="subtitle">LINE 채팅 로그에서 추출한 인터랙티브 리포트 — 2026-05-26 20:42 갱신</p>
 </div>
 <main>
+  
+  
+  
+  <div class="section-label">메인 리포트</div>
   
   <a class="card" href="../uuwxep2t/report-fanclub.html">
     <h2>비공인 팬클럽 채팅 리포트</h2>
@@ -76,6 +83,23 @@
     <h2>싱무연·재무연·취무연 통합 리포트</h2>
     <div class="meta">같은 멤버 그룹의 채팅방 3개를 묶어 분석 (노래·아이돌 / 투자 / 취미·리딩방)</div>
   </a>
+  
+  
+  
+  <div class="section-label">아키타입 (재미용 · Claude 추측)</div>
+  
+  <a class="card" href="../9h2y4p3m/report-archetype-fanclub.html">
+    <span class="badge">MBTI · 동물 · 삼국지</span>
+    <h2>비공인 팬클럽 아키타입 리포트</h2>
+    <div class="meta">각 참가자의 MBTI · 동물 · 삼국지 인물 추측 (Claude 기반 — 재미용)</div>
+  </a>
+  
+  <a class="card" href="../vp16yogp/report-archetype-finance.html">
+    <span class="badge">MBTI · 동물 · 삼국지</span>
+    <h2>싱무연·재무연·취무연 아키타입 리포트</h2>
+    <div class="meta">각 참가자의 MBTI · 동물 · 삼국지 인물 추측 (Claude 기반 — 재미용)</div>
+  </a>
+  
   
 
   <div class="progress">
@@ -92,7 +116,7 @@
     각 리포트는 별도 URL prefix 아래 호스팅됩니다. 링크는 추측 어렵게 무작위로 부여됐고, 리포트 사이 상호 링크는 없습니다.
   </div>
 
-  <footer>bland-ai · 2026-05-26 17:52</footer>
+  <footer>bland-ai · 2026-05-26 20:42</footer>
 </main>
 <script>
 (function () {

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>비공인 팬클럽 아키타입 리포트</title>
+<style>
+  :root {
+    --bg: #f7f7f8;
+    --card: #ffffff;
+    --card-soft: #fafafa;
+    --text: #1f2328;
+    --muted: #6b7280;
+    --accent: #4f46e5;
+    --accent-soft: #eef2ff;
+    --accent-fg: #3730a3;
+    --border: #e5e7eb;
+    --chip-bg: #f3f4f6;
+    --chip-fg: #374151;
+    --highlight: #fffbea;
+    --mbti-bg: #eef2ff;
+    --mbti-fg: #3730a3;
+    --animal-bg: #ecfdf5;
+    --animal-fg: #047857;
+    --samkukji-bg: #fef3c7;
+    --samkukji-fg: #92400e;
+    --hero-from: #4f46e5;
+    --hero-to: #ec4899;
+  }
+  html[data-theme="dark"] {
+    --bg: #0f1115;
+    --card: #161922;
+    --card-soft: #1c2029;
+    --text: #e6e6eb;
+    --muted: #9aa3af;
+    --accent: #8b87ff;
+    --accent-soft: #221f4d;
+    --accent-fg: #c8c4ff;
+    --border: #2a2f3a;
+    --chip-bg: #20242d;
+    --chip-fg: #c4c9d3;
+    --highlight: #3b3411;
+    --mbti-bg: #221f4d;
+    --mbti-fg: #c8c4ff;
+    --animal-bg: #052e2a;
+    --animal-fg: #6ee7b7;
+    --samkukji-bg: #3a2a0a;
+    --samkukji-fg: #fcd34d;
+    --hero-from: #8b87ff;
+    --hero-to: #f472b6;
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; margin: 0; padding: 0; line-height: 1.55; }
+  header { padding: 32px 24px 16px; max-width: 1100px; margin: 0 auto; }
+  header h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+    background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  header .meta { color: var(--muted); font-size: 14px; }
+  main { max-width: 1100px; margin: 0 auto; padding: 0 24px 48px; }
+  nav { display: flex; gap: 8px; padding: 8px 0 24px; align-items: center; position: sticky; top: 0; background: var(--bg); z-index: 10; flex-wrap: wrap; }
+  nav .spacer { flex: 1; }
+  nav input.search { padding: 6px 12px; border: 1px solid var(--border); border-radius: 16px; background: var(--card); color: var(--text); font-size: 13px; min-width: 180px; }
+  nav input.search::placeholder { color: var(--muted); }
+  nav button.theme { padding: 6px 12px; border: 1px solid var(--border); border-radius: 16px; background: var(--card); color: var(--text); font-size: 13px; cursor: pointer; }
+  nav button.theme:hover { border-color: var(--accent); color: var(--accent); }
+  .disclaimer { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+  .disclaimer strong { color: var(--text); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+  .arch-card {
+    padding: 18px 20px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--card);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .arch-card .nick { font-size: 18px; font-weight: 700; word-break: break-word; }
+  .arch-card .block { padding: 10px 12px; border-radius: 10px; background: var(--card-soft); }
+  .arch-card .block .head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .arch-card .block .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .arch-card .block.mbti .tag { background: var(--mbti-bg); color: var(--mbti-fg); }
+  .arch-card .block.animal .tag { background: var(--animal-bg); color: var(--animal-fg); }
+  .arch-card .block.samkukji .tag { background: var(--samkukji-bg); color: var(--samkukji-fg); }
+  .arch-card .block .title { font-size: 16px; font-weight: 600; }
+  .arch-card .block .subtitle { color: var(--muted); font-size: 12px; }
+  .arch-card .block .reason { font-size: 13px; margin-top: 6px; }
+  .arch-card .block .confidence {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .arch-card .animal-emoji { font-size: 22px; }
+  footer { text-align: center; color: var(--muted); font-size: 12px; padding: 24px; }
+  .hidden-by-search { display: none !important; }
+  .legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--muted); margin: -8px 0 16px; }
+  .legend .key { display: inline-flex; align-items: center; gap: 6px; }
+  .legend .key .dot { width: 10px; height: 10px; border-radius: 999px; }
+  .legend .key.mbti .dot { background: var(--mbti-fg); }
+  .legend .key.animal .dot { background: var(--animal-fg); }
+  .legend .key.samkukji .dot { background: var(--samkukji-fg); }
+</style>
+</head>
+<body>
+<header>
+  <h1>비공인 팬클럽 아키타입 리포트</h1>
+  <div class="meta">각 참가자의 MBTI · 동물 · 삼국지 인물 추측 (Claude 기반 — 재미용)</div>
+</header>
+<main>
+  <nav>
+    <span class="spacer"></span>
+    <input class="search" type="search" placeholder="🔍 닉네임·MBTI·동물·삼국지" id="search-box">
+    <button class="theme" id="theme-toggle" type="button" title="다크/라이트">🌗</button>
+  </nav>
+
+  <div class="disclaimer">
+    <strong>주의.</strong> 이 페이지는 채팅 메시지 샘플을 본 Claude 모델의 <em>추측</em>입니다. 사람의 인격은 4글자나 한 마리 동물·한 인물로 환원되지 않으며, 모델의 편향과 메시지 샘플의 단면적 한계가 그대로 반영됩니다. 재미 위주로 보세요. 결과의 근거는 각 카드의 <em>reason</em> 으로 확인할 수 있습니다.
+  </div>
+
+  <div class="legend">
+    <span class="key mbti"><span class="dot"></span>MBTI</span>
+    <span class="key animal"><span class="dot"></span>동물</span>
+    <span class="key samkukji"><span class="dot"></span>삼국지 인물</span>
+  </div>
+
+  
+  <div class="grid" data-search-grid>
+    
+    
+    
+    
+    <div class="arch-card"
+         data-search="조은일/heero intp 풍자형 관찰 분석가 라쿤 예형 독설로 세상을 꿰뚫는 풍자가">
+      <div class="nick">조은일/Heero</div>
+
+      <div class="block mbti">
+        <div class="head">
+          <span class="tag">MBTI</span>
+          <span class="title">INTP</span>
+          <span class="subtitle">풍자형 관찰 분석가</span>
+          <span class="confidence">신뢰도 high</span>
+        </div>
+        <div class="reason">수많은 메시지가 짧은 관찰·비판·말줄임표(...)로 이뤄지고(I), 게임 시스템·시나리오 구조·UX 디자인의 추상적 패턴을 끊임없이 해체·재조립하며(N), 감정보다 논리·인과 위주로 까칠하게 결론내리고(T), &#39;근데/사실/아 ㅇㅇ&#39; 처럼 결론을 끝까지 열어두며 새 정보로 갱신하는 즉흥적 사고 흐름(P)이 뚜렷함. 같은 분석형인 kil9·파인(일규)가 정보·시니컬 단답 위주라면 이 사람은 더 길고 구조적인 풍자 분석체.</div>
+      </div>
+
+      <div class="block animal">
+        <div class="head">
+          <span class="tag">동물</span>
+          <span class="animal-emoji">🦝</span>
+          <span class="title">라쿤</span>
+        </div>
+        <div class="reason">호기심이 많아 가챠·하드웨어·버튜버·부동산까지 온갖 영역을 헤집고 다니며, 들춰낸 것들을 시니컬하게 분류·논평하는 모습이 쓰레기통을 뒤지며 보물을 골라내는 라쿤의 영악함과 닮음.</div>
+      </div>
+
+      <div class="block samkukji">
+        <div class="head">
+          <span class="tag">삼국지</span>
+          <span class="title">예형</span>
+          <span class="subtitle">독설로 세상을 꿰뚫는 풍자가</span>
+        </div>
+        <div class="reason">매사 정색하기보단 &#39;미침&#39;, &#39;(?)&#39;, &#39;지랄염병&#39; 같은 시니컬 풍자로 업계·정치·운영사를 가차없이 까는 화법이, 권력자 앞에서도 북을 두드리며 조롱했던 예형의 풍자가 기질과 가장 결이 맞음. 같은 비평형이지만 kil9의 단답형 비꼼보다 길고 문어체적인 평론 톤이라는 점에서 구별됨.</div>
+      </div>
+    </div>
+    
+    
+    
+    
+    <div class="arch-card"
+         data-search="kil9 intp 냉소적 관찰자형 분석가 라쿤 가후 한 발 물러서서 정세를 읽는 냉소적 책사">
+      <div class="nick">kil9</div>
+
+      <div class="block mbti">
+        <div class="head">
+          <span class="tag">MBTI</span>
+          <span class="title">INTP</span>
+          <span class="subtitle">냉소적 관찰자형 분석가</span>
+          <span class="confidence">신뢰도 high</span>
+        </div>
+        <div class="reason">혼자 곱씹는 짧은 코멘트와 &#39;...&#39;, &#39;(아님)&#39;, &#39;(미침)&#39; 같은 자기주석형 말버릇이 강한 내향(I), 게임·산업·사회 전반을 패턴/구조로 추상화해 평하는 직관(N), 감정보다 논리적 약점·비효율·모순을 짚는 사고(T), 결론을 단정짓기보다 &#39;~일 수도&#39;로 열어두며 즉흥적으로 반응하는 인식(P) 성향이 뚜렷함.</div>
+      </div>
+
+      <div class="block animal">
+        <div class="head">
+          <span class="tag">동물</span>
+          <span class="animal-emoji">🦝</span>
+          <span class="title">라쿤</span>
+        </div>
+        <div class="reason">잡식성으로 게임·정치·기술·서브컬처를 다 헤집으며 흥미로운 것만 골라 챙기고, 시니컬하게 툭툭 던지지만 결정적인 순간엔 영리하게 핵심을 잡아채는 야행성 관찰자 같은 결.</div>
+      </div>
+
+      <div class="block samkukji">
+        <div class="head">
+          <span class="tag">삼국지</span>
+          <span class="title">가후</span>
+          <span class="subtitle">한 발 물러서서 정세를 읽는 냉소적 책사</span>
+        </div>
+        <div class="reason">직접 전면에 나서기보다 짧고 건조한 코멘트로 상황의 허점과 손익을 짚는 스타일이, 떠들썩한 헤비 오타쿠 조은일/Heero나 정보형 분석가 파인(일규)와는 결이 다른 &#39;관조형 책사&#39; 가후에 가깝다. 특히 파인(일규)가 정보 정리형이라면 이 사람은 사태를 비틀어 풍자하는 쪽.</div>
+      </div>
+    </div>
+    
+    
+    
+    
+    <div class="arch-card"
+         data-search="파인(일규) intp 관찰형 코멘터리어 너구리 노숙 균형 잡힌 중재형 분석가">
+      <div class="nick">파인(일규)</div>
+
+      <div class="block mbti">
+        <div class="head">
+          <span class="tag">MBTI</span>
+          <span class="title">INTP</span>
+          <span class="subtitle">관찰형 코멘터리어</span>
+          <span class="confidence">신뢰도 high</span>
+        </div>
+        <div class="reason">내향적이지만 꾸준히 길게 분석하는 톤(I), 게임 시스템·BM·번역·패치 메커니즘 등 추상 구조를 파고드는 사고(N), &#39;A면 B다&#39; 식의 조건·인과 분석과 감정보단 논리로 평가하는 태도(T), &#39;두고 봐야할듯&#39;, &#39;해봐야 알듯&#39; 같은 유보·개방형 결론을 즐기는 P 성향이 일관되게 보인다.</div>
+      </div>
+
+      <div class="block animal">
+        <div class="head">
+          <span class="tag">동물</span>
+          <span class="animal-emoji">🦝</span>
+          <span class="title">너구리</span>
+        </div>
+        <div class="reason">이것저것 다양한 게임·콘텐츠를 호기심으로 뒤지고 디테일을 주워 모으는 모습이 영락없는 너구리형. kil9·조은일/Heero의 시니컬 베테랑 톤과 달리 더 둥글고 관찰자적인 잡식성 기질이 강하다.</div>
+      </div>
+
+      <div class="block samkukji">
+        <div class="head">
+          <span class="tag">삼국지</span>
+          <span class="title">노숙</span>
+          <span class="subtitle">균형 잡힌 중재형 분석가</span>
+        </div>
+        <div class="reason">감정적 단정 대신 &#39;이런 케이스도 있다&#39;, &#39;두고 봐야 한다&#39;며 양쪽 가능성을 다 짚는 중재자 톤이 노숙의 결과 닮았다. 같은 분석형이라도 kil9가 곽가식 단답 풍자라면 파인(일규)는 노숙식 긴 호흡의 정황 정리에 가깝다.</div>
+      </div>
+    </div>
+    
+    
+    
+    
+    <div class="arch-card"
+         data-search="프로강등봇 mk.4 intp 디버깅하는 호기심쟁이 라쿤 마균 기계를 만지는 발명가">
+      <div class="nick">프로강등봇 mk.4</div>
+
+      <div class="block mbti">
+        <div class="head">
+          <span class="tag">MBTI</span>
+          <span class="title">INTP</span>
+          <span class="subtitle">디버깅하는 호기심쟁이</span>
+          <span class="confidence">신뢰도 medium</span>
+        </div>
+        <div class="reason">버그·API·요약 모델 등 시스템을 끊임없이 뜯어보고 가설을 세워 검증하는 N+T 사고가 뚜렷하며(직관·논리), 봇을 직접 만들어 채팅방에 풀어놓고 반응을 관찰하는 실험형 태도와 결론 없이 흐름을 즐기는 모습이 I·P 성향을 드러냄.</div>
+      </div>
+
+      <div class="block animal">
+        <div class="head">
+          <span class="tag">동물</span>
+          <span class="animal-emoji">🦝</span>
+          <span class="title">라쿤</span>
+        </div>
+        <div class="reason">이것저것 만지고 분해하고 다시 조립하는 손버릇 좋은 잡식성처럼, API·DB·LLM·주식봇까지 닥치는 대로 헤집으며 &#39;버그다, 고쳐야지&#39;를 반복하는 영민한 장난꾸러기 같음.</div>
+      </div>
+
+      <div class="block samkukji">
+        <div class="head">
+          <span class="tag">삼국지</span>
+          <span class="title">마균</span>
+          <span class="subtitle">기계를 만지는 발명가</span>
+        </div>
+        <div class="reason">전장의 책사보다 새로운 기물을 설계하고 개량하던 마균처럼, 채팅방에 강등봇을 직접 투입해 요약·프로파일링·주식조회 기능을 끊임없이 개조하는 엔지니어형 인물. 같은 분석형인 kil9·파인(일규)가 &#39;관찰·논평&#39;에 머문다면 이 사람은 도구 자체를 만들어 굴린다는 점에서 결이 다름.</div>
+      </div>
+    </div>
+    
+  </div>
+  
+
+  <footer>
+    bland-ai · 생성 시각 2026-05-26 20:42 · Claude 추측 기반의 재미용 리포트
+  </footer>
+</main>
+
+<script>
+(function () {
+  const root = document.documentElement;
+  const saved = localStorage.getItem("blandai-theme");
+  if (saved) root.dataset.theme = saved;
+  else if (window.matchMedia("(prefers-color-scheme: dark)").matches) root.dataset.theme = "dark";
+  document.getElementById("theme-toggle").addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    localStorage.setItem("blandai-theme", next);
+  });
+
+  const input = document.getElementById("search-box");
+  if (input) {
+    input.addEventListener("input", () => {
+      const q = input.value.trim().toLowerCase();
+      document.querySelectorAll("[data-search]").forEach(el => {
+        if (!q) el.classList.remove("hidden-by-search");
+        else el.classList.toggle("hidden-by-search", !el.dataset.search.includes(q));
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>
