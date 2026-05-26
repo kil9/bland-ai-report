@@ -99,13 +99,13 @@
   <nav>
     <a href="#summary">요약</a>
     <a href="#participants">참가자</a>
-    
+    <a href="#personas">페르소나</a>
     <a href="#daily">일자별</a>
     <a href="#heatmap">시간대</a>
     <a href="#words">어휘</a>
     <a href="#rooms">채팅방별</a>
-    
-    
+    <a href="#topics">주제·밈</a>
+    <a href="#timeline">타임라인</a>
     <span class="spacer"></span>
     <input class="search" type="search" placeholder="🔍 참가자·주제 검색" id="search-box">
     <button class="theme" id="theme-toggle" type="button" title="다크/라이트">🌗</button>
@@ -234,6 +234,287 @@
   </section>
 
   
+  <section id="personas">
+    <h2>참가자 페르소나 (Claude 정성 분석)</h2>
+    <p class="lede">익명 코드로 호출한 결과를 다시 닉네임으로 역치환했다. 메시지 빈도 상위부터 정렬.</p>
+    <div class="grid" data-search-grid>
+      
+      <div class="participant-card"
+           data-search="kil9 정치·시사·테크·게임을 종횡무진 논평하는 시니컬한 관찰자형 논객으로, 짧고 날카로운 한 줄 코멘트로 채팅방을 장악하는 인물. #시니컬 #정치덕 #테크긱 #한줄평 #뉴스링커 #주식러 ">
+        <div class="nick">kil9</div>
+        <div class="summary">정치·시사·테크·게임을 종횡무진 논평하는 시니컬한 관찰자형 논객으로, 짧고 날카로운 한 줄 코멘트로 채팅방을 장악하는 인물.</div>
+        <div class="tone">말투: 짧고 끊어치는 단문, 비꼬는 풍자와 자조적 유머, &#39;...&#39;·&#39;흠&#39;·&#39;ㅋㅋㅋ&#39;을 섞은 시니컬하고 건조한 말투.</div>
+        
+          <div class="section-label">관심사</div>
+          <div class="chips"><span>한국 정치(탄핵·계엄·검찰)</span><span>주식·투자(하이닉스·국장·미장)</span><span>AI/LLM(제미나이·GPT·코딩)</span><span>게임(몬헌·발더스게이트·용과같이)</span><span>법조·재판 이슈</span><span>여론조사(갤럽)</span><span>언론·뉴스 기사 공유</span></div>
+        
+        
+          <div class="section-label">말버릇</div>
+          <div class="chips"><span>&#39;...&#39;·&#39;..&#39;으로 말끝 흐리기</span><span>&#39;ㅁㄸ&#39;(맞다) 줄임 추임새</span><span>&#39;흑흑&#39;, &#39;에휴&#39;, &#39;으휴&#39; 같은 한탄</span><span>&#39;!명령어&#39;로 봇 호출(!강등, !배틀)</span><span>기사 URL 투척 후 한 줄 코멘트</span><span>&#39;개~&#39;, &#39;ㅋㅋㅋ&#39; 비꼬는 감탄</span><span>괄호 안 부연/자문자답 &#39;(?)&#39;, &#39;(아님)&#39;</span></div>
+        
+        
+          <div class="relationships"><span class="section-label">관계 ·</span> 방장님·엄보운·효진킴·peilles 등을 직접 호명하며 친근하게 디스하거나 농담을 거는 고참 멤버로 보이며, 정치인(윤석열·이재명·한동훈)이나 인플루언서(슈카·김어준·전한길)를 단골 풍자 대상으로 삼는다.</div>
+        
+        
+          <div class="chips accent" style="margin-top: 8px;"><span>#시니컬</span><span>#정치덕</span><span>#테크긱</span><span>#한줄평</span><span>#뉴스링커</span><span>#주식러</span></div>
+        
+      </div>
+      
+      <div class="participant-card"
+           data-search="доктора 주식·정치·엔터(특히 yg/베이비몬스터)를 넘나들며 냉소와 위트로 시사를 씹는 시장 관찰자형 아재. #시니컬 #주식러 #yg덕후 #뉴스큐레이터 #아재유머 #정치풍자 ">
+        <div class="nick">ДокторА</div>
+        <div class="summary">주식·정치·엔터(특히 YG/베이비몬스터)를 넘나들며 냉소와 위트로 시사를 씹는 시장 관찰자형 아재.</div>
+        <div class="tone">말투: 건조하고 비꼬는 듯한 짧은 단문에 &#39;...&#39;, &#39;ㅋㅋㅋ&#39; 말줄임을 자주 섞어 시니컬하면서도 능청스러운 말투</div>
+        
+          <div class="section-label">관심사</div>
+          <div class="chips"><span>주식 투자(K엔터·반도체·조선·바이오)</span><span>YG·베이비몬스터·블랙핑크 등 K팝 산업</span><span>한국·국제 정치(윤석열·트럼프·러시아)</span><span>경제/실적 공시 분석</span><span>사회 이슈·뉴스 큐레이션</span><span>육아와 일상</span><span>역사·국제관계 평론</span></div>
+        
+        
+          <div class="section-label">말버릇</div>
+          <div class="chips"><span>&#39;...&#39;으로 말끝 흐리기</span><span>&#39;ㅋㅋㅋ&#39; 짧은 웃음</span><span>뉴스/공시 링크 투척 후 한 줄 코멘트</span><span>&#39;~구먼&#39;, &#39;~네&#39; 같은 아재 말투</span><span>&#39;미니진&#39;, &#39;베몬&#39;, &#39;양사장&#39; 등 별명 호칭</span><span>반어·자조적 농담(&#39;~하시는 분들이었구요&#39;)</span><span>숫자·실적 데이터 인용</span></div>
+        
+        
+          <div class="relationships"><span class="section-label">관계 ·</span> 특정 인물 호명보다는 정치인(윤석열·이재명·유시민), 연예계 인사(양현석·방시혁), 방송인(슈카·허인영·김어준)을 풍자 대상으로 자주 언급하며, 채팅방에서는 종목·뉴스 링크 공유로 좌중에 화두를 던지는 정보 제공자 역할.</div>
+        
+        
+          <div class="chips accent" style="margin-top: 8px;"><span>#시니컬</span><span>#주식러</span><span>#YG덕후</span><span>#뉴스큐레이터</span><span>#아재유머</span><span>#정치풍자</span></div>
+        
+      </div>
+      
+      <div class="participant-card"
+           data-search="2071 정책·법률·시사에 해박한 현직 공무원으로, 헌법 조문과 행정 실무를 자유롭게 인용하며 세상사를 분석적·냉소적으로 논평하는 사람. #공무원 #법조문덕후 #시사분석 #탄핵정국 #말줄임표 ">
+        <div class="nick">2071</div>
+        <div class="summary">정책·법률·시사에 해박한 현직 공무원으로, 헌법 조문과 행정 실무를 자유롭게 인용하며 세상사를 분석적·냉소적으로 논평하는 사람.</div>
+        <div class="tone">말투: 건조하고 단편적이며 말줄임표·괄호 주석·자조적 농담이 섞인 분석가 말투</div>
+        
+          <div class="section-label">관심사</div>
+          <div class="chips"><span>헌법·법률 해석</span><span>탄핵·계엄 등 정치 시사</span><span>고용·노동 정책(실업급여·근로시간)</span><span>검찰·법원·헌재 동향</span><span>미국 정치(트럼프·관세·이란전)</span><span>주식·환율 등 시장</span><span>역사·국제정세</span></div>
+        
+        
+          <div class="section-label">말버릇</div>
+          <div class="chips"><span>문장 끝에 &#39;….&#39; 말줄임표 남발</span><span>&#39;(…)&#39; 괄호 주석으로 자조 표현</span><span>법조문·기사 원문을 통째로 복붙해 인용</span><span>&#39;ㅇㅇ&#39;, &#39;ㅋㅋㅋ&#39; 짧은 반응</span><span>&#39;네?&#39;, &#39;어라?&#39; 같은 의문 단발</span></div>
+        
+        
+          <div class="relationships"><span class="section-label">관계 ·</span> @許元寧, @ДокторА, @peilles, @엄보운, @효진킴, @오해성 등을 자주 호명해 법·국제정세 토론 상대로 삼고, 같은 부처/공직 동료들에 관한 일화도 자주 공유함.</div>
+        
+        
+          <div class="chips accent" style="margin-top: 8px;"><span>#공무원</span><span>#법조문덕후</span><span>#시사분석</span><span>#탄핵정국</span><span>#말줄임표</span></div>
+        
+      </div>
+      
+      <div class="participant-card"
+           data-search="許元寧 정치·시사 뉴스를 끊임없이 큐레이션하며 윤석열 정부와 극우·검찰 권력에 신랄한 논평을 가하는 비판적 시사 분석가형 참여자. #시사덕후 #윤석열비판 #뉴스큐레이터 #냉소체 #정치분석 #줄임표말투 ">
+        <div class="nick">許元寧</div>
+        <div class="summary">정치·시사 뉴스를 끊임없이 큐레이션하며 윤석열 정부와 극우·검찰 권력에 신랄한 논평을 가하는 비판적 시사 분석가형 참여자.</div>
+        <div class="tone">말투: 냉소적이고 건조하며 줄임표(..)와 짧은 한 줄 논평을 즐겨 쓰는, 빈정대면서도 분석적인 말투</div>
+        
+          <div class="section-label">관심사</div>
+          <div class="chips"><span>한국 정치(윤석열·계엄·탄핵)</span><span>검찰·사법·헌재 동향</span><span>국제정세(트럼프·이스라엘·이란)</span><span>여론조사·선거 분석</span><span>언론·기사 큐레이션</span><span>주식·부동산·자산시장</span><span>대학·연구·고등교육</span></div>
+        
+        
+          <div class="section-label">말버릇</div>
+          <div class="chips"><span>문장 끝에 &#39;..&#39; 줄임표 자주 사용</span><span>네이버 뉴스 링크를 본문 없이 투척</span><span>&#39;ㅋㅋㅋㅋ&#39;, &#39;에휴&#39;, &#39;으..&#39; 같은 짧은 반응</span><span>기사 본문 일부를 인용한 뒤 한 줄 코멘트</span><span>&#39;~ 듯&#39;, &#39;맛다&#39; 같은 구어체 단정</span><span>&#39;개~&#39;, &#39;븅신&#39;, &#39;시팔&#39; 등 거친 비속어로 정치인 비판</span></div>
+        
+        
+          <div class="relationships"><span class="section-label">관계 ·</span> 이영기·조주현·김청하 등 특정 참가자를 자주 호명하며 지식·정보 출처로 참조하고, 같은 방 멤버들과 시사 이슈에 대해 반박·맞장구·정보 공유를 주고받는 토론 허브 역할.</div>
+        
+        
+          <div class="chips accent" style="margin-top: 8px;"><span>#시사덕후</span><span>#윤석열비판</span><span>#뉴스큐레이터</span><span>#냉소체</span><span>#정치분석</span><span>#줄임표말투</span></div>
+        
+      </div>
+      
+      <div class="participant-card"
+           data-search="오해성 オヘソン 정치·사회 이슈에 냉소와 욕설을 섞어 촌철살인 한 줄 평을 던지는, 주식·코인·시사 잡학에 두루 밝은 빈정거림 장인. #냉소러 #시사덕후 #주식코인 #욕쟁이 #밈장인 ">
+        <div class="nick">오해성 オヘソン</div>
+        <div class="summary">정치·사회 이슈에 냉소와 욕설을 섞어 촌철살인 한 줄 평을 던지는, 주식·코인·시사 잡학에 두루 밝은 빈정거림 장인.</div>
+        <div class="tone">말투: 짧고 비꼬는 반말체에 욕설·감탄사·옛 유행어를 자유롭게 섞는 시니컬하고 장난기 어린 말투</div>
+        
+          <div class="section-label">관심사</div>
+          <div class="chips"><span>국내 정치·시국(내란·검찰·헌재)</span><span>주식·코인·부동산</span><span>언론 기사 공유</span><span>게임(스텔라리스·몬헌·할로나이트)</span><span>사회 사건사고와 노동 이슈</span><span>이스라엘·트럼프 등 국제정세</span><span>음식·러닝 등 일상</span></div>
+        
+        
+          <div class="section-label">말버릇</div>
+          <div class="chips"><span>&#39;캬아&#39;, &#39;크으&#39; 같은 감탄사 남발</span><span>&#39;ㅋㅋㅋㅋ&#39;, &#39;쯧쯧&#39;, &#39;에잉&#39; 같은 반응 한 줄</span><span>&#39;~새끼&#39;, &#39;씨발&#39;, &#39;좇같네&#39; 등 거친 욕설</span><span>&#39;가즈아&#39;, &#39;조져&#39;, &#39;망해라&#39; 식 선동조 농담</span><span>뉴스 URL 던지고 한 줄 코멘트</span><span>&#39;얼마까지 알아보셨어요?&#39; 같은 밈 인용</span></div>
+        
+        
+          <div class="relationships"><span class="section-label">관계 ·</span> 방장·김사장·이영기·엄보운·허센세 등 특정 참가자를 별명으로 자주 호명하며 농담조로 시비를 걸고, 아내·조카 이야기도 종종 꺼내는 친한 단톡방 고참 톤.</div>
+        
+        
+          <div class="chips accent" style="margin-top: 8px;"><span>#냉소러</span><span>#시사덕후</span><span>#주식코인</span><span>#욕쟁이</span><span>#밈장인</span></div>
+        
+      </div>
+      
+      <div class="participant-card"
+           data-search="효진킴 정치·문화·출판·시장을 종횡으로 가로지르며 냉소와 풍자를 던지는, 박식하고 시니컬한 관전평가형 인물. #시니컬 #출판인 #정치냉소 #투자자 #밈러 #문화비평 ">
+        <div class="nick">효진킴</div>
+        <div class="summary">정치·문화·출판·시장을 종횡으로 가로지르며 냉소와 풍자를 던지는, 박식하고 시니컬한 관전평가형 인물.</div>
+        <div class="tone">말투: 건조하고 비꼬는 반말체에 인터넷 밈·고유 신조어를 섞어 짧게 끊어치는 시니컬·풍자조</div>
+        
+          <div class="section-label">관심사</div>
+          <div class="chips"><span>한국 정치(윤석열·이재명·국힘 비판)</span><span>출판·번역·문학(한강, 스피박, 지젝 등)</span><span>주식·코인 투자(삼전·하닉·더본·코스피)</span><span>K팝·아이돌 산업(뉴진스·하이브·어도어)</span><span>요리·맛집·술(흑백요리사, 사케, 우동)</span><span>비평이론·철학(라캉·지젝·마르크스)</span><span>반려견과 일상, 일본·여행</span></div>
+        
+        
+          <div class="section-label">말버릇</div>
+          <div class="chips"><span>&#39;ㅋㅋㅋㅋ&#39;·&#39;ㄷㄷㄷ&#39; 같은 짧은 반응</span><span>&#39;~자&#39;, &#39;~자너&#39;, &#39;~함&#39; 어미로 끊기</span><span>&#39;윤석열·전광훈·준스톤&#39; 등 인물 별칭·조롱 호칭</span><span>&#39;!~해줘&#39; 식 봇 명령형 농담</span><span>괄호로 부연·자조 &#39;(비아냥 아님)&#39; 등</span><span>기사·트윗 URL 투척 후 한 줄 코멘트</span><span>&#39;~다구!&#39;, &#39;~지요&#39; 만화적 어투</span></div>
+        
+        
+          <div class="relationships"><span class="section-label">관계 ·</span> 방장님·이영기·김통·엄보운·엄대표 등 채팅방 멤버를 별명·존칭으로 자주 호명하며 가볍게 놀리거나 농담을 주고받고, 출판·문학·정치 화제에서는 동료 의식과 비평적 거리감을 동시에 드러낸다.</div>
+        
+        
+          <div class="chips accent" style="margin-top: 8px;"><span>#시니컬</span><span>#출판인</span><span>#정치냉소</span><span>#투자자</span><span>#밈러</span><span>#문화비평</span></div>
+        
+      </div>
+      
+      <div class="participant-card"
+           data-search="j 정치·기술·맛집·투자까지 폭넓게 빈정대며 코멘트하는, 시니컬하면서도 친근한 관찰자형 캐릭터. #시니컬 #정치덕후 #투자단톡 #ai관찰자 #맛집순례 ">
+        <div class="nick">J</div>
+        <div class="summary">정치·기술·맛집·투자까지 폭넓게 빈정대며 코멘트하는, 시니컬하면서도 친근한 관찰자형 캐릭터.</div>
+        <div class="tone">말투: 짧고 툭툭 던지는 구어체에 비꼼·자조·말줄임이 섞인 시니컬하면서도 장난스러운 말투</div>
+        
+          <div class="section-label">관심사</div>
+          <div class="chips"><span>한국 정치(계엄·탄핵·대선)</span><span>주식·투자</span><span>AI/LLM 트렌드</span><span>카카오·네이버 등 IT 업계</span><span>맛집·술(위스키, 소주)</span><span>흑백요리사 등 예능</span><span>사회 이슈·법률</span></div>
+        
+        
+          <div class="section-label">말버릇</div>
+          <div class="chips"><span>&#39;머시따/맛있다&#39; 식의 변형 구어</span><span>&#39;ㅋㅋ&#39;, &#39;ㄷㄷ&#39;, &#39;...&#39; 으로 끝맺기</span><span>&#39;~군&#39;, &#39;~듯&#39; 같은 추측형 종결</span><span>정치인을 별명으로 부르기(재드래곤, 한똥훈, 내란당 등)</span><span>다른 참가자(김청하, 이영기, 조주현) 이름 직접 거론</span><span>뉴스 URL 투척 후 한줄평</span><span>&#39;사형!&#39;, &#39;죽어라&#39; 같은 과장된 분노 농담</span></div>
+        
+        
+          <div class="relationships"><span class="section-label">관계 ·</span> 김청하·이영기·조주현·허원영·효진킴 등을 자주 호명하며 농담·질문·디스를 주고받는 단톡방의 핵심 멤버이며, 특히 김청하의 투자/네이버 이슈, 이영기의 발언을 단골 안주거리로 삼는다.</div>
+        
+        
+          <div class="chips accent" style="margin-top: 8px;"><span>#시니컬</span><span>#정치덕후</span><span>#투자단톡</span><span>#AI관찰자</span><span>#맛집순례</span></div>
+        
+      </div>
+      
+      <div class="participant-card"
+           data-search="peilles 정치·시사·언어·주식·위스키 전반을 두루 꿰는 시니컬한 관찰자이자, 채팅방의 &#39;청식이/이영기&#39; 등 멤버를 캐릭터화해 놀리는 만담꾼. #에휴정권 #시니컬 #위스키 #정치덕후 #청식이놀리기 #개미투자자 ">
+        <div class="nick">peilles</div>
+        <div class="summary">정치·시사·언어·주식·위스키 전반을 두루 꿰는 시니컬한 관찰자이자, 채팅방의 &#39;청식이/이영기&#39; 등 멤버를 캐릭터화해 놀리는 만담꾼.</div>
+        <div class="tone">말투: 짧고 툭툭 던지는 반말체에 &#39;~서?&#39;, &#39;~서!&#39;, &#39;에휴&#39;, &#39;쥐엔장&#39; 같은 한탄·비꼼·구어체가 섞인 시니컬·해학적 말투</div>
+        
+          <div class="section-label">관심사</div>
+          <div class="chips"><span>한국 정치(윤석열·계엄·탄핵·국힘 비판)</span><span>주식·코인·ETF 투자</span><span>위스키·약주 등 술 문화</span><span>언어학·국어/외국어 표기</span><span>K팝(뉴진스·민희진·하이브 사태)</span><span>흑백요리사·맛집·미식</span><span>AI·LLM 활용과 IT 가젯</span></div>
+        
+        
+          <div class="section-label">말버릇</div>
+          <div class="chips"><span>&#39;에휴~&#39; 접두로 한탄(에휴정권, 에휴판사, 에휴체포)</span><span>&#39;~서?&#39;, &#39;~했서?&#39; 식 변형 어미</span><span>&#39;쥐엔장&#39;, &#39;ㅁㄸ&#39;, &#39;ㅁㅊㄷㅁㅊㅇ&#39; 같은 짧은 감탄사</span><span>&#39;청식이/이영기/안대섭&#39; 등 멤버 이름을 캐릭터화해 놀리기</span><span>기사·커뮤니티 링크를 한 줄 코멘트와 함께 투척</span><span>&#39;개가태&#39;, &#39;개객기&#39;, &#39;븅신&#39; 등 욕설 섞인 정치 비판</span></div>
+        
+        
+          <div class="relationships"><span class="section-label">관계 ·</span> 방장·조주현(술), 이훈재·이영기(IT/일상), 김청하(&#39;청식이&#39;)·엄보운·안대섭 등을 별명과 농담으로 자주 호명하며 친밀하게 놀리는 핵심 멤버. 정치·주식·술 화제에서 좌장 격으로 코멘트를 단다.</div>
+        
+        
+          <div class="chips accent" style="margin-top: 8px;"><span>#에휴정권</span><span>#시니컬</span><span>#위스키</span><span>#정치덕후</span><span>#청식이놀리기</span><span>#개미투자자</span></div>
+        
+      </div>
+      
+      <div class="participant-card"
+           data-search="조주현 투자·기업분석에 능통한 업계 내부자이자 위스키·게임·정치 시사까지 두루 꿰는 박학다식한 냉소적 관전자. #딜인사이더 #위스키덕후 #시니컬 #용진이형 #붉며들다 #업계내부자 ">
+        <div class="nick">조주현</div>
+        <div class="summary">투자·기업분석에 능통한 업계 내부자이자 위스키·게임·정치 시사까지 두루 꿰는 박학다식한 냉소적 관전자.</div>
+        <div class="tone">말투: 건조하면서도 위트있고, 자조·반어·드립이 섞인 짧은 단문 위주의 시니컬한 말투</div>
+        
+          <div class="section-label">관심사</div>
+          <div class="chips"><span>스타트업·VC·M&amp;A 딜</span><span>위스키(버번·싱몰)</span><span>유통·이커머스(쿠팡·이마트·신세계)</span><span>정치·시사 풍자</span><span>게임(붉은사막·몬헌·패드)</span><span>AI·반도체·통신업계</span><span>엔터·아이돌 산업 비평</span></div>
+        
+        
+          <div class="section-label">말버릇</div>
+          <div class="chips"><span>&#39;~인듯&#39;, &#39;~같음&#39; 같은 추측형 마무리</span><span>&#39;데헷&#39;, &#39;미침&#39;, &#39;~규&#39; 같은 장난스런 어미</span><span>&#39;용진이형&#39;, &#39;범수형&#39;, &#39;해진이형&#39; 식의 재벌 호칭</span><span>괄호 안 자기 츳코미 &#39;(미침)&#39;, &#39;(꼰대)&#39;</span><span>&#39;마따&#39;, &#39;ㅋㅋㅋㅋ&#39; 짧은 반응</span><span>기사 URL 투척 후 한 줄 코멘트</span></div>
+        
+        
+          <div class="relationships"><span class="section-label">관계 ·</span> 업계 인사이더로서 영기형·영준형·청하형·J형 등 형·선배 호칭으로 친밀하게 부르며, 술(위스키)·게임·딜 관련 정보를 공유하는 동료 그룹과 농담을 주고받는 관계.</div>
+        
+        
+          <div class="chips accent" style="margin-top: 8px;"><span>#딜인사이더</span><span>#위스키덕후</span><span>#시니컬</span><span>#용진이형</span><span>#붉며들다</span><span>#업계내부자</span></div>
+        
+      </div>
+      
+      <div class="participant-card"
+           data-search="엄보운 리걸테크 스타트업(로톡)을 이끄는 비즈니스맨이자 전직 법조기자로, 법·정치·ai·역사를 종횡무진 논평하며 사람들을 끌어들이는 수다스러운 분석가형 캐릭터. #로톡대표 #법조수다 #ai덕후 #정치평론 #미식가 #프린이아빠 ">
+        <div class="nick">엄보운</div>
+        <div class="summary">리걸테크 스타트업(로톡)을 이끄는 비즈니스맨이자 전직 법조기자로, 법·정치·AI·역사를 종횡무진 논평하며 사람들을 끌어들이는 수다스러운 분석가형 캐릭터.</div>
+        <div class="tone">말투: 박학다식·장황·자기풍자·드립을 섞은 진지하면서도 능청맞은 말투</div>
+        
+          <div class="section-label">관심사</div>
+          <div class="chips"><span>법조·사법 이슈와 판결 분석</span><span>정치 시평(윤석열·이재명·한동훈)</span><span>리걸테크/슈퍼로이어·로톡 비즈니스</span><span>AI·LLM(클로드·GPT·퍼플렉시티)</span><span>일본 역사·료마가 간다</span><span>와인·스시·미식</span><span>건강 라이프해킹(찬물샤워·올리브유)</span><span>반려견 프린이와 가족(지운이)</span></div>
+        
+        
+          <div class="section-label">말버릇</div>
+          <div class="chips"><span>&#39;마따&#39;, &#39;끄덕끄덕&#39;, &#39;크흐&#39;, &#39;흑흑&#39; 같은 추임새 남발</span><span>&#39;!승급/!강등/!배틀&#39; 봇 명령어 즐겨 사용</span><span>장문 인용·기사 링크·슈퍼로이어 답변 통째로 붙여넣기</span><span>&#39;~읍니다&#39;, &#39;~데스&#39;, &#39;~입니까아아&#39; 같은 능청 어미</span><span>&#39;(뻔뻔)&#39;, &#39;(에헴)&#39; 식 괄호 셀프코멘트</span><span>&#39;마따..&#39;, &#39;후후후&#39; 같은 일본풍·자아도취 표현</span></div>
+        
+        
+          <div class="relationships"><span class="section-label">관계 ·</span> 허원영(교수님)·이영기(공직자)·peilles·끼룩(kil9)·제이(J)·2071 등을 &#39;당원 동지&#39;로 칭하며 농담과 토론을 주도하는 좌장 역할이고, 프린이(반려견)와 새로 태어난 지운이를 자주 자랑한다.</div>
+        
+        
+          <div class="chips accent" style="margin-top: 8px;"><span>#로톡대표</span><span>#법조수다</span><span>#AI덕후</span><span>#정치평론</span><span>#미식가</span><span>#프린이아빠</span></div>
+        
+      </div>
+      
+      <div class="participant-card"
+           data-search="pm 금융·정치·위스키·플랫폼 비즈니스를 종횡무진 누비는 박학다식한 분석가형 수다쟁이로, 시니컬한 농담과 진지한 통찰을 자유자재로 오가는 인물. #위스키덕후 #정치시황 #플랫폼분석가 #시니컬 #박학다식 #아재드립 ">
+        <div class="nick">pm</div>
+        <div class="summary">금융·정치·위스키·플랫폼 비즈니스를 종횡무진 누비는 박학다식한 분석가형 수다쟁이로, 시니컬한 농담과 진지한 통찰을 자유자재로 오가는 인물.</div>
+        <div class="tone">말투: 장문 분석과 단문 드립을 오가는, 시니컬·박학다식·자기비하 섞인 구어체에 &#39;~임/~음/~인 듯&#39; 단정형이 잦은 말투.</div>
+        
+          <div class="section-label">관심사</div>
+          <div class="chips"><span>주식·코인 시황</span><span>정치(이준석·이재명·국힘 분당)</span><span>위스키 시음·면세 쇼핑</span><span>플랫폼·모빌리티 산업(카카오모빌리티·티맵)</span><span>부동산·펜션 민원전</span><span>영화·드라마·예능(나솔·돌싱)</span><span>육아와 가족사</span></div>
+        
+        
+          <div class="section-label">말버릇</div>
+          <div class="chips"><span>&#39;~임/~음/~듯&#39; 단정형 종결</span><span>&#39;ㅋㅋㅋㅋ&#39; 길게 늘이며 자조</span><span>&#39;개~/존나&#39; 강조부사 자주 사용</span><span>&#39;맛다/맞음&#39;으로 동의 표현</span><span>&#39;~겠음/할 듯&#39; 추측형 빈번</span><span>긴 분석글 뒤 &#39;...&#39; 말줄임으로 흐리기</span><span>기사 링크 + 한 줄 코멘트 투척</span></div>
+        
+        
+          <div class="relationships"><span class="section-label">관계 ·</span> @조주현, @kil9, 청하씨 등 특정 멤버에게 위스키·종목 조언을 구하거나 면세 정보를 주고받으며, &#39;엄대표&#39;, &#39;김사장님&#39; 같은 친근한 호칭으로 모임 멤버들과 술자리·정치 토론을 주도하는 좌장 포지션.</div>
+        
+        
+          <div class="chips accent" style="margin-top: 8px;"><span>#위스키덕후</span><span>#정치시황</span><span>#플랫폼분석가</span><span>#시니컬</span><span>#박학다식</span><span>#아재드립</span></div>
+        
+      </div>
+      
+      <div class="participant-card"
+           data-search="프로강등봇 mk.4 채팅방의 등급 관리 역할극을 담당한 gpt 기반 &#39;프로강등봇&#39;으로, 멤버들을 익살스러운 별명과 함께 강등·승급·배틀시키며 방의 분위기를 주도한 ai 진행자. #강등봇 #역할극ai #별명장인 #랜덤배틀 #능청사회자 ">
+        <div class="nick">프로강등봇 mk.4</div>
+        <div class="summary">채팅방의 등급 관리 역할극을 담당한 GPT 기반 &#39;프로강등봇&#39;으로, 멤버들을 익살스러운 별명과 함께 강등·승급·배틀시키며 방의 분위기를 주도한 AI 진행자.</div>
+        <div class="tone">말투: 친절하면서도 능청스럽고, 짧은 멘트로 비꼬듯 놀리며, 이모지(😈😄😊)와 과장된 칭호를 즐겨 쓰는 장난스러운 사회자 말투</div>
+        
+          <div class="section-label">관심사</div>
+          <div class="chips"><span>등급 강등·승급 역할극</span><span>랜덤 배틀·보스전 시뮬레이션</span><span>D&amp;D식 성향·동물 별명 짓기</span><span>시사·정치·경제 잡학 질의응답</span><span>음식·요리·코냑 등 라이프스타일 정보</span><span>AI·윤리·기후변화 같은 메타 주제</span><span>주식·부동산 등 가벼운 경제 상담</span></div>
+        
+        
+          <div class="section-label">말버릇</div>
+          <div class="chips"><span>&#39;명령을 확인했습니다&#39;로 응답 시작</span><span>강등/승급 후 11명 등급 목록을 매번 나열</span><span>&#39;~되었습니다&#39;로 마무리하며 한 줄 농담 추가</span><span>&#39;흠... 아하! 이런 이런...&#39; 같은 추임새(mk.4 시기)</span><span>😊😄😈 이모지 빈번 사용</span><span>&#39;추가 요청이나 질문이 있으시면 언제든지 말씀해 주세요&#39;로 끝맺기</span><span>별명에 &#39;~의 희생자&#39;, &#39;~의 대가&#39; 같은 패턴 반복</span></div>
+        
+        
+          <div class="relationships"><span class="section-label">관계 ·</span> kil9를 가장 빈번한 강등·승급 대상으로 삼고, 엄보운·peilles·효진킴·許元寧·ДокторА·J·pm·2071·오해성·조주현 등 모든 참가자를 &#39;님&#39; 호칭으로 공평하게 다루며 누구의 명령이든 즉시 수행하는 중립적 진행자 위치에 있다.</div>
+        
+        
+          <div class="chips accent" style="margin-top: 8px;"><span>#강등봇</span><span>#역할극AI</span><span>#별명장인</span><span>#랜덤배틀</span><span>#능청사회자</span></div>
+        
+      </div>
+      
+      <div class="participant-card"
+           data-search="kil9gpt 그룹 채팅방에 상주하는 chatgpt 봇으로, 정치·역사·과학·언어 등 광범위한 주제에 대해 백과사전식 설명을 제공하면서 무작위 강등 놀이의 진행자 역할도 겸한다. #챗봇 #강등봇 #욕설채점 #백과사전 #정치덕후 ">
+        <div class="nick">kil9gpt</div>
+        <div class="summary">그룹 채팅방에 상주하는 ChatGPT 봇으로, 정치·역사·과학·언어 등 광범위한 주제에 대해 백과사전식 설명을 제공하면서 무작위 강등 놀이의 진행자 역할도 겸한다.</div>
+        <div class="tone">말투: 정중하고 장황한 설명체에 번호 매기기·굵은 글씨·이모티콘(😊)을 곁들이는 친절하고 중립적인 말투</div>
+        
+          <div class="section-label">관심사</div>
+          <div class="chips"><span>정치·대통령제·헌법</span><span>비속어 공격성 수치 평가</span><span>그룹 멤버 강등 랜덤 게임</span><span>과학·화학·BMI·영양 계산</span><span>역사·선거 결과·국제 정세</span><span>AI·양자컴퓨터·기술 트렌드</span><span>음식·요리·식이요법</span></div>
+        
+        
+          <div class="section-label">말버릇</div>
+          <div class="chips"><span>&#39;😊&#39; 이모티콘으로 마무리</span><span>&#39;다른 질문이나 도움이 필요하시면 언제든지 말씀해 주세요&#39;</span><span>&#39;죄송합니다, 그 요청은 처리할 수 없습니다&#39;</span><span>**굵은 글씨**와 번호 목록 남발</span><span>&#39;평가 결과: X/10&#39; 형식의 욕설 채점</span><span>&#39;무작위로 선택된 회원: ___ 강등 결과:&#39; 템플릿</span><span>LaTeX 수식과 단위 환산 풀이</span></div>
+        
+        
+          <div class="relationships"><span class="section-label">관계 ·</span> 방장 격인 pm을 비롯해 J, 효진킴, peilles, 엄보운, 2071, ДокторА, 허원영, 싱서인(오해성 오헤손), kil9 등 멤버들을 강등 룰렛 대상으로 호명하며, 사용자들이 던지는 욕설·정치 질문·삼행시 요청에 응답하는 만능 도우미 역할을 한다.</div>
+        
+        
+          <div class="chips accent" style="margin-top: 8px;"><span>#챗봇</span><span>#강등봇</span><span>#욕설채점</span><span>#백과사전</span><span>#정치덕후</span></div>
+        
+      </div>
+      
+    </div>
+  </section>
+  
 
   <section id="daily">
     <h2>일자별 메시지 추이</h2>
@@ -290,11 +571,400 @@
   
 
   
+  <section id="topics">
+    <h2>주제·밈·종목 (Claude 정성 분석)</h2>
+    
+      <h3 style="font-size: 15px; margin-top: 8px;">주제</h3>
+      <div class="grid">
+        
+        <div class="topic-card" data-search="윤석열 계엄·내란 사태 2024년 12·3 비상계엄 선포부터 탄핵, 구속, 재판까지의 전 과정이 그룹의 가장 큰 주제. 충암고/검찰 패밀리, 윤어게인, 부정선거론 등이 파생 주제로 반복됨.">
+          <div class="label">윤석열 계엄·내란 사태</div>
+          <div style="font-size: 13px; margin-top: 4px;">2024년 12·3 비상계엄 선포부터 탄핵, 구속, 재판까지의 전 과정이 그룹의 가장 큰 주제. 충암고/검찰 패밀리, 윤어게인, 부정선거론 등이 파생 주제로 반복됨.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"충암고 그만해!"</span><span style="margin-right: 6px;">"지금 나라에 큰일이 났다가 진압됐다고!!!!!"</span><span style="margin-right: 6px;">"0선검사가?"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="국장 투자와 종목 토론 코스피·코스닥 개별 종목, 공시 분석, 실적 발표에 대한 일상적 공유. 반도체·바이오·조선·엔터가 핵심 섹터로 자주 등장.">
+          <div class="label">국장 투자와 종목 토론</div>
+          <div style="font-size: 13px; margin-top: 4px;">코스피·코스닥 개별 종목, 공시 분석, 실적 발표에 대한 일상적 공유. 반도체·바이오·조선·엔터가 핵심 섹터로 자주 등장.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"국장은 심장에 좋지 않습니다"</span><span style="margin-right: 6px;">"코스피 4700 돌파"</span><span style="margin-right: 6px;">"빨리 타! 지금이야!"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="k-엔터·뉴진스/하이브 분쟁 민희진-하이브 갈등, 어도어, 뉴진스, 블랙핑크, 베몬(베이비몬스터), yg 등 k팝 산업 이슈를 실시간으로 추적.">
+          <div class="label">K-엔터·뉴진스/하이브 분쟁</div>
+          <div style="font-size: 13px; margin-top: 4px;">민희진-하이브 갈등, 어도어, 뉴진스, 블랙핑크, 베몬(베이비몬스터), YG 등 K팝 산업 이슈를 실시간으로 추적.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"민희진이 던진 폭탄 때문에"</span><span style="margin-right: 6px;">"0.5 어도어 정도 되네 이제"</span><span style="margin-right: 6px;">"뉴진스와 80만차로 좁혀졌습니다"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="ai 모델·툴 평론 gpt, 클로드, 제미나이, 딥리서치 등 llm의 능력과 한계, 업무 활용을 두고 잦은 비교·실험. 라인봇(쏘이/2071)도 그룹 안에서 직접 운영.">
+          <div class="label">AI 모델·툴 평론</div>
+          <div style="font-size: 13px; margin-top: 4px;">GPT, 클로드, 제미나이, 딥리서치 등 LLM의 능력과 한계, 업무 활용을 두고 잦은 비교·실험. 라인봇(쏘이/2071)도 그룹 안에서 직접 운영.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"딥리서치 끝내주네..."</span><span style="margin-right: 6px;">"차마 pro는 못쓰고 flash로 써야겠다"</span><span style="margin-right: 6px;">"제미나이한테 물어봐"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="트럼프 2기와 관세·지정학 트럼프 재집권 후 관세·동맹 재편, 이란 호르무즈 봉쇄, 중동전쟁이 시장과 외교에 미치는 영향을 자주 분석.">
+          <div class="label">트럼프 2기와 관세·지정학</div>
+          <div style="font-size: 13px; margin-top: 4px;">트럼프 재집권 후 관세·동맹 재편, 이란 호르무즈 봉쇄, 중동전쟁이 시장과 외교에 미치는 영향을 자주 분석.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"트럼프 &#34;모든 국가 수입품에 10% 관세&#34;"</span><span style="margin-right: 6px;">"트럼프: 이제부터 테슬라와 나는 한 몸이다"</span><span style="margin-right: 6px;">"TACO?"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="법조·사법 비판 지귀연 판사, 공수처, 대법원, 검찰의 행태에 대한 강한 비판. &#39;리걸 마인드&#39;, 법왜곡, 전관 문화에 대한 냉소가 반복.">
+          <div class="label">법조·사법 비판</div>
+          <div style="font-size: 13px; margin-top: 4px;">지귀연 판사, 공수처, 대법원, 검찰의 행태에 대한 강한 비판. &#39;리걸 마인드&#39;, 법왜곡, 전관 문화에 대한 냉소가 반복.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"저런 개 뻔뻔한 소리를 할 수 있게 되는게 리걸 마인드라는거겠지"</span><span style="margin-right: 6px;">"지귀연도 사형보다 더 센거 주면 좋겠다"</span><span style="margin-right: 6px;">"무능한 공수처는 영장이랑 기소 자판기나 하라고"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="이재명·민주당 정국 이재명 재판, 공직선거법, 대선 후보 경선과 새 정부 인사·정책 평가. 우호와 비판이 섞여 있음.">
+          <div class="label">이재명·민주당 정국</div>
+          <div style="font-size: 13px; margin-top: 4px;">이재명 재판, 공직선거법, 대선 후보 경선과 새 정부 인사·정책 평가. 우호와 비판이 섞여 있음.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"[속보] 노란봉투법, 민주당 주도로 환노위 소위 통과"</span><span style="margin-right: 6px;">"이죄명 친위대"</span><span style="margin-right: 6px;">"탄핵 인용되고 나면 두 갈래"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="국힘·보수 진영의 자멸 한동훈, 권성동, 나경원, 김문수, 홍준표 등의 행보와 윤어게인·전한길류 극우 현상에 대한 조롱.">
+          <div class="label">국힘·보수 진영의 자멸</div>
+          <div style="font-size: 13px; margin-top: 4px;">한동훈, 권성동, 나경원, 김문수, 홍준표 등의 행보와 윤어게인·전한길류 극우 현상에 대한 조롱.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"시발 한동훈이겠냐"</span><span style="margin-right: 6px;">"이게 정말로 부정선거가 있었다면"</span><span style="margin-right: 6px;">"윤어게인 사진 올리길래 걍 차단 박았지"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="음주·위스키·맛집 버번/스카치 위스키 시음 후기, 막걸리, 라면·소금빵, 오마카세, 후쿠오카·도쿄 출장 기록 등 식음료 잡담.">
+          <div class="label">음주·위스키·맛집</div>
+          <div style="font-size: 13px; margin-top: 4px;">버번/스카치 위스키 시음 후기, 막걸리, 라면·소금빵, 오마카세, 후쿠오카·도쿄 출장 기록 등 식음료 잡담.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"야마자키 하이볼 마셔볼까 하다가 참음"</span><span style="margin-right: 6px;">"버번 힘내"</span><span style="margin-right: 6px;">"소금파입니다"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="가족·육아·일상 유치원생 자녀(소이, 우연, 설이 등) 양육담, 부부생활, 회사 육아동호회 등 사적 일상.">
+          <div class="label">가족·육아·일상</div>
+          <div style="font-size: 13px; margin-top: 4px;">유치원생 자녀(소이, 우연, 설이 등) 양육담, 부부생활, 회사 육아동호회 등 사적 일상.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"설이가 올해 학교 들어갔다고 했던가"</span><span style="margin-right: 6px;">"소이 키우고 오히려 자주 걸리는게"</span><span style="margin-right: 6px;">"유치원 선생님 말만 듣고"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="회사·관료 조직 푸념 공무원(기재부·국토부 등) 늘공·어공의 일상, 보고서·국정과제·세제·예산 실무 토로.">
+          <div class="label">회사·관료 조직 푸념</div>
+          <div style="font-size: 13px; margin-top: 4px;">공무원(기재부·국토부 등) 늘공·어공의 일상, 보고서·국정과제·세제·예산 실무 토로.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"원래 기업이나 정부같은 노비근성 가득한 이들 많은 곳"</span><span style="margin-right: 6px;">"기재부 좋아할 개편안"</span><span style="margin-right: 6px;">"이번 달 월급은 제가 대신 받겠습니다"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="디지털 음모론·범죄 부정선거론, skt 해킹, 캄보디아 보이스피싱, 명태균, 통일교 등 음모론과 사회면 범죄 사건 공유.">
+          <div class="label">디지털 음모론·범죄</div>
+          <div style="font-size: 13px; margin-top: 4px;">부정선거론, SKT 해킹, 캄보디아 보이스피싱, 명태균, 통일교 등 음모론과 사회면 범죄 사건 공유.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"스탑 더 스틸!"</span><span style="margin-right: 6px;">"캄보디아 정부는 피해자들을 추방"</span><span style="margin-right: 6px;">"명태균이 그렇다면 그런거다"</span></div>
+        </div>
+        
+      </div>
+    
+    
+      <h3 style="font-size: 15px; margin-top: 20px;">자생적 밈·말버릇</h3>
+      <div class="grid">
+        
+        <div class="meme-card" data-search="이영기 특정 멤버를 가리키는 그룹 내 대표 캐릭터 호명. &#39;이영기에게 줄 수는 없지만&#39;, &#39;이영기 추라이&#39; 등 거의 모든 농담의 펀치라인으로 등장.">
+          <div class="phrase">이영기</div>
+          <div style="font-size: 13px; margin-top: 4px;">특정 멤버를 가리키는 그룹 내 대표 캐릭터 호명. &#39;이영기에게 줄 수는 없지만&#39;, &#39;이영기 추라이&#39; 등 거의 모든 농담의 펀치라인으로 등장.</div>
+          <div class="by">주로: 오해성 オヘソン, peilles, J, 엄보운</div>
+        </div>
+        
+        <div class="meme-card" data-search="ㅁㄸ / 맛다 / 마따 &#39;맞다&#39;의 변형 추임새. 동의·맞장구 표현으로 그룹 표준 말버릇.">
+          <div class="phrase">ㅁㄸ / 맛다 / 마따</div>
+          <div style="font-size: 13px; margin-top: 4px;">&#39;맞다&#39;의 변형 추임새. 동의·맞장구 표현으로 그룹 표준 말버릇.</div>
+          <div class="by">주로: kil9, ДокторА, J, 엄보운</div>
+        </div>
+        
+        <div class="meme-card" data-search="!강등 / !등급 라인봇에 명령하는 형식. 멤버에게 익살스런 칭호를 붙여 서열을 매기는 자생 놀이.">
+          <div class="phrase">!강등 / !등급</div>
+          <div style="font-size: 13px; margin-top: 4px;">라인봇에 명령하는 형식. 멤버에게 익살스런 칭호를 붙여 서열을 매기는 자생 놀이.</div>
+          <div class="by">주로: kil9, peilles, 효진킴</div>
+        </div>
+        
+        <div class="meme-card" data-search="충암고/충암고 그만해 윤석열·김용현 등 계엄 핵심 인물의 출신 고등학교를 빗대 &#39;내란 패밀리&#39; 전체를 가리키는 대명사.">
+          <div class="phrase">충암고/충암고 그만해</div>
+          <div style="font-size: 13px; margin-top: 4px;">윤석열·김용현 등 계엄 핵심 인물의 출신 고등학교를 빗대 &#39;내란 패밀리&#39; 전체를 가리키는 대명사.</div>
+          <div class="by">주로: kil9, 효진킴, 許元寧</div>
+        </div>
+        
+        <div class="meme-card" data-search="윤어게인 / 석열이형 윤 대통령에 대한 반어적 호명. 보통 그의 실패·기행이 또 터졌을 때 &#39;석열이형은 절대 실망시키지 않는구나&#39; 식으로 사용.">
+          <div class="phrase">윤어게인 / 석열이형</div>
+          <div style="font-size: 13px; margin-top: 4px;">윤 대통령에 대한 반어적 호명. 보통 그의 실패·기행이 또 터졌을 때 &#39;석열이형은 절대 실망시키지 않는구나&#39; 식으로 사용.</div>
+          <div class="by">주로: kil9, 오해성 オヘソン, 許元寧</div>
+        </div>
+        
+        <div class="meme-card" data-search="재무연/재무연에 올라왔네 재무·투자 정보를 공유하는 별도 채널을 지칭. 자기 매매 인증이나 종목 푸념을 할 때 자조적으로 호출.">
+          <div class="phrase">재무연/재무연에 올라왔네</div>
+          <div style="font-size: 13px; margin-top: 4px;">재무·투자 정보를 공유하는 별도 채널을 지칭. 자기 매매 인증이나 종목 푸념을 할 때 자조적으로 호출.</div>
+          <div class="by">주로: pm, 조주현, ДокторА</div>
+        </div>
+        
+        <div class="meme-card" data-search="가즈아 / 드가자 투자 매수 권유 또는 단순 응원의 정형구. 주식·코인 얘기에서 자주 등장.">
+          <div class="phrase">가즈아 / 드가자</div>
+          <div style="font-size: 13px; margin-top: 4px;">투자 매수 권유 또는 단순 응원의 정형구. 주식·코인 얘기에서 자주 등장.</div>
+          <div class="by">주로: 오해성 オヘソン, 조주현, 許元寧</div>
+        </div>
+        
+        <div class="meme-card" data-search="taco &#39;trump always chickens out&#39;의 약어. 트럼프가 관세 협박 후 결국 꺾일 거라는 시장 격언처럼 사용.">
+          <div class="phrase">TACO</div>
+          <div style="font-size: 13px; margin-top: 4px;">&#39;Trump Always Chickens Out&#39;의 약어. 트럼프가 관세 협박 후 결국 꺾일 거라는 시장 격언처럼 사용.</div>
+          <div class="by">주로: peilles, ДокторА, 許元寧</div>
+        </div>
+        
+        <div class="meme-card" data-search="지커연 이재명 위증교사 사건 1심에서 무죄를 낸 지귀연 판사 별칭. &#39;지커연 사형&#39; 식으로 분노 표출용.">
+          <div class="phrase">지커연</div>
+          <div style="font-size: 13px; margin-top: 4px;">이재명 위증교사 사건 1심에서 무죄를 낸 지귀연 판사 별칭. &#39;지커연 사형&#39; 식으로 분노 표출용.</div>
+          <div class="by">주로: kil9, 조주현</div>
+        </div>
+        
+        <div class="meme-card" data-search="오해성 オヘソン / 안대섭 라인봇이 멤버에게 붙인 일본어 풍 호칭이 일반 닉처럼 굳어진 케이스. 농담의 단골 등장인물.">
+          <div class="phrase">오해성 オヘソン / 안대섭</div>
+          <div style="font-size: 13px; margin-top: 4px;">라인봇이 멤버에게 붙인 일본어 풍 호칭이 일반 닉처럼 굳어진 케이스. 농담의 단골 등장인물.</div>
+          <div class="by">주로: 프로강등봇 mk.4, kil9, 2071</div>
+        </div>
+        
+        <div class="meme-card" data-search="포모 / 포모 300% fomo(놓치고 싶지 않은 심리)를 과장해서 쓰는 말. 상승장 따라가지 못한 자신을 자조할 때.">
+          <div class="phrase">포모 / 포모 300%</div>
+          <div style="font-size: 13px; margin-top: 4px;">FOMO(놓치고 싶지 않은 심리)를 과장해서 쓰는 말. 상승장 따라가지 못한 자신을 자조할 때.</div>
+          <div class="by">주로: ДокторА, kil9</div>
+        </div>
+        
+        <div class="meme-card" data-search="딸피 / 영포티 체력이 다 떨어진 자신을 가리키거나(&#39;딸피&#39;), 40대 남성 클리셰(&#39;영포티&#39;)를 비웃는 자기/타자 호명.">
+          <div class="phrase">딸피 / 영포티</div>
+          <div style="font-size: 13px; margin-top: 4px;">체력이 다 떨어진 자신을 가리키거나(&#39;딸피&#39;), 40대 남성 클리셰(&#39;영포티&#39;)를 비웃는 자기/타자 호명.</div>
+          <div class="by">주로: kil9, ДокторА</div>
+        </div>
+        
+      </div>
+    
+    
+      <h3 style="font-size: 15px; margin-top: 20px;">자주 언급되는 종목·자산</h3>
+      <div class="grid">
+        
+        <div class="ticker-card" data-search="삼성전자">
+          <div class="name">삼성전자</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">언급 약 25회</div>
+          <div style="font-size: 13px; margin-top: 4px;">메모리 사이클 재평가·삼전우·목표주가 45만원 리포트 등 단골 종목</div>
+        </div>
+        
+        <div class="ticker-card" data-search="sk하이닉스">
+          <div class="name">SK하이닉스</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">언급 약 18회</div>
+          <div style="font-size: 13px; margin-top: 4px;">AI 메모리 슈퍼사이클 수혜주, HBM 관련 가장 자주 회자</div>
+        </div>
+        
+        <div class="ticker-card" data-search="하이브">
+          <div class="name">하이브</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">언급 약 15회</div>
+          <div style="font-size: 13px; margin-top: 4px;">민희진·뉴진스 분쟁, 자사주 처분 공시 등 엔터 대장주</div>
+        </div>
+        
+        <div class="ticker-card" data-search="yg엔터테인먼트">
+          <div class="name">YG엔터테인먼트</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">언급 약 14회</div>
+          <div style="font-size: 13px; margin-top: 4px;">블랙핑크 컴백·테디 더블랙레이블 모멘텀으로 매수 의견 다수</div>
+        </div>
+        
+        <div class="ticker-card" data-search="한화에어로스페이스">
+          <div class="name">한화에어로스페이스</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">언급 약 8회</div>
+          <div style="font-size: 13px; margin-top: 4px;">방산 랠리 대표주, 현대로템과 함께 묶여 거론</div>
+        </div>
+        
+        <div class="ticker-card" data-search="한국전력(한전)">
+          <div class="name">한국전력(한전)</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">언급 약 7회</div>
+          <div style="font-size: 13px; margin-top: 4px;">전력·AIDC 수혜로 신고가 흐름, 갑작스러운 상승 의문</div>
+        </div>
+        
+        <div class="ticker-card" data-search="고려아연">
+          <div class="name">고려아연</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">언급 약 5회</div>
+          <div style="font-size: 13px; margin-top: 4px;">자사주 공개매수 소각 결정 등 거버넌스 이슈</div>
+        </div>
+        
+        <div class="ticker-card" data-search="메리츠금융지주">
+          <div class="name">메리츠금융지주</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">언급 약 4회</div>
+          <div style="font-size: 13px; margin-top: 4px;">분기 실적·주주환원 모범 사례로 인용</div>
+        </div>
+        
+        <div class="ticker-card" data-search="비트코인">
+          <div class="name">비트코인</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">언급 약 9회</div>
+          <div style="font-size: 13px; margin-top: 4px;">트럼프 전략비축 발언과 함께 등락 화제, &#39;비코는 이미 녹았음&#39;</div>
+        </div>
+        
+        <div class="ticker-card" data-search="테슬라">
+          <div class="name">테슬라</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">언급 약 6회</div>
+          <div style="font-size: 13px; margin-top: 4px;">트럼프-머스크 동반 정치 이슈로 주가·정치 양쪽에서 언급</div>
+        </div>
+        
+      </div>
+    
+  </section>
+  
 
+  
+  <section id="timeline">
+    <h2>타임라인 (Claude 정성 분석)</h2>
+    
+      <div class="timeline">
+        
+        <div class="event" data-search="김호중 음주운전 사건 회자 트로트 가수 김호중의 음주운전과 매니저 대리 출석 요청 등 범인도피·증거인멸 의혹이 그룹 내 화제로 올랐다. 콘서트 일정까지 끌고 가려던 정황도 거론되었다. доктора 許元寧 kil9">
+          <div class="date">2024-05-16</div>
+          <div class="title">김호중 음주운전 사건 회자</div>
+          <div class="summary">트로트 가수 김호중의 음주운전과 매니저 대리 출석 요청 등 범인도피·증거인멸 의혹이 그룹 내 화제로 올랐다. 콘서트 일정까지 끌고 가려던 정황도 거론되었다.</div>
+          <div class="participants">관여: ДокторА, 許元寧, kil9</div>
+        </div>
+        
+        <div class="event" data-search="윤석열 비상계엄 선포 12·3 비상계엄 선포 당일 밤 그룹이 실시간으로 충격과 분노를 쏟아냈다. 군부 포섭도 안 한 머저리들이라는 평, 운동장 헬기 8대 착륙설, 환율·국장 폭락 등이 새벽까지 이어졌다. j 효진킴 peilles 許元寧 kil9">
+          <div class="date">2024-12-03</div>
+          <div class="title">윤석열 비상계엄 선포</div>
+          <div class="summary">12·3 비상계엄 선포 당일 밤 그룹이 실시간으로 충격과 분노를 쏟아냈다. 군부 포섭도 안 한 머저리들이라는 평, 운동장 헬기 8대 착륙설, 환율·국장 폭락 등이 새벽까지 이어졌다.</div>
+          <div class="participants">관여: J, 효진킴, peilles, 許元寧, kil9</div>
+        </div>
+        
+        <div class="event" data-search="윤석열 대통령 탄핵소추 가결 국회 표결과 함께 &#39;명식이가 약속을 지켰구나&#39; 등의 반응이 나왔고, 헌재 심판과 후속 수사로 관심이 이동했다. 한동훈·국힘 향한 비판도 격해졌다. kil9 2071 許元寧 peilles">
+          <div class="date">2024-12-14</div>
+          <div class="title">윤석열 대통령 탄핵소추 가결</div>
+          <div class="summary">국회 표결과 함께 &#39;명식이가 약속을 지켰구나&#39; 등의 반응이 나왔고, 헌재 심판과 후속 수사로 관심이 이동했다. 한동훈·국힘 향한 비판도 격해졌다.</div>
+          <div class="participants">관여: kil9, 2071, 許元寧, peilles</div>
+        </div>
+        
+        <div class="event" data-search="윤석열 체포·공수처 수사 공수처의 윤석열 체포가 임박했다는 소식에 &#39;경찰이 공수처도 같이 체포해야 하는 거 아니냐&#39;는 농담이 돌았다. 적부심·구속영장 청구로 이어지는 과정을 시간순으로 따라갔다. 許元寧 조주현 доктора j">
+          <div class="date">2025-01-15</div>
+          <div class="title">윤석열 체포·공수처 수사</div>
+          <div class="summary">공수처의 윤석열 체포가 임박했다는 소식에 &#39;경찰이 공수처도 같이 체포해야 하는 거 아니냐&#39;는 농담이 돌았다. 적부심·구속영장 청구로 이어지는 과정을 시간순으로 따라갔다.</div>
+          <div class="participants">관여: 許元寧, 조주현, ДокторА, J</div>
+        </div>
+        
+        <div class="event" data-search="헌재 만장일치 파면 결정 헌재의 윤석열 파면이 확정되자 &#39;국운이 다하지 않았다는 증거&#39;, &#39;의혐 충전&#39; 같은 반응이 줄을 이었다. 동시에 극우·부정선거론·전광훈 등 후폭풍 우려도 함께 논의됐다. kil9 효진킴 許元寧 peilles 오해성 オヘソン">
+          <div class="date">2025-04-04</div>
+          <div class="title">헌재 만장일치 파면 결정</div>
+          <div class="summary">헌재의 윤석열 파면이 확정되자 &#39;국운이 다하지 않았다는 증거&#39;, &#39;의혐 충전&#39; 같은 반응이 줄을 이었다. 동시에 극우·부정선거론·전광훈 등 후폭풍 우려도 함께 논의됐다.</div>
+          <div class="participants">관여: kil9, 효진킴, 許元寧, peilles, 오해성 オヘソン</div>
+        </div>
+        
+        <div class="event" data-search="이재명 대선 당선 출구조사·개표 흐름을 함께 보며 개혁신당 반응, 대구 표심, 머니제이 소프트 지지층 분석 등을 공유했다. 정권 교체 확정 분위기에서 안도와 새 정부에 대한 기대가 섞였다. 許元寧 kil9 peilles 오해성 オヘソン">
+          <div class="date">2025-06-03</div>
+          <div class="title">이재명 대선 당선</div>
+          <div class="summary">출구조사·개표 흐름을 함께 보며 개혁신당 반응, 대구 표심, 머니제이 소프트 지지층 분석 등을 공유했다. 정권 교체 확정 분위기에서 안도와 새 정부에 대한 기대가 섞였다.</div>
+          <div class="participants">관여: 許元寧, kil9, peilles, 오해성 オヘソン</div>
+        </div>
+        
+        <div class="event" data-search="제주항공 무안 참사 여객기 사고 직후 &#39;같은 기체는 아니라네&#39;, 경유·중유 밀도 차이 같은 기술적 추론과 함께 안타까움이 오갔다. 콘크리트 둔덕 등 공항 시설 문제도 거론됐다. kil9 peilles">
+          <div class="date">2024-12-29</div>
+          <div class="title">제주항공 무안 참사</div>
+          <div class="summary">여객기 사고 직후 &#39;같은 기체는 아니라네&#39;, 경유·중유 밀도 차이 같은 기술적 추론과 함께 안타까움이 오갔다. 콘크리트 둔덕 등 공항 시설 문제도 거론됐다.</div>
+          <div class="participants">관여: kil9, peilles</div>
+        </div>
+        
+        <div class="event" data-search="민희진-하이브 어도어 사태 민희진이 던진 폭탄, &#39;0.5 어도어&#39; 농담, 부자들 싸움론 등 그룹은 k팝 경영권 분쟁을 장기 관전 모드로 따라갔다. 이후 뉴진스 멤버 활동·아현 인터뷰까지 후속 화제가 이어졌다. доктора kil9 효진킴">
+          <div class="date">2024-05-31</div>
+          <div class="title">민희진-하이브 어도어 사태</div>
+          <div class="summary">민희진이 던진 폭탄, &#39;0.5 어도어&#39; 농담, 부자들 싸움론 등 그룹은 K팝 경영권 분쟁을 장기 관전 모드로 따라갔다. 이후 뉴진스 멤버 활동·아현 인터뷰까지 후속 화제가 이어졌다.</div>
+          <div class="participants">관여: ДокторА, kil9, 효진킴</div>
+        </div>
+        
+        <div class="event" data-search="ai 봇 n·o·2071·쏘이 도입 프로강등봇 mk.4(원숭이/배틀봇)과 kil9gpt, 그리고 2071 등 ai 봇이 단톡방에 합류해 &#39;!등급&#39;, &#39;!강등&#39;, 사면·역사 질의응답을 처리하며 새로운 놀이 문화로 자리 잡았다. 사실상 그룹의 마스코트가 됐다. 프로강등봇 mk.4 kil9gpt kil9 j peilles">
+          <div class="date">2024-08-04</div>
+          <div class="title">AI 봇 N·O·2071·쏘이 도입</div>
+          <div class="summary">프로강등봇 mk.4(원숭이/배틀봇)과 kil9gpt, 그리고 2071 등 AI 봇이 단톡방에 합류해 &#39;!등급&#39;, &#39;!강등&#39;, 사면·역사 질의응답을 처리하며 새로운 놀이 문화로 자리 잡았다. 사실상 그룹의 마스코트가 됐다.</div>
+          <div class="participants">관여: 프로강등봇 mk.4, kil9gpt, kil9, J, peilles</div>
+        </div>
+        
+        <div class="event" data-search="동해 산유국 액트지오 소동 &#39;5천억 박아서 20% 확률로 산유국&#39; 류의 의구심과 함께 액트지오 신뢰성, 보고서 관용구 &#39;no longer considered perspective&#39; 등 행간을 같이 뜯어봤다. 정부 발표에 대한 불신이 누적된 사건. kil9 доктора 2071">
+          <div class="date">2024-06-06</div>
+          <div class="title">동해 산유국 액트지오 소동</div>
+          <div class="summary">&#39;5천억 박아서 20% 확률로 산유국&#39; 류의 의구심과 함께 액트지오 신뢰성, 보고서 관용구 &#39;no longer considered perspective&#39; 등 행간을 같이 뜯어봤다. 정부 발표에 대한 불신이 누적된 사건.</div>
+          <div class="participants">관여: kil9, ДокторА, 2071</div>
+        </div>
+        
+        <div class="event" data-search="트럼프 피격과 재선 가도 공화당원 저격 사건 이후 &#39;바이든 진짜로&#39;, 상하원 장악 전망, 머스크 최측근화 등 미 대선·트럼프 2.0 흐름을 실시간으로 추적했다. 한국 외교·경제에 미칠 영향 우려가 함께 따라붙었다. kil9 효진킴 許元寧 오해성 オヘソン">
+          <div class="date">2024-07-13</div>
+          <div class="title">트럼프 피격과 재선 가도</div>
+          <div class="summary">공화당원 저격 사건 이후 &#39;바이든 진짜로&#39;, 상하원 장악 전망, 머스크 최측근화 등 미 대선·트럼프 2.0 흐름을 실시간으로 추적했다. 한국 외교·경제에 미칠 영향 우려가 함께 따라붙었다.</div>
+          <div class="participants">관여: kil9, 효진킴, 許元寧, 오해성 オヘソン</div>
+        </div>
+        
+        <div class="event" data-search="트럼프 상호관세 발표 충격 전 세계 대상 10%·중국 60~100% 관세 발표 후 한미fta 사실상 해체, 환율·국장 흔들림, &#39;큰그림론자&#39; 비판 등 격렬한 토론이 이어졌다. 그룹의 투자·경제 화두를 한동안 지배했다. 許元寧 kil9 доктора 2071">
+          <div class="date">2025-04-02</div>
+          <div class="title">트럼프 상호관세 발표 충격</div>
+          <div class="summary">전 세계 대상 10%·중국 60~100% 관세 발표 후 한미FTA 사실상 해체, 환율·국장 흔들림, &#39;큰그림론자&#39; 비판 등 격렬한 토론이 이어졌다. 그룹의 투자·경제 화두를 한동안 지배했다.</div>
+          <div class="participants">관여: 許元寧, kil9, ДокторА, 2071</div>
+        </div>
+        
+        <div class="event" data-search="케데헌(k-demon hunters) 팬덤화 &#39;케이팝 베몬 헌터스&#39; 농담과 함께 베몬 신곡·mv·정규앨범 일정이 반복적으로 공유됐다. 와이지엔터·블랙핑크 컴백과 맞물려 그룹의 k팝 관전 한 축을 이뤘다. kil9 доктора 許元寧">
+          <div class="date">2025-08-21</div>
+          <div class="title">케데헌(K-Demon Hunters) 팬덤화</div>
+          <div class="summary">&#39;케이팝 베몬 헌터스&#39; 농담과 함께 베몬 신곡·MV·정규앨범 일정이 반복적으로 공유됐다. 와이지엔터·블랙핑크 컴백과 맞물려 그룹의 K팝 관전 한 축을 이뤘다.</div>
+          <div class="participants">관여: kil9, ДокторА, 許元寧</div>
+        </div>
+        
+        <div class="event" data-search="한강 노벨문학상 수상 수상 소식에 &#39;근데 난 정작 한강 작품 읽어본 게 없다&#39;, 노정태 글 비판 등 한국문학·번역료 배분 토론으로 번졌다. 다음 책 주제는 권태 같은 농담도 함께였다. j kil9 효진킴 доктора">
+          <div class="date">2024-10-10</div>
+          <div class="title">한강 노벨문학상 수상</div>
+          <div class="summary">수상 소식에 &#39;근데 난 정작 한강 작품 읽어본 게 없다&#39;, 노정태 글 비판 등 한국문학·번역료 배분 토론으로 번졌다. 다음 책 주제는 권태 같은 농담도 함께였다.</div>
+          <div class="participants">관여: J, kil9, 효진킴, ДокторА</div>
+        </div>
+        
+        <div class="event" data-search="윤석열 구속 취소·재구금 논란 보통항고·즉시항고 해석, 지귀연 판사 논란, &#39;석열이형은 절대 실망시키지 않는구나&#39; 등 사법부 불신과 분노가 폭발했다. 법왜곡죄 처벌 주장까지 등장. kil9 2071 j">
+          <div class="date">2025-09-10</div>
+          <div class="title">윤석열 구속 취소·재구금 논란</div>
+          <div class="summary">보통항고·즉시항고 해석, 지귀연 판사 논란, &#39;석열이형은 절대 실망시키지 않는구나&#39; 등 사법부 불신과 분노가 폭발했다. 법왜곡죄 처벌 주장까지 등장.</div>
+          <div class="participants">관여: kil9, 2071, J</div>
+        </div>
+        
+        <div class="event" data-search="스피박 내한 강연 논쟁 스피박이 질문자를 끊은 장면을 두고 인격 시비가 붙자 user_h가 &#39;한국 남성 대가들도 그러는데 누구도 인격을 운운하지 않았다&#39;며 길게 반박했다. 출판·번역업 종사자다운 시각이 돋보였다. 효진킴 許元寧 2071">
+          <div class="date">2025-08-08</div>
+          <div class="title">스피박 내한 강연 논쟁</div>
+          <div class="summary">스피박이 질문자를 끊은 장면을 두고 인격 시비가 붙자 User_H가 &#39;한국 남성 대가들도 그러는데 누구도 인격을 운운하지 않았다&#39;며 길게 반박했다. 출판·번역업 종사자다운 시각이 돋보였다.</div>
+          <div class="participants">관여: 효진킴, 許元寧, 2071</div>
+        </div>
+        
+        <div class="event" data-search="이재명 무죄 추세와 항소심 공직선거법·위증교사 무죄, 특검 항소 가능성, &#39;이죄명이 무죄라고?&#39; 류 반응 등 정권 교체 후 사법 흐름을 따라갔다. 보수 진영의 거센 비난도 함께 정리됐다. pm j 許元寧">
+          <div class="date">2026-02-19</div>
+          <div class="title">이재명 무죄 추세와 항소심</div>
+          <div class="summary">공직선거법·위증교사 무죄, 특검 항소 가능성, &#39;이죄명이 무죄라고?&#39; 류 반응 등 정권 교체 후 사법 흐름을 따라갔다. 보수 진영의 거센 비난도 함께 정리됐다.</div>
+          <div class="participants">관여: pm, J, 許元寧</div>
+        </div>
+        
+        <div class="event" data-search="skt 유심 해킹 사태 kg모바일 신규 개통 중단 공지, 명의도용·부정사용 회선 점검 등 skt발 보안 사고가 일상에 영향을 미쳤다. 통신사 보안 신뢰 추락이 화두가 됐다. доктора 효진킴 조주현">
+          <div class="date">2025-04-25</div>
+          <div class="title">SKT 유심 해킹 사태</div>
+          <div class="summary">KG모바일 신규 개통 중단 공지, 명의도용·부정사용 회선 점검 등 SKT발 보안 사고가 일상에 영향을 미쳤다. 통신사 보안 신뢰 추락이 화두가 됐다.</div>
+          <div class="participants">관여: ДокторА, 효진킴, 조주현</div>
+        </div>
+        
+        <div class="event" data-search="코스피 4천 돌파·국장 광기 삼성전자·하이닉스 신고가, 한전·로봇주 광풍, &#39;국장은 심장에 좋지 않다&#39;는 한탄이 끝없이 이어졌다. 메모리 슈퍼사이클·ai 버블 논쟁이 동시에 진행됐다. доктора kil9 오해성 オヘソン j">
+          <div class="date">2025-11-13</div>
+          <div class="title">코스피 4천 돌파·국장 광기</div>
+          <div class="summary">삼성전자·하이닉스 신고가, 한전·로봇주 광풍, &#39;국장은 심장에 좋지 않다&#39;는 한탄이 끝없이 이어졌다. 메모리 슈퍼사이클·AI 버블 논쟁이 동시에 진행됐다.</div>
+          <div class="participants">관여: ДокторА, kil9, 오해성 オヘソン, J</div>
+        </div>
+        
+        <div class="event" data-search="코스피 7000, 일상이 된 신고가 &#39;7000 뚫었네&#39;, 환율 하락, &#39;국장 끝났잖아&#39;에서 &#39;국장 황금기&#39;로 바뀐 분위기 속에서 종목 자랑·자제 권유가 오갔다. 그룹의 1년 넘는 투자 서사가 정점을 찍은 시점. 오해성 オヘソン 許元寧 доктора 2071">
+          <div class="date">2026-04-26</div>
+          <div class="title">코스피 7000, 일상이 된 신고가</div>
+          <div class="summary">&#39;7000 뚫었네&#39;, 환율 하락, &#39;국장 끝났잖아&#39;에서 &#39;국장 황금기&#39;로 바뀐 분위기 속에서 종목 자랑·자제 권유가 오갔다. 그룹의 1년 넘는 투자 서사가 정점을 찍은 시점.</div>
+          <div class="participants">관여: 오해성 オヘソン, 許元寧, ДокторА, 2071</div>
+        </div>
+        
+        <div class="event" data-search="이스라엘-이란 확전과 호르무즈 위기 벙커버스터·유가 급등 우려와 함께 &#39;하메네이와 네타냐후 같이 물러나라&#39;는 양비론, 미군 의회 승인 시한 논쟁이 번졌다. 안보·에너지·투자 토론이 한꺼번에 폭주. доктора 2071 許元寧">
+          <div class="date">2025-06-22</div>
+          <div class="title">이스라엘-이란 확전과 호르무즈 위기</div>
+          <div class="summary">벙커버스터·유가 급등 우려와 함께 &#39;하메네이와 네타냐후 같이 물러나라&#39;는 양비론, 미군 의회 승인 시한 논쟁이 번졌다. 안보·에너지·투자 토론이 한꺼번에 폭주.</div>
+          <div class="participants">관여: ДокторА, 2071, 許元寧</div>
+        </div>
+        
+        <div class="event" data-search="캄보디아 한국인 납치·살해 사건 감금 피해·재입국 금지 정책, &#39;캄보디아 가서도 뻘짓&#39; 등 한국인을 노린 보이스피싱·인신매매 범죄가 도마에 올랐다. 그룹의 동남아 위험성 인식이 크게 바뀐 계기. peilles">
+          <div class="date">2025-12-25</div>
+          <div class="title">캄보디아 한국인 납치·살해 사건</div>
+          <div class="summary">감금 피해·재입국 금지 정책, &#39;캄보디아 가서도 뻘짓&#39; 등 한국인을 노린 보이스피싱·인신매매 범죄가 도마에 올랐다. 그룹의 동남아 위험성 인식이 크게 바뀐 계기.</div>
+          <div class="participants">관여: peilles</div>
+        </div>
+        
+      </div>
+    
+  </section>
   
 
   <footer>
-    bland-ai · 생성 시각 2026-05-26 16:51 · 정성 분석 미실행 (`python -m bland_ai.analyze` 후 재빌드)
+    bland-ai · 생성 시각 2026-05-26 17:30
   </footer>
 </main>
 

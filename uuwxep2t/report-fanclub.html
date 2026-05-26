@@ -99,13 +99,13 @@
   <nav>
     <a href="#summary">요약</a>
     <a href="#participants">참가자</a>
-    
+    <a href="#personas">페르소나</a>
     <a href="#daily">일자별</a>
     <a href="#heatmap">시간대</a>
     <a href="#words">어휘</a>
     
-    
-    
+    <a href="#topics">주제·밈</a>
+    <a href="#timeline">타임라인</a>
     <span class="spacer"></span>
     <input class="search" type="search" placeholder="🔍 참가자·주제 검색" id="search-box">
     <button class="theme" id="theme-toggle" type="button" title="다크/라이트">🌗</button>
@@ -162,6 +162,98 @@
   </section>
 
   
+  <section id="personas">
+    <h2>참가자 페르소나 (Claude 정성 분석)</h2>
+    <p class="lede">익명 코드로 호출한 결과를 다시 닉네임으로 역치환했다. 메시지 빈도 상위부터 정렬.</p>
+    <div class="grid" data-search-grid>
+      
+      <div class="participant-card"
+           data-search="조은일/heero 버튜버·일본 서브컬처·가챠게임에 정통한 헤비 게이머로, 디테일에 집착하며 시니컬한 농담을 즐기는 베테랑 오타쿠. #버튜버덕 #가챠헤비 #시니컬오타쿠 #스펙덕후 #일본서브컬처 ">
+        <div class="nick">조은일/Heero</div>
+        <div class="summary">버튜버·일본 서브컬처·가챠게임에 정통한 헤비 게이머로, 디테일에 집착하며 시니컬한 농담을 즐기는 베테랑 오타쿠.</div>
+        <div class="tone">말투: 건조하고 시니컬하면서도 &#39;ㅋㅋㅋ&#39;, &#39;...&#39;, &#39;(미침)&#39; 같은 추임새로 농담조를 섞는 반말·존댓말 혼용체</div>
+        
+          <div class="section-label">관심사</div>
+          <div class="chips"><span>홀로라이브·니지산지 등 버튜버 씬</span><span>명조·젠존제·블루아카이브 등 가챠 게임</span><span>에이펙스/FPS 및 e스포츠</span><span>일본 애니·만화·추리 어드벤처</span><span>주변기기(마우스·모니터·키보드) 스펙</span><span>부동산·통신·IT 업계 시사</span><span>격투게임과 레이싱 게임</span></div>
+        
+        
+          <div class="section-label">말버릇</div>
+          <div class="chips"><span>문장 끝에 &#39;...&#39; 말줄임표 남발</span><span>&#39;(미침)&#39;, &#39;(...)&#39;, &#39;(?)&#39; 같은 괄호 자조</span><span>&#39;ㅋㅋㅋㅋ&#39; 단독 리액션</span><span>&#39;~듯&#39;, &#39;~인 듯&#39; 추측체 마무리</span><span>&#39;솔까&#39;, &#39;뭐 어차피&#39; 같은 체념조 부사</span><span>익명·은어로 인물 지칭(파인, 띵조, 라프 등)</span><span>일본어 표현·발음 그대로 끼워넣기(&#39;사스가&#39;, &#39;야바이&#39;)</span></div>
+        
+        
+          <div class="relationships"><span class="section-label">관계 ·</span> 파인·라프·미녕이·낄구 등 같은 방의 멤버를 별명으로 자주 호출하며, 버튜버·게임 취향을 공유하는 동료들에게 정보를 풀어주는 형/선배 포지션. 의견 차이엔 신랄하게 받아치지만 기본적으로는 농담조로 어우러짐.</div>
+        
+        
+          <div class="chips accent" style="margin-top: 8px;"><span>#버튜버덕</span><span>#가챠헤비</span><span>#시니컬오타쿠</span><span>#스펙덕후</span><span>#일본서브컬처</span></div>
+        
+      </div>
+      
+      <div class="participant-card"
+           data-search="kil9 게임·버튜버·서브컬처에 정통한 40대 베테랑 게이머로, 시니컬한 농담과 짧은 단답을 즐기는 분석형 채팅러. #가챠인생 #버튜버덕 #몬헌대기 #시니컬단답 #게임평론 #서브컬처 ">
+        <div class="nick">kil9</div>
+        <div class="summary">게임·버튜버·서브컬처에 정통한 40대 베테랑 게이머로, 시니컬한 농담과 짧은 단답을 즐기는 분석형 채팅러.</div>
+        <div class="tone">말투: 짧고 건조하며 시니컬한 한 줄 반응, &#39;...&#39;·&#39;ㅋㅋㅋ&#39;·괄호 부연이 섞인 능청스러운 말투</div>
+        
+          <div class="section-label">관심사</div>
+          <div class="chips"><span>가챠 게임(젠존제·명조·블루아카)</span><span>몬스터헌터 등 콘솔 액션 게임</span><span>홀로라이브·니지산지 등 버튜버</span><span>일본 서브컬처(애니·만화)</span><span>게임 업계·개발 이야기</span><span>PC·주변기기·IT 가젯</span><span>사회·정치 시사 한 줄 코멘트</span></div>
+        
+        
+          <div class="section-label">말버릇</div>
+          <div class="chips"><span>&#39;...&#39;으로 말끝 흐리기</span><span>&#39;네&#39; 단답</span><span>&#39;(아님)&#39;, &#39;(미침)&#39;, &#39;(?)&#39; 같은 괄호 부연</span><span>&#39;!!!!!!!!!!&#39; 다중 느낌표로 외치기</span><span>&#39;오&#39;, &#39;오오&#39;, &#39;ㄷㄷㄷ&#39; 짧은 리액션</span><span>URL·나무위키 링크 투척</span></div>
+        
+        
+          <div class="relationships"><span class="section-label">관계 ·</span> 파인·히러·미녕이·헤비 등 닉네임을 자주 불러 농담을 주고받으며, 버튜버(미야비·페코라·라프·아쿠땅 등) 이야기를 같은 덕질 친구들과 공유하는 친근한 베테랑 포지션.</div>
+        
+        
+          <div class="chips accent" style="margin-top: 8px;"><span>#가챠인생</span><span>#버튜버덕</span><span>#몬헌대기</span><span>#시니컬단답</span><span>#게임평론</span><span>#서브컬처</span></div>
+        
+      </div>
+      
+      <div class="participant-card"
+           data-search="파인(일규) 서브컬쳐 가챠겜과 콘솔게임을 폭넓게 즐기는 베테랑 게이머로, 차분하고 분석적인 톤으로 꾸준히 정보를 공유하는 채팅방의 정보통. #가챠고인물 #명조박사 #버튜버시청자 #정보통 #관조적말투 #콘솔겐트 ">
+        <div class="nick">파인(일규)</div>
+        <div class="summary">서브컬쳐 가챠겜과 콘솔게임을 폭넓게 즐기는 베테랑 게이머로, 차분하고 분석적인 톤으로 꾸준히 정보를 공유하는 채팅방의 정보통.</div>
+        <div class="tone">말투: 건조하고 무심한 듯하면서도 &#39;ㅋㅋㅋ&#39;와 &#39;(미침)&#39;, &#39;(?)&#39; 같은 가벼운 추임새를 자주 섞는 관조적·해설형 말투</div>
+        
+          <div class="section-label">관심사</div>
+          <div class="chips"><span>명조(명일방주/명조 워더링웨이브)</span><span>젠레스 존 제로·원신 등 호요버스 가챠겜</span><span>몬스터 헌터 와일즈</span><span>홀로라이브·니지산지 등 버튜버</span><span>에이펙스 레전드·FPS e스포츠</span><span>콘솔·PC 하드웨어와 주변기기</span><span>닌가·데메크 등 액션게임</span></div>
+        
+        
+          <div class="section-label">말버릇</div>
+          <div class="chips"><span>문장 끝을 흐리는 &#39;..&#39; 말줄임표</span><span>&#39;(미침)&#39;, &#39;(?)&#39;, &#39;(막말)&#39; 같은 괄호 셀프코멘트</span><span>&#39;ㅋㅋㅋ&#39;와 &#39;ㄷㄷㄷ&#39; 단답 리액션</span><span>&#39;~인듯&#39;, &#39;~같은데&#39; 등 추측형 종결</span><span>유튜브·루리웹·디시 링크 즉시 투척</span><span>캐릭터 돌파·픽업·천장 등 가챠 용어 일상 사용</span></div>
+        
+        
+          <div class="relationships"><span class="section-label">관계 ·</span> 낄구님, 히러, 재호, 쫑민 등 채팅방 멤버를 닉네임으로 친근하게 부르며 가챠 결과·게임 진척을 챙겨 묻는 정보 공유형 관계. 특히 명조·젠존제 관련해 멤버들에게 공략과 픽업 정보를 알려주는 큰형/조언자 포지션.</div>
+        
+        
+          <div class="chips accent" style="margin-top: 8px;"><span>#가챠고인물</span><span>#명조박사</span><span>#버튜버시청자</span><span>#정보통</span><span>#관조적말투</span><span>#콘솔겐트</span></div>
+        
+      </div>
+      
+      <div class="participant-card"
+           data-search="프로강등봇 mk.4 봇 개발과 디버깅에 매달리는 개발자이자 홀로라이브·게임·서브컬처에 진심인 오타쿠 기질의 참여자. #봇개발자 #홀로덕 #버그헌터 #개조식말투 #서브컬처 ">
+        <div class="nick">프로강등봇 mk.4</div>
+        <div class="summary">봇 개발과 디버깅에 매달리는 개발자이자 홀로라이브·게임·서브컬처에 진심인 오타쿠 기질의 참여자.</div>
+        <div class="tone">말투: 간결하고 직설적이며, 불만과 유머가 섞인 개발자 특유의 건조한 말투</div>
+        
+          <div class="section-label">관심사</div>
+          <div class="chips"><span>LINE 봇 개발 및 디버깅</span><span>AI/요약 기능과 바이브 코딩</span><span>홀로라이브 및 버튜버</span><span>젤다의 전설(야숨/왕눈)</span><span>붕괴스타레일 등 서브컬처 게임</span><span>주식·환율 정보</span></div>
+        
+        
+          <div class="section-label">말버릇</div>
+          <div class="chips"><span>&#39;~함&#39;, &#39;~해야 함&#39; 같은 개조식 문체</span><span>버그·표시 문제 반복 언급</span><span>URL 링크 공유(postype 등)</span><span>&#39;아오&#39;, &#39;흑흑&#39; 등 짧은 감탄사</span><span>프로강등봇을 직접 테스트하며 셀프 디버깅</span></div>
+        
+        
+          <div class="relationships"><span class="section-label">관계 ·</span> 조은일/Heero, 파인(일규) 등과 같은 채널에서 어울리며, 봇(프로강등봇 mk.4)을 상대로 자주 명령을 던지고 결과에 일희일비함. &#39;kil9&#39;라는 닉네임으로 호명됨.</div>
+        
+        
+          <div class="chips accent" style="margin-top: 8px;"><span>#봇개발자</span><span>#홀로덕</span><span>#버그헌터</span><span>#개조식말투</span><span>#서브컬처</span></div>
+        
+      </div>
+      
+    </div>
+  </section>
+  
 
   <section id="daily">
     <h2>일자별 메시지 추이</h2>
@@ -181,11 +273,286 @@
   
 
   
+  <section id="topics">
+    <h2>주제·밈·종목 (Claude 정성 분석)</h2>
+    
+      <h3 style="font-size: 15px; margin-top: 8px;">주제</h3>
+      <div class="grid">
+        
+        <div class="topic-card" data-search="서브컬쳐 가챠 게임 잡담 명조(쿠로게임즈), 젠존제, 원신/스타레일(미호요), 가테, 명방 등 서브컬쳐 가챠 게임들의 픽업·천장·전무·돌파·이벤트 운영을 일상적으로 공유하는 그룹의 중심 화제.">
+          <div class="label">서브컬쳐 가챠 게임 잡담</div>
+          <div style="font-size: 13px; margin-top: 4px;">명조(쿠로게임즈), 젠존제, 원신/스타레일(미호요), 가테, 명방 등 서브컬쳐 가챠 게임들의 픽업·천장·전무·돌파·이벤트 운영을 일상적으로 공유하는 그룹의 중심 화제.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"360 개 되면 전무 뜨던 말던 스탑"</span><span style="margin-right: 6px;">"쿠로게임즈가 아마 그날로 이름 혜자게임즈로 불릴텐데"</span><span style="margin-right: 6px;">"젠존제 정식 출시 축하드립니다"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="명조 스토리 감상 명조의 1·2·3장과 캐릭터별 피안(개인 스토리), 양아지·진강척·플로로 등에 대한 서사적 감상과 호평/혹평을 오래 이어감.">
+          <div class="label">명조 스토리 감상</div>
+          <div style="font-size: 13px; margin-top: 4px;">명조의 1·2·3장과 캐릭터별 피안(개인 스토리), 양아지·진강척·플로로 등에 대한 서사적 감상과 호평/혹평을 오래 이어감.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"3막은 집요하게"</span><span style="margin-right: 6px;">"양아지 진짜 분노가 슬픔을 압도하는 타입이다"</span><span style="margin-right: 6px;">"1장이 더 낫다는 의견에는 반대고"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="버튜버·홀로라이브 잡담 홀로라이브(미코, 토와, 카나타, 마츠리, 스이세이 등), 니지산지, 브이스포, 치지직 한국 버튜버까지 두루 짚으며 활동·졸업·합방·노래방송 평가.">
+          <div class="label">버튜버·홀로라이브 잡담</div>
+          <div style="font-size: 13px; margin-top: 4px;">홀로라이브(미코, 토와, 카나타, 마츠리, 스이세이 등), 니지산지, 브이스포, 치지직 한국 버튜버까지 두루 짚으며 활동·졸업·합방·노래방송 평가.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"홀로라이브 토와, 아키로제, 마츠리 참가"</span><span style="margin-right: 6px;">"니지산지는 올해 11명 졸업했군요"</span><span style="margin-right: 6px;">"스이세이가 노래+ 방송하면서 잘 성공한 케이슨듯"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="에이펙스·fps 푸념 에이펙스(아펙스)의 트롤·치터·캐릭터 밸런스(크립토·발키리 등)와 배필, 마라톤 등 슈터 전반에 대한 빡침과 현타.">
+          <div class="label">에이펙스·FPS 푸념</div>
+          <div style="font-size: 13px; margin-top: 4px;">에이펙스(아펙스)의 트롤·치터·캐릭터 밸런스(크립토·발키리 등)와 배필, 마라톤 등 슈터 전반에 대한 빡침과 현타.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"이제 에펙도 안한다"</span><span style="margin-right: 6px;">"흑흑 에펙은 이제 일본에서도"</span><span style="margin-right: 6px;">"더러운 에임 어시스트"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="몬헌 시리즈 토론 월드, 라이즈, 와일즈를 중심으로 무기군(건랜·태도·헤보 등), 패치, 캡콤 행보에 대해 자주 언급.">
+          <div class="label">몬헌 시리즈 토론</div>
+          <div style="font-size: 13px; margin-top: 4px;">월드, 라이즈, 와일즈를 중심으로 무기군(건랜·태도·헤보 등), 패치, 캡콤 행보에 대해 자주 언급.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"몬헌 와일즈 방송 했군요"</span><span style="margin-right: 6px;">"건랜스가 와일즈에서 개빨라지고 부드러워졌음"</span><span style="margin-right: 6px;">"와일즈 나오기 전까지 다 깨야지"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="pc/주변기기 잡담 엔비디아 그래픽카드·드라이버, oled 모니터(32uqx·울트라와이드), 키보드 자석축, 마우스, 파워서플라이 같은 하드웨어 구매·이슈 토론.">
+          <div class="label">PC/주변기기 잡담</div>
+          <div style="font-size: 13px; margin-top: 4px;">엔비디아 그래픽카드·드라이버, OLED 모니터(32UQX·울트라와이드), 키보드 자석축, 마우스, 파워서플라이 같은 하드웨어 구매·이슈 토론.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"32uqx 200만원 넘지 않나"</span><span style="margin-right: 6px;">"DLSS 갓갓 사건이 늘어나고"</span><span style="margin-right: 6px;">"다 자석축인데"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="콘솔·신작 게임 출시 스위치2, 실크송, 33원정대, gta6, 메타포, 드퀘3 리메이크, 포코피아, 붉은사막, 프래그마타 등 신작·발매 일정과 첫인상 토크.">
+          <div class="label">콘솔·신작 게임 출시</div>
+          <div style="font-size: 13px; margin-top: 4px;">스위치2, 실크송, 33원정대, GTA6, 메타포, 드퀘3 리메이크, 포코피아, 붉은사막, 프래그마타 등 신작·발매 일정과 첫인상 토크.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"스위치 2뭔가 독에 꼽아놓으면 계속 뜨거운"</span><span style="margin-right: 6px;">"실크송은 한 번도 갈아엎은 적 없을텐데"</span><span style="margin-right: 6px;">"와우.. 프래그마타 한국어 더빙 예정"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="공장겜·로그라이크 팩토리오·새틀팩토리·dsp 같은 공장겜과 발라트로, 슬더스 같은 덱빌딩/로그라이크에 대한 빠짐없는 관심.">
+          <div class="label">공장겜·로그라이크</div>
+          <div style="font-size: 13px; margin-top: 4px;">팩토리오·새틀팩토리·DSP 같은 공장겜과 발라트로, 슬더스 같은 덱빌딩/로그라이크에 대한 빠짐없는 관심.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"팬텀페인 몬헌 정도인 듯 공장겜 3종이랑.. (DSP/팩토리오/새팩)"</span><span style="margin-right: 6px;">"발라트로랑 아스트로봇은 해봐야겠군"</span><span style="margin-right: 6px;">"이렇게 된거 다 같이 분재겜"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="회사·업계 푸념 게임업계 크런치·연봉·이직, 판교 채용 동향, 디렉션 문제, ai 도입 같은 직장인 시선의 한탄.">
+          <div class="label">회사·업계 푸념</div>
+          <div style="font-size: 13px; margin-top: 4px;">게임업계 크런치·연봉·이직, 판교 채용 동향, 디렉션 문제, AI 도입 같은 직장인 시선의 한탄.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"판교회사들 사람 안뽑네"</span><span style="margin-right: 6px;">"디렉션 하는놈이 신경을 안쓰는 거"</span><span style="margin-right: 6px;">"이건 디렉션 이슈 같음"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="k-사회 시사 한탄 윤석열 탄핵·내란죄, 통신사 유출(skt·쿠팡), 부동산·재개발, 출산정책, 정치권 무능 등 한국 사회 이슈에 대한 빡침.">
+          <div class="label">K-사회 시사 한탄</div>
+          <div style="font-size: 13px; margin-top: 4px;">윤석열 탄핵·내란죄, 통신사 유출(SKT·쿠팡), 부동산·재개발, 출산정책, 정치권 무능 등 한국 사회 이슈에 대한 빡침.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"윤석열 파면 vs 마비노기 발매"</span><span style="margin-right: 6px;">"쿠팡 3700만건 털렸네요"</span><span style="margin-right: 6px;">"skt 유출 때문에 통신사나 한 번 다시 바꿀까"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="애니·만화 잡담 데스노트, 카이지, 더 파이팅, 죠죠, 기생수, 슈로대, 건담, 요네즈 켄시 뮤비 등 일본 만화·애니·음악 추억담.">
+          <div class="label">애니·만화 잡담</div>
+          <div style="font-size: 13px; margin-top: 4px;">데스노트, 카이지, 더 파이팅, 죠죠, 기생수, 슈로대, 건담, 요네즈 켄시 뮤비 등 일본 만화·애니·음악 추억담.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"더 파이팅 신장판 52권 까지 나왔네요"</span><span style="margin-right: 6px;">"요네즈 켄시 뮤비 버젼으로는 처음봤는데"</span><span style="margin-right: 6px;">"5. 근육맨 6. 바키 7. 고교철권전 터프"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="ai/번역 도구 활용 딥식·챗gpt·제미나이·나노바나나 같은 llm과 이미지 생성, 게임 번역(한글화) 품질, ai로 작업 자동화 가능성 논의.">
+          <div class="label">AI/번역 도구 활용</div>
+          <div style="font-size: 13px; margin-top: 4px;">딥식·챗GPT·제미나이·나노바나나 같은 LLM과 이미지 생성, 게임 번역(한글화) 품질, AI로 작업 자동화 가능성 논의.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"챗GPT는 오픈소스가 아니고 API 호출 방식이기 때문에"</span><span style="margin-right: 6px;">"야 제미나이 나를 위한 짱짱 마우스를 설계해라"</span><span style="margin-right: 6px;">"나노바나나 정체 공개"</span></div>
+        </div>
+        
+      </div>
+    
+    
+      <h3 style="font-size: 15px; margin-top: 20px;">자생적 밈·말버릇</h3>
+      <div class="grid">
+        
+        <div class="meme-card" data-search="(미침) 어이없거나 자기 행동이 과하다고 자조할 때 문장 끝에 붙이는 그룹 고유 추임새. &#39;아님&#39;·&#39;막말&#39;·&#39;폭언&#39; 등과 같은 자기 라벨링 계열의 대표격.">
+          <div class="phrase">(미침)</div>
+          <div style="font-size: 13px; margin-top: 4px;">어이없거나 자기 행동이 과하다고 자조할 때 문장 끝에 붙이는 그룹 고유 추임새. &#39;아님&#39;·&#39;막말&#39;·&#39;폭언&#39; 등과 같은 자기 라벨링 계열의 대표격.</div>
+          <div class="by">주로: kil9, 조은일/Heero, 파인(일규)</div>
+        </div>
+        
+        <div class="meme-card" data-search="흑흑 / ㅠㅠ 게임 가챠 망함, 야근, 빡침 등 거의 모든 패배 상황에 가볍게 우는 시늉을 하는 말버릇.">
+          <div class="phrase">흑흑 / ㅠㅠ</div>
+          <div style="font-size: 13px; margin-top: 4px;">게임 가챠 망함, 야근, 빡침 등 거의 모든 패배 상황에 가볍게 우는 시늉을 하는 말버릇.</div>
+          <div class="by">주로: 조은일/Heero, kil9</div>
+        </div>
+        
+        <div class="meme-card" data-search="ㅋㅋㅋㅋ 거의 모든 메시지에 따라붙는 기본 반응. 진지한 비판이나 분노조차 ㅋㅋ로 무마하는 그룹 톤.">
+          <div class="phrase">ㅋㅋㅋㅋ</div>
+          <div style="font-size: 13px; margin-top: 4px;">거의 모든 메시지에 따라붙는 기본 반응. 진지한 비판이나 분노조차 ㅋㅋ로 무마하는 그룹 톤.</div>
+          <div class="by">주로: kil9, 조은일/Heero, 파인(일규)</div>
+        </div>
+        
+        <div class="meme-card" data-search="그럼죽어 / 그럼 죽어..! 어떤 요구나 불만에 대해 극단적으로 받아치는 농담. &#39;윤석열 왜 탄핵 안 시키나요? -&gt; 그럼 죽어&#39;처럼 정치·고인물 화법에 두루 사용.">
+          <div class="phrase">그럼죽어 / 그럼 죽어..!</div>
+          <div style="font-size: 13px; margin-top: 4px;">어떤 요구나 불만에 대해 극단적으로 받아치는 농담. &#39;윤석열 왜 탄핵 안 시키나요? -&gt; 그럼 죽어&#39;처럼 정치·고인물 화법에 두루 사용.</div>
+          <div class="by">주로: 조은일/Heero</div>
+        </div>
+        
+        <div class="meme-card" data-search="킹갓~ / 갓겜·갓갓 특정 작품·인물·요소를 과장되게 찬양할 때 쓰는 접두어. &#39;킹갓슬라&#39;, &#39;킹갓사막&#39;, &#39;갓겜 들이키기&#39;처럼 반쯤 농담으로 사용.">
+          <div class="phrase">킹갓~ / 갓겜·갓갓</div>
+          <div style="font-size: 13px; margin-top: 4px;">특정 작품·인물·요소를 과장되게 찬양할 때 쓰는 접두어. &#39;킹갓슬라&#39;, &#39;킹갓사막&#39;, &#39;갓겜 들이키기&#39;처럼 반쯤 농담으로 사용.</div>
+          <div class="by">주로: kil9, 조은일/Heero, 파인(일규)</div>
+        </div>
+        
+        <div class="meme-card" data-search="트럭 (1트럭, 2트럭…) 가챠에서 결제 단위/사용량을 트럭 단위로 표현하는 그룹 내 환산 단위. &#39;3트럭&#39;, &#39;5트럭 썼네요&#39; 등.">
+          <div class="phrase">트럭 (1트럭, 2트럭…)</div>
+          <div style="font-size: 13px; margin-top: 4px;">가챠에서 결제 단위/사용량을 트럭 단위로 표현하는 그룹 내 환산 단위. &#39;3트럭&#39;, &#39;5트럭 썼네요&#39; 등.</div>
+          <div class="by">주로: kil9, 조은일/Heero, 파인(일규)</div>
+        </div>
+        
+        <div class="meme-card" data-search="잔성회 또 너야? 명조 스토리에서 사고만 치는 악역 조직 &#39;잔성회&#39;를 빌려, 회사 혹은 일상에서 빡칠 일 생길 때 책임 떠넘기는 농담.">
+          <div class="phrase">잔성회 또 너야?</div>
+          <div style="font-size: 13px; margin-top: 4px;">명조 스토리에서 사고만 치는 악역 조직 &#39;잔성회&#39;를 빌려, 회사 혹은 일상에서 빡칠 일 생길 때 책임 떠넘기는 농담.</div>
+          <div class="by">주로: kil9, 조은일/Heero</div>
+        </div>
+        
+        <div class="meme-card" data-search="분재겜 시간 많이 못 쓰는 직장인이 일일퀘·관리 위주로 천천히 가꾸듯 굴리는 가챠게임을 부르는 별명. 명조·젠존제 등을 분재겜 모드로 한다고 표현.">
+          <div class="phrase">분재겜</div>
+          <div style="font-size: 13px; margin-top: 4px;">시간 많이 못 쓰는 직장인이 일일퀘·관리 위주로 천천히 가꾸듯 굴리는 가챠게임을 부르는 별명. 명조·젠존제 등을 분재겜 모드로 한다고 표현.</div>
+          <div class="by">주로: kil9, 파인(일규)</div>
+        </div>
+        
+        <div class="meme-card" data-search="띵조 / 명조띵조띵띵 명조를 친애하는 별칭. 운영이 마음에 들 때나 자조할 때 양쪽에 모두 쓰임.">
+          <div class="phrase">띵조 / 명조띵조띵띵</div>
+          <div style="font-size: 13px; margin-top: 4px;">명조를 친애하는 별칭. 운영이 마음에 들 때나 자조할 때 양쪽에 모두 쓰임.</div>
+          <div class="by">주로: 조은일/Heero, kil9</div>
+        </div>
+        
+        <div class="meme-card" data-search="네코마타 미친아…! 젠존제·홀로 등에서 네코마타 캐릭터/콘텐츠가 강하거나 귀여울 때 외치는 정형구. &#39;네코마타 덕분이다&#39; 같은 변주도 다수.">
+          <div class="phrase">네코마타 미친아…!</div>
+          <div style="font-size: 13px; margin-top: 4px;">젠존제·홀로 등에서 네코마타 캐릭터/콘텐츠가 강하거나 귀여울 때 외치는 정형구. &#39;네코마타 덕분이다&#39; 같은 변주도 다수.</div>
+          <div class="by">주로: kil9</div>
+        </div>
+        
+        <div class="meme-card" data-search="빨리 열라고!!! 몬헌·와일즈·픽업·서버 점검 등 출시·오픈을 기다릴 때 줄지어 외치는 단체 구호.">
+          <div class="phrase">빨리 열라고!!!</div>
+          <div style="font-size: 13px; margin-top: 4px;">몬헌·와일즈·픽업·서버 점검 등 출시·오픈을 기다릴 때 줄지어 외치는 단체 구호.</div>
+          <div class="by">주로: kil9</div>
+        </div>
+        
+        <div class="meme-card" data-search="버튜버 데뷔해야함 이상행동이나 인생 파탄 사례를 보면 &#39;결국 버튜버 하면 된다&#39;로 마무리하는 농담. 버튜버를 일종의 도피처/만능 솔루션처럼 다루는 자조.">
+          <div class="phrase">버튜버 데뷔해야함</div>
+          <div style="font-size: 13px; margin-top: 4px;">이상행동이나 인생 파탄 사례를 보면 &#39;결국 버튜버 하면 된다&#39;로 마무리하는 농담. 버튜버를 일종의 도피처/만능 솔루션처럼 다루는 자조.</div>
+          <div class="by">주로: 조은일/Heero</div>
+        </div>
+        
+      </div>
+    
+    
+  </section>
+  
 
+  
+  <section id="timeline">
+    <h2>타임라인 (Claude 정성 분석)</h2>
+    
+      <div class="timeline">
+        
+        <div class="event" data-search="스텔라블레이드와 유니콘 시즌 user_a가 유니콘 오버로드를 끝내고 스텔라블레이드로 넘어가는 등 봄 게임 라인업을 즐기던 시기. 그룹의 게임 잡담이 활발하게 이어졌다. kil9 조은일/heero 파인(일규)">
+          <div class="date">2024-05-18</div>
+          <div class="title">스텔라블레이드와 유니콘 시즌</div>
+          <div class="summary">User_A가 유니콘 오버로드를 끝내고 스텔라블레이드로 넘어가는 등 봄 게임 라인업을 즐기던 시기. 그룹의 게임 잡담이 활발하게 이어졌다.</div>
+          <div class="participants">관여: kil9, 조은일/Heero, 파인(일규)</div>
+        </div>
+        
+        <div class="event" data-search="젠존제 출시와 가챠 입문 젠레스 존 제로 출시 즈음 그룹 전체가 캐릭터 성능, 파티 구성 얘기로 떠들썩해진다. 이후 미야비, 엘렌, 야나기 등 캐릭터들이 단톡방의 주요 화제가 됨. kil9 조은일/heero 파인(일규)">
+          <div class="date">2024-07-17</div>
+          <div class="title">젠존제 출시와 가챠 입문</div>
+          <div class="summary">젠레스 존 제로 출시 즈음 그룹 전체가 캐릭터 성능, 파티 구성 얘기로 떠들썩해진다. 이후 미야비, 엘렌, 야나기 등 캐릭터들이 단톡방의 주요 화제가 됨.</div>
+          <div class="participants">관여: kil9, 조은일/Heero, 파인(일규)</div>
+        </div>
+        
+        <div class="event" data-search="홀로 운동회 라이브뷰잉 관전 홀로라이브 운동회를 실시간으로 보면서 user_b가 하윤이 6킬, 라프 디토 사망 등 경기를 중계하듯 채팅을 쏟아냈다. 조은일/heero 파인(일규)">
+          <div class="date">2024-08-24</div>
+          <div class="title">홀로 운동회 라이브뷰잉 관전</div>
+          <div class="summary">홀로라이브 운동회를 실시간으로 보면서 User_B가 하윤이 6킬, 라프 디토 사망 등 경기를 중계하듯 채팅을 쏟아냈다.</div>
+          <div class="participants">관여: 조은일/Heero, 파인(일규)</div>
+        </div>
+        
+        <div class="event" data-search="skt 유심 대란 user_a의 유심이 안 오는 등 통신사 이슈로 그룹이 시끌. 이후 2025년에도 skt 유출 사건으로 통신사 변경 이야기가 다시 떠오른다. kil9 파인(일규)">
+          <div class="date">2024-11-07</div>
+          <div class="title">SKT 유심 대란</div>
+          <div class="summary">User_A의 유심이 안 오는 등 통신사 이슈로 그룹이 시끌. 이후 2025년에도 SKT 유출 사건으로 통신사 변경 이야기가 다시 떠오른다.</div>
+          <div class="participants">관여: kil9, 파인(일규)</div>
+        </div>
+        
+        <div class="event" data-search="몬헌 와일즈 발매 대기 user_a가 &#39;빨리 열라고!!!&#39;를 도배할 정도로 몬헌 와일즈 출시를 손꼽아 기다림. 출시 후 건랜스 빨라졌다며 만족하지만 컷씬 다시보기 부재 등 불만도 공유. kil9 조은일/heero 파인(일규)">
+          <div class="date">2025-02-28</div>
+          <div class="title">몬헌 와일즈 발매 대기</div>
+          <div class="summary">User_A가 &#39;빨리 열라고!!!&#39;를 도배할 정도로 몬헌 와일즈 출시를 손꼽아 기다림. 출시 후 건랜스 빨라졌다며 만족하지만 컷씬 다시보기 부재 등 불만도 공유.</div>
+          <div class="participants">관여: kil9, 조은일/Heero, 파인(일규)</div>
+        </div>
+        
+        <div class="event" data-search="33 원정대(클레르 옵스큐르) 충격 파인(일규) 주도로 33 원정대를 시작했고 &#39;게임이 이렇게 재밌을 수도 있나&#39;라는 평이 나올 정도로 그룹의 올해 인생겜 후보로 자리잡음. kil9 조은일/heero 파인(일규)">
+          <div class="date">2025-04-04</div>
+          <div class="title">33 원정대(클레르 옵스큐르) 충격</div>
+          <div class="summary">파인(일규) 주도로 33 원정대를 시작했고 &#39;게임이 이렇게 재밌을 수도 있나&#39;라는 평이 나올 정도로 그룹의 올해 인생겜 후보로 자리잡음.</div>
+          <div class="participants">관여: kil9, 조은일/Heero, 파인(일규)</div>
+        </div>
+        
+        <div class="event" data-search="!요약 봇 도입과 단톡방 ai 실험 user_b가 !요약, !젤다 검색 같은 ai 명령어를 시도. user_c가 &#39;요약하지 말고 나랑 놀자&#39;고 응수하면서 그룹의 ai 활용 실험이 일상화됨. kil9 조은일/heero 파인(일규)">
+          <div class="date">2025-07-13</div>
+          <div class="title">!요약 봇 도입과 단톡방 AI 실험</div>
+          <div class="summary">User_B가 !요약, !젤다 검색 같은 AI 명령어를 시도. User_C가 &#39;요약하지 말고 나랑 놀자&#39;고 응수하면서 그룹의 AI 활용 실험이 일상화됨.</div>
+          <div class="participants">관여: kil9, 조은일/Heero, 파인(일규)</div>
+        </div>
+        
+        <div class="event" data-search="명조(wuthering waves) 본격 입문 파인(일규) 주도로 user_a가 명조에 빠져들기 시작. 에코 파밍, 리세마라, 캐릭터 픽업 얘기가 늘면서 단톡방의 메인 게임으로 자리잡는다. kil9 조은일/heero 파인(일규)">
+          <div class="date">2025-08-11</div>
+          <div class="title">명조(Wuthering Waves) 본격 입문</div>
+          <div class="summary">파인(일규) 주도로 User_A가 명조에 빠져들기 시작. 에코 파밍, 리세마라, 캐릭터 픽업 얘기가 늘면서 단톡방의 메인 게임으로 자리잡는다.</div>
+          <div class="participants">관여: kil9, 조은일/Heero, 파인(일규)</div>
+        </div>
+        
+        <div class="event" data-search="실크송 발매와 밤샘 플레이 오랫동안 기다린 할로우 나이트 실크송이 드디어 출시. user_a가 &#39;실크송으로부터 도망친다&#39;고 농담하면서도 진보스 리트하다 잠들 정도로 몰입. kil9 조은일/heero">
+          <div class="date">2025-09-12</div>
+          <div class="title">실크송 발매와 밤샘 플레이</div>
+          <div class="summary">오랫동안 기다린 할로우 나이트 실크송이 드디어 출시. User_A가 &#39;실크송으로부터 도망친다&#39;고 농담하면서도 진보스 리트하다 잠들 정도로 몰입.</div>
+          <div class="participants">관여: kil9, 조은일/Heero</div>
+        </div>
+        
+        <div class="event" data-search="gta 6 발매 연기 발표 락스타가 gta 6 발매일을 2026년 11월 19일로 발표. user_c가 공식 링크를 공유하며 또 한 번의 대기 모드 돌입. kil9 조은일/heero 파인(일규)">
+          <div class="date">2025-11-07</div>
+          <div class="title">GTA 6 발매 연기 발표</div>
+          <div class="summary">락스타가 GTA 6 발매일을 2026년 11월 19일로 발표. User_C가 공식 링크를 공유하며 또 한 번의 대기 모드 돌입.</div>
+          <div class="participants">관여: kil9, 조은일/Heero, 파인(일규)</div>
+        </div>
+        
+        <div class="event" data-search="쿠팡 3,700만 건 개인정보 유출 user_b가 쿠팡 대규모 정보 유출 사실을 공유. 그러나 user_c는 &#39;아직도 쿠팡 종종 주문 중&#39;이라며 무기력한 현실을 한탄. 조은일/heero 파인(일규)">
+          <div class="date">2025-12-01</div>
+          <div class="title">쿠팡 3,700만 건 개인정보 유출</div>
+          <div class="summary">User_B가 쿠팡 대규모 정보 유출 사실을 공유. 그러나 User_C는 &#39;아직도 쿠팡 종종 주문 중&#39;이라며 무기력한 현실을 한탄.</div>
+          <div class="participants">관여: 조은일/Heero, 파인(일규)</div>
+        </div>
+        
+        <div class="event" data-search="미녕이·오몽이·마젯 치지직 이적 user_c가 버튜버 미녕이 등의 치지직 이적 소식을 전함. 단톡방의 오랜 떡밥인 버튜버 플랫폼 이동 화제가 다시 한번 폭발. 파인(일규)">
+          <div class="date">2025-12-27</div>
+          <div class="title">미녕이·오몽이·마젯 치지직 이적</div>
+          <div class="summary">User_C가 버튜버 미녕이 등의 치지직 이적 소식을 전함. 단톡방의 오랜 떡밥인 버튜버 플랫폼 이동 화제가 다시 한번 폭발.</div>
+          <div class="participants">관여: 파인(일규)</div>
+        </div>
+        
+        <div class="event" data-search="명조 글로벌 신서버 리세마라 user_c가 글로벌 1서버 정보를 공유, user_a가 81mb/s로 다운받으며 명조 글로벌판에 본격 합류. 그룹이 서로 픽업과 빌드 정보를 활발하게 교류. kil9 파인(일규)">
+          <div class="date">2026-01-22</div>
+          <div class="title">명조 글로벌 신서버 리세마라</div>
+          <div class="summary">User_C가 글로벌 1서버 정보를 공유, User_A가 81MB/s로 다운받으며 명조 글로벌판에 본격 합류. 그룹이 서로 픽업과 빌드 정보를 활발하게 교류.</div>
+          <div class="participants">관여: kil9, 파인(일규)</div>
+        </div>
+        
+        <div class="event" data-search="붉은사막 공개와 인방 흥행 붉은사막이 공개되며 단톡방에서 잠시 명조를 밀어내고 화제 중심으로. 피디들도 &#39;붉사 인방 개흥한다&#39;며 평가, 다만 &#39;전작에서 개선할 건 못 했다&#39;는 비판도 공존. kil9 조은일/heero 파인(일규)">
+          <div class="date">2026-03-23</div>
+          <div class="title">붉은사막 공개와 인방 흥행</div>
+          <div class="summary">붉은사막이 공개되며 단톡방에서 잠시 명조를 밀어내고 화제 중심으로. 피디들도 &#39;붉사 인방 개흥한다&#39;며 평가, 다만 &#39;전작에서 개선할 건 못 했다&#39;는 비판도 공존.</div>
+          <div class="participants">관여: kil9, 조은일/Heero, 파인(일규)</div>
+        </div>
+        
+        <div class="event" data-search="젠존제 pc 정식 출시 축하 젠레스 존 제로 pc 정식 출시일에 user_a가 축하 메시지를 남김. 동시에 일본 페스와 명조 1주년 견우와 직녀 픽업 등 봄 이벤트가 단톡방을 가득 채움. kil9 조은일/heero 파인(일규)">
+          <div class="date">2026-04-30</div>
+          <div class="title">젠존제 PC 정식 출시 축하</div>
+          <div class="summary">젠레스 존 제로 PC 정식 출시일에 User_A가 축하 메시지를 남김. 동시에 일본 페스와 명조 1주년 견우와 직녀 픽업 등 봄 이벤트가 단톡방을 가득 채움.</div>
+          <div class="participants">관여: kil9, 조은일/Heero, 파인(일규)</div>
+        </div>
+        
+      </div>
+    
+  </section>
   
 
   <footer>
-    bland-ai · 생성 시각 2026-05-26 16:51 · 정성 분석 미실행 (`python -m bland_ai.analyze` 후 재빌드)
+    bland-ai · 생성 시각 2026-05-26 17:30
   </footer>
 </main>
 
