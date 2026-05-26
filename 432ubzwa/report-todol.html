@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>토돌방 리포트</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+<style>
+  :root {
+    --bg: #f7f7f8;
+    --card: #ffffff;
+    --card-soft: #fafafa;
+    --text: #1f2328;
+    --muted: #6b7280;
+    --accent: #4f46e5;
+    --accent-soft: #eef2ff;
+    --accent-fg: #3730a3;
+    --border: #e5e7eb;
+    --chip-bg: #f3f4f6;
+    --chip-fg: #374151;
+    --highlight: #fffbea;
+  }
+  html[data-theme="dark"] {
+    --bg: #0f1115;
+    --card: #161922;
+    --card-soft: #1c2029;
+    --text: #e6e6eb;
+    --muted: #9aa3af;
+    --accent: #8b87ff;
+    --accent-soft: #221f4d;
+    --accent-fg: #c8c4ff;
+    --border: #2a2f3a;
+    --chip-bg: #20242d;
+    --chip-fg: #c4c9d3;
+    --highlight: #3b3411;
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; margin: 0; padding: 0; line-height: 1.55; }
+  header { padding: 32px 24px 16px; max-width: 1100px; margin: 0 auto; }
+  header h1 { margin: 0 0 8px; font-size: 28px; }
+  header .meta { color: var(--muted); font-size: 14px; }
+  main { max-width: 1100px; margin: 0 auto; padding: 0 24px 48px; }
+  nav { display: flex; gap: 8px; padding: 8px 0 24px; flex-wrap: wrap; align-items: center; position: sticky; top: 0; background: var(--bg); z-index: 10; }
+  nav a { padding: 6px 12px; border: 1px solid var(--border); border-radius: 16px; color: var(--text); text-decoration: none; font-size: 13px; background: var(--card); }
+  nav a:hover { border-color: var(--accent); color: var(--accent); }
+  nav .spacer { flex: 1; }
+  nav input.search { padding: 6px 12px; border: 1px solid var(--border); border-radius: 16px; background: var(--card); color: var(--text); font-size: 13px; min-width: 180px; }
+  nav input.search::placeholder { color: var(--muted); }
+  nav button.theme { padding: 6px 12px; border: 1px solid var(--border); border-radius: 16px; background: var(--card); color: var(--text); font-size: 13px; cursor: pointer; }
+  nav button.theme:hover { border-color: var(--accent); color: var(--accent); }
+  section { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin-bottom: 20px; }
+  section h2 { margin: 0 0 16px; font-size: 20px; }
+  section .lede { color: var(--muted); font-size: 13px; margin: -6px 0 16px; }
+  .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+  .summary-grid .item { padding: 12px; border-radius: 8px; background: var(--card-soft); border: 1px solid var(--border); }
+  .summary-grid .item .label { color: var(--muted); font-size: 12px; }
+  .summary-grid .item .value { font-size: 22px; font-weight: 600; margin-top: 4px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+  .participant-card { padding: 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--card-soft); }
+  .participant-card .nick { font-weight: 600; margin-bottom: 4px; word-break: break-word; }
+  .participant-card .stat { color: var(--muted); font-size: 13px; }
+  .participant-card .summary { margin-top: 8px; font-size: 13px; }
+  .participant-card .tone { margin-top: 6px; font-size: 12px; color: var(--muted); font-style: italic; }
+  .participant-card .relationships { margin-top: 6px; font-size: 12px; color: var(--muted); }
+  .participant-card .section-label { margin-top: 10px; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .chips { margin-top: 4px; font-size: 12px; line-height: 1.9; }
+  .chips span { display: inline-block; padding: 2px 8px; margin: 1px 4px 1px 0; background: var(--chip-bg); color: var(--chip-fg); border-radius: 10px; }
+  .chips.accent span { background: var(--accent-soft); color: var(--accent-fg); }
+  .chart { width: 100%; min-height: 360px; }
+  footer { text-align: center; color: var(--muted); font-size: 12px; padding: 24px; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); font-size: 13px; }
+  th { color: var(--muted); font-weight: 500; }
+  .topic-card, .meme-card, .ticker-card { padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--card-soft); }
+  .topic-card .label, .meme-card .phrase, .ticker-card .name { font-weight: 600; font-size: 14px; }
+  .topic-card .examples { margin-top: 6px; font-size: 12px; color: var(--muted); }
+  .meme-card .by { margin-top: 6px; font-size: 11px; color: var(--muted); }
+  .timeline { border-left: 2px solid var(--accent); padding-left: 16px; margin-top: 8px; }
+  .timeline .event { margin-bottom: 16px; }
+  .timeline .event .date { font-size: 12px; color: var(--accent); font-weight: 600; }
+  .timeline .event .title { font-size: 15px; font-weight: 600; margin: 2px 0; }
+  .timeline .event .summary { font-size: 13px; color: var(--text); }
+  .timeline .event .participants { margin-top: 4px; font-size: 11px; color: var(--muted); }
+  .room-block { padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--card-soft); margin-bottom: 8px; }
+  .room-block .name { font-weight: 600; font-size: 14px; }
+  .room-block .total { color: var(--muted); font-size: 12px; }
+  .empty { color: var(--muted); font-size: 13px; padding: 10px 0; }
+  /* 검색 박스로 숨겨진 카드 */
+  .hidden-by-search { display: none !important; }
+  /* 검색 하이라이트 */
+  mark { background: var(--highlight); color: inherit; padding: 0 2px; border-radius: 2px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>토돌방 리포트</h1>
+  <div class="meta">두 사람만의 사적 채팅방 — 다른 그룹과 완전 분리된 별도 분석</div>
+</header>
+<main>
+  <nav>
+    <a href="#summary">요약</a>
+    <a href="#participants">참가자</a>
+    <a href="#personas">페르소나</a>
+    <a href="#daily">일자별</a>
+    <a href="#heatmap">시간대</a>
+    <a href="#words">어휘</a>
+    
+    <a href="#topics">주제·밈</a>
+    <a href="#timeline">타임라인</a>
+    <span class="spacer"></span>
+    <input class="search" type="search" placeholder="🔍 참가자·주제 검색" id="search-box">
+    <button class="theme" id="theme-toggle" type="button" title="다크/라이트">🌗</button>
+  </nav>
+
+  <section id="summary">
+    <h2>요약</h2>
+    <div class="summary-grid">
+      <div class="item"><div class="label">기간</div><div class="value" style="font-size:16px;">2024-05-16 ~ 2026-05-26</div></div>
+      <div class="item"><div class="label">참가자 수</div><div class="value">3명</div></div>
+      <div class="item"><div class="label">총 메시지</div><div class="value">46,087</div></div>
+      <div class="item"><div class="label">채팅방 수</div><div class="value">1</div></div>
+    </div>
+  </section>
+
+  <section id="participants">
+    <h2>참가자별 메시지 수</h2>
+    <div id="chart-participants" class="chart"></div>
+    <div class="grid" style="margin-top: 24px;" data-search-grid>
+      
+      <div class="participant-card" data-search="윤해림 (토돌방) 우연 우연이 돌곰 돌곰이 시에 저녁 돌곰녀석 토토꾸 미팅 점심 ">
+        <div class="nick">윤해림 (토돌방)</div>
+        <div class="stat">25,984건</div>
+        <div class="chips" style="margin-top: 8px;">
+          <span>우연 <small>(985)</small></span><span>우연이 <small>(554)</small></span><span>돌곰 <small>(402)</small></span><span>돌곰이 <small>(381)</small></span><span>시에 <small>(365)</small></span><span>저녁 <small>(278)</small></span><span>돌곰녀석 <small>(268)</small></span><span>토토꾸 <small>(202)</small></span><span>미팅 <small>(192)</small></span><span>점심 <small>(188)</small></span>
+        </div>
+      </div>
+      
+      <div class="participant-card" data-search="kil9 (토돌방) 돌곰 토토꾸 우연 우연이 토꾸녀석 같군 맞맞 알겠어 돌곰이 좋을지 ">
+        <div class="nick">kil9 (토돌방)</div>
+        <div class="stat">20,067건</div>
+        <div class="chips" style="margin-top: 8px;">
+          <span>돌곰 <small>(596)</small></span><span>토토꾸 <small>(303)</small></span><span>우연 <small>(280)</small></span><span>우연이 <small>(242)</small></span><span>토꾸녀석 <small>(166)</small></span><span>같군 <small>(147)</small></span><span>맞맞 <small>(131)</small></span><span>알겠어 <small>(121)</small></span><span>돌곰이 <small>(119)</small></span><span>좋을지 <small>(110)</small></span>
+        </div>
+      </div>
+      
+      <div class="participant-card" data-search="kil9gpt (토돌방) 메뉴 추천 고기리면 프랭크버거 하남돼지집 후보 알겠습니다 다음과 엽떡 쫄삼 ">
+        <div class="nick">kil9gpt (토돌방)</div>
+        <div class="stat">36건</div>
+        <div class="chips" style="margin-top: 8px;">
+          <span>메뉴 <small>(88)</small></span><span>추천 <small>(31)</small></span><span>고기리면 <small>(31)</small></span><span>프랭크버거 <small>(29)</small></span><span>하남돼지집 <small>(29)</small></span><span>후보 <small>(29)</small></span><span>알겠습니다 <small>(26)</small></span><span>다음과 <small>(26)</small></span><span>엽떡 <small>(26)</small></span><span>쫄삼 <small>(25)</small></span>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  
+  <section id="personas">
+    <h2>참가자 페르소나 (Claude 정성 분석)</h2>
+    <p class="lede">익명 코드로 호출한 결과를 다시 닉네임으로 역치환했다. 메시지 빈도 상위부터 정렬.</p>
+    <div class="grid" data-search-grid>
+      
+      <div class="participant-card"
+           data-search="윤해림 (토돌방) 워킹맘으로서 육아·살림·업무를 동시에 굴리며 배우자(돌곰)에게 끊임없이 지시·불만·협업 요청을 쏟아내는 실무형 멀티플레이어. #워킹맘 #육아총괄 #돌곰지령 #ㅍ말투 #불만폭발 #실속파 ">
+        <div class="nick">윤해림 (토돌방)</div>
+        <div class="summary">워킹맘으로서 육아·살림·업무를 동시에 굴리며 배우자(돌곰)에게 끊임없이 지시·불만·협업 요청을 쏟아내는 실무형 멀티플레이어.</div>
+        <div class="tone">말투: 건조하고 짧은 단문, &#39;ㅍ&#39;·&#39;헤헷&#39;·&#39;힝구&#39; 같은 귀여운 추임새와 날선 분노 표현이 공존하는 양가적 말투.</div>
+        
+          <div class="section-label">관심사</div>
+          <div class="chips"><span>육아(우연이) 루틴 관리</span><span>이유식·식단·배달 메뉴 결정</span><span>재택·회의·코웍데이 업무 조율</span><span>주식·스톡옵션·자산관리</span><span>어린이집·시터·가족 일정 조율</span><span>가전·살림살이 구매</span></div>
+        
+        
+          <div class="section-label">말버릇</div>
+          <div class="chips"><span>문장 끝에 &#39;ㅍ&#39; 자주 붙이기</span><span>&#39;헤헷&#39;, &#39;힝구&#39;, &#39;꺅&#39;, &#39;큭&#39; 등 의성어/추임새</span><span>&#39;~려나&#39;, &#39;~할괴&#39;, &#39;~즤&#39; 같은 변형 어미</span><span>&#39;고맹워/고매워&#39; 같은 애칭형 감사 표현</span><span>분노 시 단문을 줄줄이 연속 발사하는 패턴</span><span>시간·금액·수량을 구체 숫자로 적시</span></div>
+        
+        
+          <div class="relationships"><span class="section-label">관계 ·</span> 배우자 &#39;돌곰&#39;에게 우연이 케어·하원·식사·집안일을 끊임없이 부탁·지시하며 갈등도 폭발적으로 표출하고, 아이 &#39;우연이&#39;를 중심으로 시터·돌엄마·토엄마·지맹네 등 양가 가족과 촘촘히 협업한다.</div>
+        
+        
+          <div class="chips accent" style="margin-top: 8px;"><span>#워킹맘</span><span>#육아총괄</span><span>#돌곰지령</span><span>#ㅍ말투</span><span>#불만폭발</span><span>#실속파</span></div>
+        
+      </div>
+      
+      <div class="participant-card"
+           data-search="kil9 (토돌방) 육아·집안일·회사일을 동시에 굴리며 끊임없이 메모와 조율을 남기는, 차분하지만 감정 표현은 절제된 워킹대디형 캐릭터. #워킹대디 #육아로그 #메뉴고민 #담백말투 #회의지옥 #돌곰토토꾸 ">
+        <div class="nick">kil9 (토돌방)</div>
+        <div class="summary">육아·집안일·회사일을 동시에 굴리며 끊임없이 메모와 조율을 남기는, 차분하지만 감정 표현은 절제된 워킹대디형 캐릭터.</div>
+        <div class="tone">말투: 짧고 단답형이며 &#39;~당/~군/~즤&#39; 같은 어미와 &#39;흠/ㅍ/헤헷&#39; 추임새를 자주 쓰는, 담담하고 분석적이면서도 귀여운 말투.</div>
+        
+          <div class="section-label">관심사</div>
+          <div class="chips"><span>육아(우연이)</span><span>회사 업무·회의 조율</span><span>맛집·배달 메뉴 고르기</span><span>재테크·주식·부동산</span><span>IT/개발·AI 툴</span><span>가전·살림 최적화</span></div>
+        
+        
+          <div class="section-label">말버릇</div>
+          <div class="chips"><span>문장 끝에 &#39;ㅍ&#39;만 단독으로 보내기</span><span>&#39;흠&#39;, &#39;헉&#39;, &#39;꺅&#39;, &#39;윽&#39; 같은 짧은 감탄사</span><span>&#39;~당&#39;, &#39;~군&#39;, &#39;~즤&#39; 어미 사용</span><span>&#39;돌곰&#39;, &#39;토토꾸&#39; 같은 본인·배우자 별칭 사용</span><span>메뉴를 1·2·3 번호로 나열</span><span>&#39;헤헷&#39;, &#39;맞맞&#39;, &#39;괜괜&#39; 반복 표현</span></div>
+        
+        
+          <div class="relationships"><span class="section-label">관계 ·</span> 배우자(토토꾸)와 가장 많이 대화하며 육아·집안일 분담을 두고 갈등과 사과를 자주 반복하고, 딸 우연이, 돌엄마(친정/시댁), 하담이·지우 등 주변 아이들 이야기를 자주 거론한다.</div>
+        
+        
+          <div class="chips accent" style="margin-top: 8px;"><span>#워킹대디</span><span>#육아로그</span><span>#메뉴고민</span><span>#담백말투</span><span>#회의지옥</span><span>#돌곰토토꾸</span></div>
+        
+      </div>
+      
+    </div>
+  </section>
+  
+
+  <section id="daily">
+    <h2>일자별 메시지 추이</h2>
+    <div id="chart-daily" class="chart"></div>
+  </section>
+
+  <section id="heatmap">
+    <h2>요일 × 시간대 히트맵</h2>
+    <div id="chart-heatmap" class="chart" style="min-height: 420px;"></div>
+  </section>
+
+  <section id="words">
+    <h2>자주 등장한 어휘 Top 50</h2>
+    <div id="chart-words" class="chart" style="min-height: 520px;"></div>
+  </section>
+
+  
+
+  
+  <section id="topics">
+    <h2>주제·밈·종목 (Claude 정성 분석)</h2>
+    
+      <h3 style="font-size: 15px; margin-top: 8px;">주제</h3>
+      <div class="grid">
+        
+        <div class="topic-card" data-search="육아 분담·갈등 딸 우연이의 식사·낮잠·목욕·하원 분담을 두고 부부가 끊임없이 조율하고 갈등하는 모습이 가장 자주 등장.">
+          <div class="label">육아 분담·갈등</div>
+          <div style="font-size: 13px; margin-top: 4px;">딸 우연이의 식사·낮잠·목욕·하원 분담을 두고 부부가 끊임없이 조율하고 갈등하는 모습이 가장 자주 등장.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"밤잠을 돌곰이가 재워야해"</span><span style="margin-right: 6px;">"내가 화장실도 못가고 먹이는데"</span><span style="margin-right: 6px;">"평일 저녁 - 막수랑 주말은 돌곰이가 좀 해줬으면 해"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="시터·돌봄인력 시터 채용·교체·감기 옮김 등 외부 돌봄 인력에 관한 논의와 불만이 반복됨.">
+          <div class="label">시터·돌봄인력</div>
+          <div style="font-size: 13px; margin-top: 4px;">시터 채용·교체·감기 옮김 등 외부 돌봄 인력에 관한 논의와 불만이 반복됨.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"시터님 지난주 목요일 퇴근하면서 넘어지셔서"</span><span style="margin-right: 6px;">"월요일부터는 안나오셨으면 해"</span><span style="margin-right: 6px;">"면접 볼 때는 자기 손 안 씻어서 우연이 못 만진다고 해서"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="어린이집 적응 우연이 어린이집 등하원, 적응기, 알림장, 친구 관계(바보 발언 등) 등이 자주 언급됨.">
+          <div class="label">어린이집 적응</div>
+          <div style="font-size: 13px; margin-top: 4px;">우연이 어린이집 등하원, 적응기, 알림장, 친구 관계(바보 발언 등) 등이 자주 언급됨.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"우연이 어린이집 적응 이번주에 왠지 끝날 거 같아서"</span><span style="margin-right: 6px;">"9시 등원 4시 하원이면 어린이집이잖아"</span><span style="margin-right: 6px;">"신발장에서 같이 하원하던 반 친구에게 바보라는 말을 들어서요"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="회사·재택 회의 두 사람 모두 it 직장인으로, 끝없는 회의 일정 조율과 육아 시간 충돌이 매일의 주요 대화.">
+          <div class="label">회사·재택 회의</div>
+          <div style="font-size: 13px; margin-top: 4px;">두 사람 모두 IT 직장인으로, 끝없는 회의 일정 조율과 육아 시간 충돌이 매일의 주요 대화.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"난 3시 회의 시작"</span><span style="margin-right: 6px;">"5시 미팅이 취소돼서 6시 전에 들어갈게"</span><span style="margin-right: 6px;">"11시 회의라 조금 두렵긴 하지만"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="리더십·인사평가 리더 역할, 셀프리뷰, ss/aa 등급, 신입 면접·면담 등 회사 평가 시스템 얘기.">
+          <div class="label">리더십·인사평가</div>
+          <div style="font-size: 13px; margin-top: 4px;">리더 역할, 셀프리뷰, SS/AA 등급, 신입 면접·면담 등 회사 평가 시스템 얘기.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"난 이제 리더다"</span><span style="margin-right: 6px;">"SS 한 명 AA 두 명 A 두 명"</span><span style="margin-right: 6px;">"AA 기대했는데 AA 받았고"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="배달·외식 메뉴 선정 프랭크버거·롯데리아·엽떡·하남돼지집 등 정해진 후보군에서 매일 끼니 메뉴를 고르는 의례.">
+          <div class="label">배달·외식 메뉴 선정</div>
+          <div style="font-size: 13px; margin-top: 4px;">프랭크버거·롯데리아·엽떡·하남돼지집 등 정해진 후보군에서 매일 끼니 메뉴를 고르는 의례.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"!메뉴추천"</span><span style="margin-right: 6px;">"최배달떡순튀 같은게 땡기긴 해"</span><span style="margin-right: 6px;">"프랭크 시킬래"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="스마트홈·가전 에어컨·가습기·홈캠·식기세척기·건조기 등 가전 사용과 전기요금에 대한 토론.">
+          <div class="label">스마트홈·가전</div>
+          <div style="font-size: 13px; margin-top: 4px;">에어컨·가습기·홈캠·식기세척기·건조기 등 가전 사용과 전기요금에 대한 토론.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"거실캠에서 만나자구"</span><span style="margin-right: 6px;">"지난달 전기료는 18만원"</span><span style="margin-right: 6px;">"건조기가 귀신들려서 서비스 불렀는데"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="주식·자산관리 네이버 스톡옵션 행사, 인센티브, rsu, 청약, 자산 영끌 계산 등 재무 대화 빈번.">
+          <div class="label">주식·자산관리</div>
+          <div style="font-size: 13px; margin-top: 4px;">네이버 스톡옵션 행사, 인센티브, RSU, 청약, 자산 영끌 계산 등 재무 대화 빈번.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"2025년 10월 NAVER Stock Option 행사신청"</span><span style="margin-right: 6px;">"893만원 납부"</span><span style="margin-right: 6px;">"원금은 12억 6천"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="부부싸움·관계회복 말투·집안일·시댁·인터넷 약속 등으로 격한 다툼이 새벽까지 이어지고 사과·합의로 마무리되는 패턴.">
+          <div class="label">부부싸움·관계회복</div>
+          <div style="font-size: 13px; margin-top: 4px;">말투·집안일·시댁·인터넷 약속 등으로 격한 다툼이 새벽까지 이어지고 사과·합의로 마무리되는 패턴.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"같이 살기 싫어 같이 있으면 늘 기분 안좋은 일이 셍겨"</span><span style="margin-right: 6px;">"정말 정말 미안해"</span><span style="margin-right: 6px;">"이게 대화야?"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="여행·휴양 계획 제주·부산·평창·하와이·해외여행, 휴양시설 예약 등 가족 여행 기획.">
+          <div class="label">여행·휴양 계획</div>
+          <div style="font-size: 13px; margin-top: 4px;">제주·부산·평창·하와이·해외여행, 휴양시설 예약 등 가족 여행 기획.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"슬슬 제주 여행 일정 확정해서"</span><span style="margin-right: 6px;">"우연이랑 부산 놀러가고싶당"</span><span style="margin-right: 6px;">"켄싱턴 플로라"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="건강·병원 우연이 열·해열제 교차복용, 피부과·이비인후과 방문, 임신·시험관 관련 대화.">
+          <div class="label">건강·병원</div>
+          <div style="font-size: 13px; margin-top: 4px;">우연이 열·해열제 교차복용, 피부과·이비인후과 방문, 임신·시험관 관련 대화.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"13:09 맥시부펜 5ml"</span><span style="margin-right: 6px;">"37.3"</span><span style="margin-right: 6px;">"분당서울대학교병원 외래진료 예약안내"</span></div>
+        </div>
+        
+        <div class="topic-card" data-search="ai 개발 도구 claude code·cursor·copilot·mcp 등 사내 ai 도구 도입과 활용 토론.">
+          <div class="label">AI 개발 도구</div>
+          <div style="font-size: 13px; margin-top: 4px;">Claude Code·Cursor·Copilot·MCP 등 사내 AI 도구 도입과 활용 토론.</div>
+          <div class="examples">예: <span style="margin-right: 6px;">"Claude Code 수요 조사 중이냐고"</span><span style="margin-right: 6px;">"PoC가 종료되면 Cursor/Copilot/Claude Code중 한 개"</span><span style="margin-right: 6px;">"그냥 클로드코드 API로 쓰면"</span></div>
+        </div>
+        
+      </div>
+    
+    
+      <h3 style="font-size: 15px; margin-top: 20px;">자생적 밈·말버릇</h3>
+      <div class="grid">
+        
+        <div class="meme-card" data-search="ㅍ 가장 빈번한 말버릇. 가벼운 동의·끄덕임·말끝 흐림 등 거의 모든 맥락에서 추임새처럼 사용.">
+          <div class="phrase">ㅍ</div>
+          <div style="font-size: 13px; margin-top: 4px;">가장 빈번한 말버릇. 가벼운 동의·끄덕임·말끝 흐림 등 거의 모든 맥락에서 추임새처럼 사용.</div>
+          <div class="by">주로: kil9 (토돌방), 윤해림 (토돌방)</div>
+        </div>
+        
+        <div class="meme-card" data-search="돌곰 / 토토꾸 (토꾸) 부부가 서로를 부르는 고정 별명. &#39;kil9 (토돌방)=돌곰&#39;, &#39;윤해림 (토돌방)=토토꾸&#39;로 일관되게 호칭.">
+          <div class="phrase">돌곰 / 토토꾸 (토꾸)</div>
+          <div style="font-size: 13px; margin-top: 4px;">부부가 서로를 부르는 고정 별명. &#39;kil9 (토돌방)=돌곰&#39;, &#39;윤해림 (토돌방)=토토꾸&#39;로 일관되게 호칭.</div>
+          <div class="by">주로: kil9 (토돌방), 윤해림 (토돌방)</div>
+        </div>
+        
+        <div class="meme-card" data-search="괜괜 &#39;괜찮아&#39;를 줄여 부드럽게 표현. 동의·허용 사인.">
+          <div class="phrase">괜괜</div>
+          <div style="font-size: 13px; margin-top: 4px;">&#39;괜찮아&#39;를 줄여 부드럽게 표현. 동의·허용 사인.</div>
+          <div class="by">주로: kil9 (토돌방), 윤해림 (토돌방)</div>
+        </div>
+        
+        <div class="meme-card" data-search="꺅 / 헉 / 힝구(힝) 감탄·놀람·아쉬움을 짧게 표현하는 의성어 모음. 메시지를 짧게 끊는 톤을 만든다.">
+          <div class="phrase">꺅 / 헉 / 힝구(힝)</div>
+          <div style="font-size: 13px; margin-top: 4px;">감탄·놀람·아쉬움을 짧게 표현하는 의성어 모음. 메시지를 짧게 끊는 톤을 만든다.</div>
+          <div class="by">주로: kil9 (토돌방), 윤해림 (토돌방)</div>
+        </div>
+        
+        <div class="meme-card" data-search="헤헷 웃음 섞인 사과·애교·말끝 마무리. 특히 kil9 (토돌방)가 분위기 푸는 데 사용.">
+          <div class="phrase">헤헷</div>
+          <div style="font-size: 13px; margin-top: 4px;">웃음 섞인 사과·애교·말끝 마무리. 특히 kil9 (토돌방)가 분위기 푸는 데 사용.</div>
+          <div class="by">주로: kil9 (토돌방)</div>
+        </div>
+        
+        <div class="meme-card" data-search="~녀석 / ~녀석들 동료·아기·물건·주가 등 거의 모든 대상에 붙이는 애칭 접미사. (예: 토꾸녀석, 우연이녀석, 슬림쿡녀석, 엔비디아녀석)">
+          <div class="phrase">~녀석 / ~녀석들</div>
+          <div style="font-size: 13px; margin-top: 4px;">동료·아기·물건·주가 등 거의 모든 대상에 붙이는 애칭 접미사. (예: 토꾸녀석, 우연이녀석, 슬림쿡녀석, 엔비디아녀석)</div>
+          <div class="by">주로: kil9 (토돌방), 윤해림 (토돌방)</div>
+        </div>
+        
+        <div class="meme-card" data-search="쩔어 / 굉장하군 / 대단 감탄·칭찬 표현. 상대의 성과나 사건에 대한 짧은 리액션.">
+          <div class="phrase">쩔어 / 굉장하군 / 대단</div>
+          <div style="font-size: 13px; margin-top: 4px;">감탄·칭찬 표현. 상대의 성과나 사건에 대한 짧은 리액션.</div>
+          <div class="by">주로: kil9 (토돌방), 윤해림 (토돌방)</div>
+        </div>
+        
+        <div class="meme-card" data-search="슉 &#39;바로 갈게/출발&#39; 의 의성어. 이동·즉시 행동을 알릴 때 사용.">
+          <div class="phrase">슉</div>
+          <div style="font-size: 13px; margin-top: 4px;">&#39;바로 갈게/출발&#39; 의 의성어. 이동·즉시 행동을 알릴 때 사용.</div>
+          <div class="by">주로: 윤해림 (토돌방)</div>
+        </div>
+        
+        <div class="meme-card" data-search="고맹워 / 고맹 / 고멩 &#39;고마워&#39;의 귀엽게 변형된 형태. 짧은 감사 표시.">
+          <div class="phrase">고맹워 / 고맹 / 고멩</div>
+          <div style="font-size: 13px; margin-top: 4px;">&#39;고마워&#39;의 귀엽게 변형된 형태. 짧은 감사 표시.</div>
+          <div class="by">주로: 윤해림 (토돌방)</div>
+        </div>
+        
+        <div class="meme-card" data-search="!메뉴추천 line 봇(kil9gpt (토돌방))을 호출해 등록된 후보 중 메뉴를 추천받는 자체 커맨드. 끼니 결정 의례화.">
+          <div class="phrase">!메뉴추천</div>
+          <div style="font-size: 13px; margin-top: 4px;">LINE 봇(kil9gpt (토돌방))을 호출해 등록된 후보 중 메뉴를 추천받는 자체 커맨드. 끼니 결정 의례화.</div>
+          <div class="by">주로: kil9 (토돌방)</div>
+        </div>
+        
+        <div class="meme-card" data-search="노쪽잠 / 노저녁 / 노상관 영어 no를 접두어처럼 붙여 부재·생략을 표현하는 가족 내 조어.">
+          <div class="phrase">노쪽잠 / 노저녁 / 노상관</div>
+          <div style="font-size: 13px; margin-top: 4px;">영어 No를 접두어처럼 붙여 부재·생략을 표현하는 가족 내 조어.</div>
+          <div class="by">주로: 윤해림 (토돌방), kil9 (토돌방)</div>
+        </div>
+        
+        <div class="meme-card" data-search="깔깔 사내 회의/도구 이름으로 추정되는 약어를 그대로 일정 표기에 사용. 회의 시간 지칭.">
+          <div class="phrase">깔깔</div>
+          <div style="font-size: 13px; margin-top: 4px;">사내 회의/도구 이름으로 추정되는 약어를 그대로 일정 표기에 사용. 회의 시간 지칭.</div>
+          <div class="by">주로: kil9 (토돌방), 윤해림 (토돌방)</div>
+        </div>
+        
+      </div>
+    
+    
+      <h3 style="font-size: 15px; margin-top: 20px;">자주 언급되는 종목·자산</h3>
+      <div class="grid">
+        
+        <div class="ticker-card" data-search="네이버(naver) 주식·스톡옵션">
+          <div class="name">네이버(NAVER) 주식·스톡옵션</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">언급 약 25회</div>
+          <div style="font-size: 13px; margin-top: 4px;">본인들 회사 추정. 행사·매도·RSU·청약 등 반복 등장하는 핵심 자산</div>
+        </div>
+        
+        <div class="ticker-card" data-search="엔비디아">
+          <div class="name">엔비디아</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">언급 약 2회</div>
+          <div style="font-size: 13px; margin-top: 4px;">&#39;엔비디아녀석 또 엄청 올라서&#39; 등 개별 종목으로 짧게 언급</div>
+        </div>
+        
+        <div class="ticker-card" data-search="테슬라">
+          <div class="name">테슬라</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">언급 약 1회</div>
+          <div style="font-size: 13px; margin-top: 4px;">지인을 &#39;테슬라충&#39;이라 칭하는 맥락</div>
+        </div>
+        
+        <div class="ticker-card" data-search="더본코리아 공모주">
+          <div class="name">더본코리아 공모주</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">언급 약 2회</div>
+          <div style="font-size: 13px; margin-top: 4px;">&#39;더본 공모 100주 하려면 170만원&#39; 공용재산 투자 논의</div>
+        </div>
+        
+        <div class="ticker-card" data-search="irp/연금계좌">
+          <div class="name">IRP/연금계좌</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">언급 약 2회</div>
+          <div style="font-size: 13px; margin-top: 4px;">900만원 IRP 납입, IRA 절세 등 절세 계좌 운용 언급</div>
+        </div>
+        
+        <div class="ticker-card" data-search="코스피 지수">
+          <div class="name">코스피 지수</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">언급 약 1회</div>
+          <div style="font-size: 13px; margin-top: 4px;">&#39;코스피 6900&#39; 등 시장 전체 흐름 코멘트</div>
+        </div>
+        
+        <div class="ticker-card" data-search="부동산(판교 푸르지오 그랑블 등)">
+          <div class="name">부동산(판교 푸르지오 그랑블 등)</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">언급 약 4회</div>
+          <div style="font-size: 13px; margin-top: 4px;">이사·집값 2.5배 상승·담보대출 등 자산 비중 큰 항목</div>
+        </div>
+        
+      </div>
+    
+  </section>
+  
+
+  
+  <section id="timeline">
+    <h2>타임라인 (Claude 정성 분석)</h2>
+    
+      <div class="timeline">
+        
+        <div class="event" data-search="육아 분담 갈등의 시작 이유식 이후부터 막수까지 우연이를 돌곰이 봐달라는 요청을 두고 충돌. 낮 동안 토토꾸 혼자 모든 것을 감당하고 있다는 불만이 본격적으로 표출되기 시작했다. 윤해림 (토돌방) kil9 (토돌방)">
+          <div class="date">2024-05-24</div>
+          <div class="title">육아 분담 갈등의 시작</div>
+          <div class="summary">이유식 이후부터 막수까지 우연이를 돌곰이 봐달라는 요청을 두고 충돌. 낮 동안 토토꾸 혼자 모든 것을 감당하고 있다는 불만이 본격적으로 표출되기 시작했다.</div>
+          <div class="participants">관여: 윤해림 (토돌방), kil9 (토돌방)</div>
+        </div>
+        
+        <div class="event" data-search="주말 분담 본격 충돌 고무장갑 던지며 짜증내는 행동, 평일 저녁·막수·주말 돌봄 분담 요구를 둘러싸고 격한 다툼. &#39;주말 외출 무조건 동반&#39; 원칙을 세우는 등 가족 운영 규칙을 새로 정립하려 시도했다. 윤해림 (토돌방) kil9 (토돌방)">
+          <div class="date">2024-06-16</div>
+          <div class="title">주말 분담 본격 충돌</div>
+          <div class="summary">고무장갑 던지며 짜증내는 행동, 평일 저녁·막수·주말 돌봄 분담 요구를 둘러싸고 격한 다툼. &#39;주말 외출 무조건 동반&#39; 원칙을 세우는 등 가족 운영 규칙을 새로 정립하려 시도했다.</div>
+          <div class="participants">관여: 윤해림 (토돌방), kil9 (토돌방)</div>
+        </div>
+        
+        <div class="event" data-search="메뉴추천 봇 kil9gpt (토돌방) 등장 식사 메뉴를 자동으로 추천해주는 봇(kil9gpt (토돌방))이 도입되어 프랭크버거·쫄삼·하남돼지집 등 단골 메뉴 후보들을 관리하기 시작. 부부의 매일 메뉴 고민이 시스템화되는 전환점이었다. kil9 (토돌방) 윤해림 (토돌방) kil9gpt (토돌방)">
+          <div class="date">2024-07-08</div>
+          <div class="title">메뉴추천 봇 kil9gpt (토돌방) 등장</div>
+          <div class="summary">식사 메뉴를 자동으로 추천해주는 봇(kil9gpt (토돌방))이 도입되어 프랭크버거·쫄삼·하남돼지집 등 단골 메뉴 후보들을 관리하기 시작. 부부의 매일 메뉴 고민이 시스템화되는 전환점이었다.</div>
+          <div class="participants">관여: kil9 (토돌방), 윤해림 (토돌방), kil9gpt (토돌방)</div>
+        </div>
+        
+        <div class="event" data-search="첫 제주 가족여행 우연이를 데리고 제주 여행을 다녀옴. 비행기에서 핑크퐁을 보여주고 멀미 걱정도 했지만 가족 단위 첫 장거리 여행으로 자리잡았다. 윤해림 (토돌방) kil9 (토돌방)">
+          <div class="date">2024-09-18</div>
+          <div class="title">첫 제주 가족여행</div>
+          <div class="summary">우연이를 데리고 제주 여행을 다녀옴. 비행기에서 핑크퐁을 보여주고 멀미 걱정도 했지만 가족 단위 첫 장거리 여행으로 자리잡았다.</div>
+          <div class="participants">관여: 윤해림 (토돌방), kil9 (토돌방)</div>
+        </div>
+        
+        <div class="event" data-search="시터 채용 본격화 조종재 시터님과 계약서 작성, 평일 4시간 시터 운영(주 30만원) 시작. 맞벌이 부부의 일과 육아 병행을 위한 외부 인력 도입의 첫걸음이었다. 윤해림 (토돌방) kil9 (토돌방)">
+          <div class="date">2024-10-11</div>
+          <div class="title">시터 채용 본격화</div>
+          <div class="summary">조종재 시터님과 계약서 작성, 평일 4시간 시터 운영(주 30만원) 시작. 맞벌이 부부의 일과 육아 병행을 위한 외부 인력 도입의 첫걸음이었다.</div>
+          <div class="participants">관여: 윤해림 (토돌방), kil9 (토돌방)</div>
+        </div>
+        
+        <div class="event" data-search="시터 해고 결정 시터님의 근무 태도와 우연이 감기 옮음 의혹이 누적되어 월요일부터 출근하지 말아달라고 통보. 두 달만 버티면 어린이집 간다는 희망으로 부부가 직접 보육을 떠안기로 했다. 윤해림 (토돌방) kil9 (토돌방)">
+          <div class="date">2024-12-13</div>
+          <div class="title">시터 해고 결정</div>
+          <div class="summary">시터님의 근무 태도와 우연이 감기 옮음 의혹이 누적되어 월요일부터 출근하지 말아달라고 통보. 두 달만 버티면 어린이집 간다는 희망으로 부부가 직접 보육을 떠안기로 했다.</div>
+          <div class="participants">관여: 윤해림 (토돌방), kil9 (토돌방)</div>
+        </div>
+        
+        <div class="event" data-search="장문의 부부 다툼과 사과 우연이 밥, 식탁 정리, 시터 문제, 인터넷 약속 등 누적된 불만이 한 번에 폭발. kil9 (토돌방)가 &#39;토토꾸 말이 다 맞다&#39;며 사과하고 잘하겠다고 다짐한 긴 대화가 오갔다. 윤해림 (토돌방) kil9 (토돌방)">
+          <div class="date">2025-01-04</div>
+          <div class="title">장문의 부부 다툼과 사과</div>
+          <div class="summary">우연이 밥, 식탁 정리, 시터 문제, 인터넷 약속 등 누적된 불만이 한 번에 폭발. kil9 (토돌방)가 &#39;토토꾸 말이 다 맞다&#39;며 사과하고 잘하겠다고 다짐한 긴 대화가 오갔다.</div>
+          <div class="participants">관여: 윤해림 (토돌방), kil9 (토돌방)</div>
+        </div>
+        
+        <div class="event" data-search="남편의 문제점 항목화 선언 남편의 살림 무관심, 게임 우선순위, 사과할 줄 모름, 보일러 제멋대로 조절 등 결혼생활의 문제를 조목조목 정리. &#39;같이 살지 않는 것이 최선&#39;이라는 말까지 나온 위기 국면이었다. 윤해림 (토돌방) kil9 (토돌방)">
+          <div class="date">2025-02-08</div>
+          <div class="title">남편의 문제점 항목화 선언</div>
+          <div class="summary">남편의 살림 무관심, 게임 우선순위, 사과할 줄 모름, 보일러 제멋대로 조절 등 결혼생활의 문제를 조목조목 정리. &#39;같이 살지 않는 것이 최선&#39;이라는 말까지 나온 위기 국면이었다.</div>
+          <div class="participants">관여: 윤해림 (토돌방), kil9 (토돌방)</div>
+        </div>
+        
+        <div class="event" data-search="우연이 어린이집 적응 시작 푸르니 어린이집 적응기 돌입. 첫날 울며 들어가고 낮잠 거부 등 진통이 있었지만 부부가 등하원 분담을 조율하며 새로운 일과를 만들어갔다. 윤해림 (토돌방) kil9 (토돌방)">
+          <div class="date">2025-03-13</div>
+          <div class="title">우연이 어린이집 적응 시작</div>
+          <div class="summary">푸르니 어린이집 적응기 돌입. 첫날 울며 들어가고 낮잠 거부 등 진통이 있었지만 부부가 등하원 분담을 조율하며 새로운 일과를 만들어갔다.</div>
+          <div class="participants">관여: 윤해림 (토돌방), kil9 (토돌방)</div>
+        </div>
+        
+        <div class="event" data-search="새벽까지 이어진 자기성찰 대화 낮의 모든 일과 부담, 무쇠솥 닦기·욕실 위험 등 사소한 사건 누적이 다시 충돌로. kil9 (토돌방)가 &#39;있는 듯 없는 듯 집안일 열심히 하며 살겠다&#39;고 약속하며 봉합되었다. 윤해림 (토돌방) kil9 (토돌방)">
+          <div class="date">2025-04-14</div>
+          <div class="title">새벽까지 이어진 자기성찰 대화</div>
+          <div class="summary">낮의 모든 일과 부담, 무쇠솥 닦기·욕실 위험 등 사소한 사건 누적이 다시 충돌로. kil9 (토돌방)가 &#39;있는 듯 없는 듯 집안일 열심히 하며 살겠다&#39;고 약속하며 봉합되었다.</div>
+          <div class="participants">관여: 윤해림 (토돌방), kil9 (토돌방)</div>
+        </div>
+        
+        <div class="event" data-search="말투·하대 논쟁 &#39;이렇게 해&#39; 식 명령조 말투가 하대냐 아니냐를 두고 격한 토론. 합의된 사항에 대해서도 부연 없이 명령하듯 말하는 패턴을 인정받기까지 한참 걸렸다. 윤해림 (토돌방) kil9 (토돌방)">
+          <div class="date">2025-06-07</div>
+          <div class="title">말투·하대 논쟁</div>
+          <div class="summary">&#39;이렇게 해&#39; 식 명령조 말투가 하대냐 아니냐를 두고 격한 토론. 합의된 사항에 대해서도 부연 없이 명령하듯 말하는 패턴을 인정받기까지 한참 걸렸다.</div>
+          <div class="participants">관여: 윤해림 (토돌방), kil9 (토돌방)</div>
+        </div>
+        
+        <div class="event" data-search="건강검진과 둘째 준비 시그널 윤해림 (토돌방)의 마취 검진 후 회복 중, 지역카드 지원·냉동배아 보관 안내 이야기가 등장. 부부의 건강관리와 둘째(콩콩이) 가능성 논의가 본격화되는 흐름이 보였다. 윤해림 (토돌방) kil9 (토돌방)">
+          <div class="date">2025-07-21</div>
+          <div class="title">건강검진과 둘째 준비 시그널</div>
+          <div class="summary">윤해림 (토돌방)의 마취 검진 후 회복 중, 지역카드 지원·냉동배아 보관 안내 이야기가 등장. 부부의 건강관리와 둘째(콩콩이) 가능성 논의가 본격화되는 흐름이 보였다.</div>
+          <div class="participants">관여: 윤해림 (토돌방), kil9 (토돌방)</div>
+        </div>
+        
+        <div class="event" data-search="회의 연속 속 회식·돌봄 곡예 5시·6시 연속 회의 중 우연이 케어를 두고 충돌, &#39;오든 말든 알아서 해&#39;까지 갔다가 사과. 맞벌이 풀가동 시기의 전형적인 하루로 기록되었다. 윤해림 (토돌방) kil9 (토돌방)">
+          <div class="date">2025-08-14</div>
+          <div class="title">회의 연속 속 회식·돌봄 곡예</div>
+          <div class="summary">5시·6시 연속 회의 중 우연이 케어를 두고 충돌, &#39;오든 말든 알아서 해&#39;까지 갔다가 사과. 맞벌이 풀가동 시기의 전형적인 하루로 기록되었다.</div>
+          <div class="participants">관여: 윤해림 (토돌방), kil9 (토돌방)</div>
+        </div>
+        
+        <div class="event" data-search="스톡옵션·rsu 자산 정리 네이버 스톡옵션 행사 및 rsu로 가족 재산이 큰 폭으로 증가. &#39;21만3천원 밑으로 안 떨어지면 이득&#39; 같은 계산을 하며 본격적인 자산관리 모드로 들어갔다. 윤해림 (토돌방) kil9 (토돌방)">
+          <div class="date">2025-10-14</div>
+          <div class="title">스톡옵션·RSU 자산 정리</div>
+          <div class="summary">네이버 스톡옵션 행사 및 RSU로 가족 재산이 큰 폭으로 증가. &#39;21만3천원 밑으로 안 떨어지면 이득&#39; 같은 계산을 하며 본격적인 자산관리 모드로 들어갔다.</div>
+          <div class="participants">관여: 윤해림 (토돌방), kil9 (토돌방)</div>
+        </div>
+        
+        <div class="event" data-search="택배·목욕 분담 또 폭발 퇴근 직후 택배를 뜯어 우연이가 난리치는 상황을 두고 분노가 폭발. &#39;양해를 구하라&#39;는 토토꾸의 요청과 함께 일상 협업 룰을 다시 다잡았다. 윤해림 (토돌방) kil9 (토돌방)">
+          <div class="date">2025-12-09</div>
+          <div class="title">택배·목욕 분담 또 폭발</div>
+          <div class="summary">퇴근 직후 택배를 뜯어 우연이가 난리치는 상황을 두고 분노가 폭발. &#39;양해를 구하라&#39;는 토토꾸의 요청과 함께 일상 협업 룰을 다시 다잡았다.</div>
+          <div class="participants">관여: 윤해림 (토돌방), kil9 (토돌방)</div>
+        </div>
+        
+        <div class="event" data-search="토토꾸 해외 출장(eta 발급) eta 문서 준비, 인천공항 프린트 가능 시간 점검 등 토토꾸의 단독 해외 출장 준비. 우연이와 돌곰이 둘이 남아 며칠을 보내는 새로운 가족 구성 경험이 시작됐다. 윤해림 (토돌방) kil9 (토돌방)">
+          <div class="date">2026-02-19</div>
+          <div class="title">토토꾸 해외 출장(ETA 발급)</div>
+          <div class="summary">ETA 문서 준비, 인천공항 프린트 가능 시간 점검 등 토토꾸의 단독 해외 출장 준비. 우연이와 돌곰이 둘이 남아 며칠을 보내는 새로운 가족 구성 경험이 시작됐다.</div>
+          <div class="participants">관여: 윤해림 (토돌방), kil9 (토돌방)</div>
+        </div>
+        
+        <div class="event" data-search="에버랜드 가족 나들이 급하게 결정한 에버랜드 나들이를 다녀옴. 어린이집 적응을 끝낸 우연이가 본격적으로 가족 외출을 즐기는 단계로 접어든 기념비적인 주말이었다. 윤해림 (토돌방) kil9 (토돌방)">
+          <div class="date">2026-05-15</div>
+          <div class="title">에버랜드 가족 나들이</div>
+          <div class="summary">급하게 결정한 에버랜드 나들이를 다녀옴. 어린이집 적응을 끝낸 우연이가 본격적으로 가족 외출을 즐기는 단계로 접어든 기념비적인 주말이었다.</div>
+          <div class="participants">관여: 윤해림 (토돌방), kil9 (토돌방)</div>
+        </div>
+        
+      </div>
+    
+  </section>
+  
+
+  <footer>
+    bland-ai · 생성 시각 2026-05-26 21:18
+  </footer>
+</main>
+
+<script>
+const STATS = {"rooms": [{"chatroom": "토돌방", "total": 46090, "top_words": [{"word": "우연", "count": 1265}, {"word": "돌곰", "count": 998}, {"word": "우연이", "count": 796}, {"word": "토토꾸", "count": 505}, {"word": "돌곰이", "count": 500}, {"word": "시에", "count": 440}, {"word": "저녁", "count": 330}, {"word": "점심", "count": 284}, {"word": "먹고", "count": 270}, {"word": "돌곰녀석", "count": 268}, {"word": "헤헷", "count": 266}, {"word": "같군", "count": 208}, {"word": "혼자", "count": 203}, {"word": "회의", "count": 197}, {"word": "미팅", "count": 193}, {"word": "미안", "count": 191}, {"word": "집에", "count": 181}, {"word": "맞맞", "count": 178}, {"word": "돌엄마", "count": 177}, {"word": "일찍", "count": 168}, {"word": "토꾸녀석", "count": 166}, {"word": "좋군", "count": 158}, {"word": "같기", "count": 157}, {"word": "뭐즤", "count": 154}, {"word": "메뉴", "count": 153}, {"word": "좋을지", "count": 151}, {"word": "알겠어", "count": 151}, {"word": "녀석", "count": 145}, {"word": "우린", "count": 142}, {"word": "하원", "count": 141}]}], "total_messages": 46087, "total_messages_all": 46090, "participant_count": 3, "noise_nick_count": 2, "date_range": {"first": "2024-05-16", "last": "2026-05-26"}, "heatmap": [[468, 223, 113, 7, 13, 1, 0, 4, 39, 194, 962, 675, 511, 310, 533, 570, 768, 469, 223, 120, 251, 467, 465, 203], [192, 475, 39, 17, 16, 1, 0, 4, 18, 179, 678, 566, 421, 428, 482, 605, 464, 720, 424, 163, 177, 578, 502, 718], [567, 480, 70, 30, 12, 4, 20, 19, 25, 319, 767, 712, 236, 388, 638, 597, 645, 511, 384, 219, 348, 471, 569, 204], [225, 158, 63, 4, 1, 2, 3, 20, 42, 263, 910, 545, 214, 403, 549, 586, 591, 382, 437, 238, 218, 395, 531, 216], [369, 100, 77, 72, 4, 1, 1, 4, 27, 194, 885, 515, 360, 419, 601, 661, 524, 493, 358, 70, 269, 515, 460, 413], [167, 52, 53, 101, 18, 15, 0, 13, 24, 57, 86, 251, 100, 134, 164, 161, 153, 232, 102, 116, 293, 566, 752, 461], [182, 140, 44, 5, 6, 14, 10, 10, 63, 72, 119, 122, 196, 212, 160, 255, 173, 173, 56, 74, 260, 579, 547, 468]], "daily": [{"date": "2024-05-16", "count": 34}, {"date": "2024-05-17", "count": 117}, {"date": "2024-05-18", "count": 9}, {"date": "2024-05-19", "count": 46}, {"date": "2024-05-20", "count": 73}, {"date": "2024-05-21", "count": 27}, {"date": "2024-05-22", "count": 73}, {"date": "2024-05-23", "count": 82}, {"date": "2024-05-24", "count": 160}, {"date": "2024-05-25", "count": 10}, {"date": "2024-05-26", "count": 8}, {"date": "2024-05-27", "count": 69}, {"date": "2024-05-28", "count": 98}, {"date": "2024-05-29", "count": 117}, {"date": "2024-05-30", "count": 31}, {"date": "2024-05-31", "count": 148}, {"date": "2024-06-01", "count": 151}, {"date": "2024-06-02", "count": 146}, {"date": "2024-06-03", "count": 166}, {"date": "2024-06-04", "count": 106}, {"date": "2024-06-05", "count": 52}, {"date": "2024-06-06", "count": 29}, {"date": "2024-06-07", "count": 147}, {"date": "2024-06-08", "count": 48}, {"date": "2024-06-09", "count": 66}, {"date": "2024-06-10", "count": 60}, {"date": "2024-06-11", "count": 153}, {"date": "2024-06-12", "count": 111}, {"date": "2024-06-13", "count": 26}, {"date": "2024-06-14", "count": 156}, {"date": "2024-06-15", "count": 47}, {"date": "2024-06-16", "count": 395}, {"date": "2024-06-17", "count": 94}, {"date": "2024-06-18", "count": 145}, {"date": "2024-06-19", "count": 512}, {"date": "2024-06-20", "count": 86}, {"date": "2024-06-21", "count": 105}, {"date": "2024-06-22", "count": 139}, {"date": "2024-06-23", "count": 53}, {"date": "2024-06-24", "count": 220}, {"date": "2024-06-25", "count": 159}, {"date": "2024-06-26", "count": 149}, {"date": "2024-06-27", "count": 218}, {"date": "2024-06-28", "count": 91}, {"date": "2024-06-29", "count": 63}, {"date": "2024-06-30", "count": 60}, {"date": "2024-07-01", "count": 316}, {"date": "2024-07-02", "count": 408}, {"date": "2024-07-03", "count": 563}, {"date": "2024-07-04", "count": 121}, {"date": "2024-07-05", "count": 96}, {"date": "2024-07-06", "count": 173}, {"date": "2024-07-07", "count": 153}, {"date": "2024-07-08", "count": 359}, {"date": "2024-07-09", "count": 78}, {"date": "2024-07-10", "count": 199}, {"date": "2024-07-11", "count": 82}, {"date": "2024-07-12", "count": 101}, {"date": "2024-07-13", "count": 41}, {"date": "2024-07-14", "count": 63}, {"date": "2024-07-15", "count": 145}, {"date": "2024-07-16", "count": 37}, {"date": "2024-07-17", "count": 112}, {"date": "2024-07-18", "count": 60}, {"date": "2024-07-19", "count": 60}, {"date": "2024-07-20", "count": 54}, {"date": "2024-07-21", "count": 63}, {"date": "2024-07-22", "count": 114}, {"date": "2024-07-23", "count": 77}, {"date": "2024-07-24", "count": 200}, {"date": "2024-07-25", "count": 66}, {"date": "2024-07-26", "count": 71}, {"date": "2024-07-27", "count": 23}, {"date": "2024-07-28", "count": 26}, {"date": "2024-07-29", "count": 133}, {"date": "2024-07-30", "count": 8}, {"date": "2024-07-31", "count": 32}, {"date": "2024-08-01", "count": 55}, {"date": "2024-08-02", "count": 55}, {"date": "2024-08-03", "count": 13}, {"date": "2024-08-04", "count": 181}, {"date": "2024-08-05", "count": 109}, {"date": "2024-08-06", "count": 134}, {"date": "2024-08-07", "count": 134}, {"date": "2024-08-08", "count": 150}, {"date": "2024-08-09", "count": 41}, {"date": "2024-08-10", "count": 45}, {"date": "2024-08-11", "count": 19}, {"date": "2024-08-12", "count": 109}, {"date": "2024-08-13", "count": 295}, {"date": "2024-08-14", "count": 137}, {"date": "2024-08-15", "count": 52}, {"date": "2024-08-16", "count": 89}, {"date": "2024-08-17", "count": 60}, {"date": "2024-08-18", "count": 8}, {"date": "2024-08-19", "count": 266}, {"date": "2024-08-20", "count": 153}, {"date": "2024-08-21", "count": 433}, {"date": "2024-08-22", "count": 72}, {"date": "2024-08-23", "count": 170}, {"date": "2024-08-24", "count": 88}, {"date": "2024-08-25", "count": 36}, {"date": "2024-08-26", "count": 63}, {"date": "2024-08-27", "count": 110}, {"date": "2024-08-28", "count": 42}, {"date": "2024-08-29", "count": 207}, {"date": "2024-08-30", "count": 40}, {"date": "2024-08-31", "count": 78}, {"date": "2024-09-01", "count": 1}, {"date": "2024-09-02", "count": 8}, {"date": "2024-09-03", "count": 59}, {"date": "2024-09-04", "count": 22}, {"date": "2024-09-05", "count": 70}, {"date": "2024-09-06", "count": 100}, {"date": "2024-09-10", "count": 15}, {"date": "2024-09-11", "count": 30}, {"date": "2024-09-12", "count": 25}, {"date": "2024-09-13", "count": 48}, {"date": "2024-09-14", "count": 14}, {"date": "2024-09-15", "count": 4}, {"date": "2024-09-16", "count": 33}, {"date": "2024-09-17", "count": 11}, {"date": "2024-09-18", "count": 34}, {"date": "2024-09-19", "count": 12}, {"date": "2024-09-20", "count": 16}, {"date": "2024-09-21", "count": 22}, {"date": "2024-09-22", "count": 16}, {"date": "2024-09-23", "count": 57}, {"date": "2024-09-24", "count": 50}, {"date": "2024-09-25", "count": 82}, {"date": "2024-09-26", "count": 107}, {"date": "2024-09-27", "count": 87}, {"date": "2024-09-28", "count": 8}, {"date": "2024-09-29", "count": 90}, {"date": "2024-09-30", "count": 29}, {"date": "2024-10-01", "count": 11}, {"date": "2024-10-02", "count": 51}, {"date": "2024-10-03", "count": 23}, {"date": "2024-10-04", "count": 15}, {"date": "2024-10-05", "count": 10}, {"date": "2024-10-07", "count": 32}, {"date": "2024-10-08", "count": 57}, {"date": "2024-10-09", "count": 6}, {"date": "2024-10-10", "count": 77}, {"date": "2024-10-11", "count": 95}, {"date": "2024-10-12", "count": 13}, {"date": "2024-10-13", "count": 55}, {"date": "2024-10-14", "count": 165}, {"date": "2024-10-15", "count": 109}, {"date": "2024-10-16", "count": 41}, {"date": "2024-10-17", "count": 55}, {"date": "2024-10-18", "count": 13}, {"date": "2024-10-19", "count": 15}, {"date": "2024-10-20", "count": 18}, {"date": "2024-10-21", "count": 103}, {"date": "2024-10-22", "count": 151}, {"date": "2024-10-23", "count": 15}, {"date": "2024-10-24", "count": 50}, {"date": "2024-10-25", "count": 9}, {"date": "2024-10-26", "count": 13}, {"date": "2024-10-27", "count": 3}, {"date": "2024-10-28", "count": 151}, {"date": "2024-10-29", "count": 59}, {"date": "2024-10-30", "count": 33}, {"date": "2024-10-31", "count": 49}, {"date": "2024-11-01", "count": 22}, {"date": "2024-11-02", "count": 6}, {"date": "2024-11-03", "count": 3}, {"date": "2024-11-04", "count": 133}, {"date": "2024-11-05", "count": 60}, {"date": "2024-11-06", "count": 37}, {"date": "2024-11-07", "count": 34}, {"date": "2024-11-08", "count": 111}, {"date": "2024-11-09", "count": 6}, {"date": "2024-11-10", "count": 27}, {"date": "2024-11-11", "count": 65}, {"date": "2024-11-12", "count": 54}, {"date": "2024-11-13", "count": 97}, {"date": "2024-11-14", "count": 62}, {"date": "2024-11-15", "count": 75}, {"date": "2024-11-17", "count": 7}, {"date": "2024-11-18", "count": 46}, {"date": "2024-11-19", "count": 69}, {"date": "2024-11-20", "count": 43}, {"date": "2024-11-21", "count": 74}, {"date": "2024-11-22", "count": 103}, {"date": "2024-11-23", "count": 13}, {"date": "2024-11-24", "count": 18}, {"date": "2024-11-25", "count": 74}, {"date": "2024-11-26", "count": 58}, {"date": "2024-11-27", "count": 34}, {"date": "2024-11-28", "count": 33}, {"date": "2024-11-29", "count": 26}, {"date": "2024-11-30", "count": 28}, {"date": "2024-12-01", "count": 15}, {"date": "2024-12-02", "count": 88}, {"date": "2024-12-03", "count": 108}, {"date": "2024-12-04", "count": 47}, {"date": "2024-12-05", "count": 118}, {"date": "2024-12-06", "count": 130}, {"date": "2024-12-07", "count": 16}, {"date": "2024-12-09", "count": 22}, {"date": "2024-12-10", "count": 62}, {"date": "2024-12-11", "count": 127}, {"date": "2024-12-12", "count": 110}, {"date": "2024-12-13", "count": 293}, {"date": "2024-12-14", "count": 14}, {"date": "2024-12-15", "count": 7}, {"date": "2024-12-16", "count": 186}, {"date": "2024-12-17", "count": 58}, {"date": "2024-12-18", "count": 121}, {"date": "2024-12-19", "count": 128}, {"date": "2024-12-21", "count": 4}, {"date": "2024-12-22", "count": 53}, {"date": "2024-12-23", "count": 33}, {"date": "2024-12-25", "count": 51}, {"date": "2024-12-26", "count": 43}, {"date": "2024-12-27", "count": 36}, {"date": "2024-12-28", "count": 20}, {"date": "2024-12-29", "count": 19}, {"date": "2024-12-30", "count": 23}, {"date": "2024-12-31", "count": 24}, {"date": "2025-01-01", "count": 4}, {"date": "2025-01-02", "count": 48}, {"date": "2025-01-03", "count": 56}, {"date": "2025-01-04", "count": 317}, {"date": "2025-01-05", "count": 96}, {"date": "2025-01-06", "count": 14}, {"date": "2025-01-07", "count": 46}, {"date": "2025-01-08", "count": 42}, {"date": "2025-01-09", "count": 174}, {"date": "2025-01-10", "count": 3}, {"date": "2025-01-11", "count": 6}, {"date": "2025-01-12", "count": 53}, {"date": "2025-01-13", "count": 58}, {"date": "2025-01-14", "count": 22}, {"date": "2025-01-15", "count": 57}, {"date": "2025-01-16", "count": 49}, {"date": "2025-01-17", "count": 87}, {"date": "2025-01-18", "count": 41}, {"date": "2025-01-19", "count": 22}, {"date": "2025-01-20", "count": 33}, {"date": "2025-01-21", "count": 145}, {"date": "2025-01-22", "count": 69}, {"date": "2025-01-23", "count": 113}, {"date": "2025-01-24", "count": 257}, {"date": "2025-01-25", "count": 1}, {"date": "2025-01-26", "count": 24}, {"date": "2025-01-27", "count": 39}, {"date": "2025-01-28", "count": 141}, {"date": "2025-01-29", "count": 127}, {"date": "2025-01-30", "count": 48}, {"date": "2025-01-31", "count": 88}, {"date": "2025-02-01", "count": 9}, {"date": "2025-02-02", "count": 24}, {"date": "2025-02-03", "count": 284}, {"date": "2025-02-04", "count": 23}, {"date": "2025-02-05", "count": 70}, {"date": "2025-02-06", "count": 101}, {"date": "2025-02-07", "count": 31}, {"date": "2025-02-08", "count": 133}, {"date": "2025-02-09", "count": 3}, {"date": "2025-02-10", "count": 51}, {"date": "2025-02-11", "count": 57}, {"date": "2025-02-12", "count": 73}, {"date": "2025-02-13", "count": 86}, {"date": "2025-02-14", "count": 47}, {"date": "2025-02-15", "count": 67}, {"date": "2025-02-16", "count": 23}, {"date": "2025-02-17", "count": 26}, {"date": "2025-02-18", "count": 93}, {"date": "2025-02-19", "count": 189}, {"date": "2025-02-20", "count": 31}, {"date": "2025-02-21", "count": 82}, {"date": "2025-02-22", "count": 49}, {"date": "2025-02-23", "count": 52}, {"date": "2025-02-24", "count": 16}, {"date": "2025-02-25", "count": 68}, {"date": "2025-02-26", "count": 46}, {"date": "2025-02-27", "count": 10}, {"date": "2025-02-28", "count": 20}, {"date": "2025-03-02", "count": 123}, {"date": "2025-03-03", "count": 38}, {"date": "2025-03-04", "count": 96}, {"date": "2025-03-05", "count": 86}, {"date": "2025-03-06", "count": 104}, {"date": "2025-03-07", "count": 110}, {"date": "2025-03-08", "count": 103}, {"date": "2025-03-09", "count": 2}, {"date": "2025-03-10", "count": 61}, {"date": "2025-03-11", "count": 33}, {"date": "2025-03-12", "count": 226}, {"date": "2025-03-13", "count": 238}, {"date": "2025-03-14", "count": 143}, {"date": "2025-03-15", "count": 34}, {"date": "2025-03-16", "count": 2}, {"date": "2025-03-17", "count": 56}, {"date": "2025-03-18", "count": 92}, {"date": "2025-03-19", "count": 103}, {"date": "2025-03-20", "count": 212}, {"date": "2025-03-21", "count": 88}, {"date": "2025-03-22", "count": 26}, {"date": "2025-03-23", "count": 25}, {"date": "2025-03-24", "count": 49}, {"date": "2025-03-25", "count": 17}, {"date": "2025-03-26", "count": 39}, {"date": "2025-03-27", "count": 24}, {"date": "2025-03-28", "count": 27}, {"date": "2025-03-29", "count": 38}, {"date": "2025-03-30", "count": 22}, {"date": "2025-03-31", "count": 8}, {"date": "2025-04-01", "count": 171}, {"date": "2025-04-02", "count": 235}, {"date": "2025-04-03", "count": 111}, {"date": "2025-04-04", "count": 153}, {"date": "2025-04-05", "count": 3}, {"date": "2025-04-06", "count": 38}, {"date": "2025-04-07", "count": 184}, {"date": "2025-04-08", "count": 83}, {"date": "2025-04-09", "count": 182}, {"date": "2025-04-10", "count": 75}, {"date": "2025-04-11", "count": 165}, {"date": "2025-04-12", "count": 10}, {"date": "2025-04-13", "count": 21}, {"date": "2025-04-14", "count": 269}, {"date": "2025-04-15", "count": 113}, {"date": "2025-04-16", "count": 49}, {"date": "2025-04-17", "count": 38}, {"date": "2025-04-18", "count": 6}, {"date": "2025-04-19", "count": 5}, {"date": "2025-04-20", "count": 79}, {"date": "2025-04-21", "count": 110}, {"date": "2025-04-22", "count": 13}, {"date": "2025-04-23", "count": 101}, {"date": "2025-04-24", "count": 39}, {"date": "2025-04-25", "count": 39}, {"date": "2025-04-26", "count": 37}, {"date": "2025-04-27", "count": 5}, {"date": "2025-04-28", "count": 48}, {"date": "2025-04-29", "count": 64}, {"date": "2025-04-30", "count": 49}, {"date": "2025-05-01", "count": 4}, {"date": "2025-05-02", "count": 27}, {"date": "2025-05-03", "count": 41}, {"date": "2025-05-04", "count": 71}, {"date": "2025-05-05", "count": 100}, {"date": "2025-05-06", "count": 28}, {"date": "2025-05-07", "count": 8}, {"date": "2025-05-08", "count": 24}, {"date": "2025-05-09", "count": 7}, {"date": "2025-05-10", "count": 8}, {"date": "2025-05-11", "count": 20}, {"date": "2025-05-12", "count": 45}, {"date": "2025-05-13", "count": 61}, {"date": "2025-05-14", "count": 45}, {"date": "2025-05-15", "count": 35}, {"date": "2025-05-16", "count": 36}, {"date": "2025-05-17", "count": 15}, {"date": "2025-05-18", "count": 12}, {"date": "2025-05-19", "count": 13}, {"date": "2025-05-20", "count": 45}, {"date": "2025-05-21", "count": 42}, {"date": "2025-05-22", "count": 40}, {"date": "2025-05-23", "count": 36}, {"date": "2025-05-24", "count": 45}, {"date": "2025-05-25", "count": 35}, {"date": "2025-05-26", "count": 19}, {"date": "2025-05-27", "count": 142}, {"date": "2025-05-28", "count": 82}, {"date": "2025-05-29", "count": 56}, {"date": "2025-05-30", "count": 43}, {"date": "2025-05-31", "count": 76}, {"date": "2025-06-01", "count": 23}, {"date": "2025-06-02", "count": 85}, {"date": "2025-06-03", "count": 22}, {"date": "2025-06-04", "count": 72}, {"date": "2025-06-05", "count": 9}, {"date": "2025-06-06", "count": 15}, {"date": "2025-06-07", "count": 354}, {"date": "2025-06-08", "count": 12}, {"date": "2025-06-09", "count": 73}, {"date": "2025-06-10", "count": 38}, {"date": "2025-06-11", "count": 88}, {"date": "2025-06-12", "count": 74}, {"date": "2025-06-13", "count": 155}, {"date": "2025-06-14", "count": 68}, {"date": "2025-06-15", "count": 20}, {"date": "2025-06-16", "count": 49}, {"date": "2025-06-17", "count": 177}, {"date": "2025-06-18", "count": 42}, {"date": "2025-06-19", "count": 39}, {"date": "2025-06-20", "count": 266}, {"date": "2025-06-21", "count": 31}, {"date": "2025-06-22", "count": 64}, {"date": "2025-06-23", "count": 131}, {"date": "2025-06-24", "count": 99}, {"date": "2025-06-25", "count": 132}, {"date": "2025-06-26", "count": 55}, {"date": "2025-06-27", "count": 115}, {"date": "2025-06-28", "count": 78}, {"date": "2025-06-29", "count": 40}, {"date": "2025-06-30", "count": 66}, {"date": "2025-07-01", "count": 138}, {"date": "2025-07-02", "count": 46}, {"date": "2025-07-03", "count": 71}, {"date": "2025-07-04", "count": 162}, {"date": "2025-07-05", "count": 83}, {"date": "2025-07-06", "count": 124}, {"date": "2025-07-07", "count": 36}, {"date": "2025-07-08", "count": 272}, {"date": "2025-07-09", "count": 154}, {"date": "2025-07-10", "count": 56}, {"date": "2025-07-11", "count": 75}, {"date": "2025-07-12", "count": 48}, {"date": "2025-07-13", "count": 99}, {"date": "2025-07-14", "count": 129}, {"date": "2025-07-15", "count": 89}, {"date": "2025-07-16", "count": 92}, {"date": "2025-07-17", "count": 73}, {"date": "2025-07-18", "count": 77}, {"date": "2025-07-19", "count": 21}, {"date": "2025-07-20", "count": 98}, {"date": "2025-07-21", "count": 155}, {"date": "2025-07-22", "count": 53}, {"date": "2025-07-23", "count": 88}, {"date": "2025-07-24", "count": 43}, {"date": "2025-07-25", "count": 22}, {"date": "2025-07-26", "count": 44}, {"date": "2025-07-27", "count": 58}, {"date": "2025-07-28", "count": 112}, {"date": "2025-07-29", "count": 3}, {"date": "2025-07-30", "count": 15}, {"date": "2025-07-31", "count": 10}, {"date": "2025-08-01", "count": 19}, {"date": "2025-08-02", "count": 23}, {"date": "2025-08-03", "count": 87}, {"date": "2025-08-04", "count": 103}, {"date": "2025-08-05", "count": 69}, {"date": "2025-08-06", "count": 55}, {"date": "2025-08-07", "count": 56}, {"date": "2025-08-08", "count": 72}, {"date": "2025-08-09", "count": 25}, {"date": "2025-08-10", "count": 66}, {"date": "2025-08-11", "count": 65}, {"date": "2025-08-12", "count": 76}, {"date": "2025-08-13", "count": 61}, {"date": "2025-08-14", "count": 124}, {"date": "2025-08-15", "count": 19}, {"date": "2025-08-16", "count": 60}, {"date": "2025-08-17", "count": 33}, {"date": "2025-08-18", "count": 25}, {"date": "2025-08-19", "count": 82}, {"date": "2025-08-20", "count": 126}, {"date": "2025-08-21", "count": 101}, {"date": "2025-08-22", "count": 125}, {"date": "2025-08-24", "count": 18}, {"date": "2025-08-25", "count": 47}, {"date": "2025-08-26", "count": 58}, {"date": "2025-08-27", "count": 188}, {"date": "2025-08-28", "count": 61}, {"date": "2025-08-29", "count": 58}, {"date": "2025-08-30", "count": 16}, {"date": "2025-08-31", "count": 40}, {"date": "2025-09-01", "count": 65}, {"date": "2025-09-02", "count": 12}, {"date": "2025-09-03", "count": 7}, {"date": "2025-09-04", "count": 24}, {"date": "2025-09-05", "count": 80}, {"date": "2025-09-06", "count": 40}, {"date": "2025-09-07", "count": 48}, {"date": "2025-09-08", "count": 90}, {"date": "2025-09-09", "count": 46}, {"date": "2025-09-10", "count": 131}, {"date": "2025-09-11", "count": 95}, {"date": "2025-09-12", "count": 25}, {"date": "2025-09-13", "count": 32}, {"date": "2025-09-15", "count": 47}, {"date": "2025-09-16", "count": 34}, {"date": "2025-09-17", "count": 24}, {"date": "2025-09-18", "count": 40}, {"date": "2025-09-19", "count": 16}, {"date": "2025-09-20", "count": 52}, {"date": "2025-09-21", "count": 27}, {"date": "2025-09-22", "count": 80}, {"date": "2025-09-23", "count": 88}, {"date": "2025-09-24", "count": 9}, {"date": "2025-09-25", "count": 62}, {"date": "2025-09-26", "count": 44}, {"date": "2025-09-27", "count": 30}, {"date": "2025-09-28", "count": 56}, {"date": "2025-09-29", "count": 68}, {"date": "2025-09-30", "count": 28}, {"date": "2025-10-01", "count": 16}, {"date": "2025-10-02", "count": 61}, {"date": "2025-10-03", "count": 8}, {"date": "2025-10-04", "count": 62}, {"date": "2025-10-05", "count": 21}, {"date": "2025-10-06", "count": 2}, {"date": "2025-10-07", "count": 24}, {"date": "2025-10-08", "count": 35}, {"date": "2025-10-09", "count": 2}, {"date": "2025-10-10", "count": 8}, {"date": "2025-10-11", "count": 4}, {"date": "2025-10-12", "count": 3}, {"date": "2025-10-13", "count": 50}, {"date": "2025-10-14", "count": 85}, {"date": "2025-10-15", "count": 44}, {"date": "2025-10-16", "count": 39}, {"date": "2025-10-17", "count": 35}, {"date": "2025-10-18", "count": 32}, {"date": "2025-10-19", "count": 5}, {"date": "2025-10-20", "count": 30}, {"date": "2025-10-21", "count": 150}, {"date": "2025-10-22", "count": 31}, {"date": "2025-10-23", "count": 54}, {"date": "2025-10-24", "count": 16}, {"date": "2025-10-25", "count": 12}, {"date": "2025-10-26", "count": 10}, {"date": "2025-10-27", "count": 56}, {"date": "2025-10-28", "count": 33}, {"date": "2025-10-29", "count": 12}, {"date": "2025-10-30", "count": 19}, {"date": "2025-10-31", "count": 12}, {"date": "2025-11-01", "count": 59}, {"date": "2025-11-02", "count": 23}, {"date": "2025-11-03", "count": 42}, {"date": "2025-11-04", "count": 59}, {"date": "2025-11-05", "count": 52}, {"date": "2025-11-06", "count": 76}, {"date": "2025-11-07", "count": 74}, {"date": "2025-11-08", "count": 34}, {"date": "2025-11-09", "count": 50}, {"date": "2025-11-10", "count": 26}, {"date": "2025-11-11", "count": 32}, {"date": "2025-11-12", "count": 60}, {"date": "2025-11-13", "count": 97}, {"date": "2025-11-14", "count": 57}, {"date": "2025-11-15", "count": 11}, {"date": "2025-11-16", "count": 5}, {"date": "2025-11-17", "count": 35}, {"date": "2025-11-18", "count": 164}, {"date": "2025-11-19", "count": 79}, {"date": "2025-11-20", "count": 104}, {"date": "2025-11-21", "count": 36}, {"date": "2025-11-22", "count": 15}, {"date": "2025-11-23", "count": 41}, {"date": "2025-11-24", "count": 153}, {"date": "2025-11-25", "count": 46}, {"date": "2025-11-26", "count": 32}, {"date": "2025-11-27", "count": 123}, {"date": "2025-11-28", "count": 27}, {"date": "2025-11-29", "count": 17}, {"date": "2025-11-30", "count": 14}, {"date": "2025-12-01", "count": 65}, {"date": "2025-12-02", "count": 108}, {"date": "2025-12-03", "count": 45}, {"date": "2025-12-04", "count": 32}, {"date": "2025-12-05", "count": 46}, {"date": "2025-12-06", "count": 32}, {"date": "2025-12-07", "count": 11}, {"date": "2025-12-08", "count": 5}, {"date": "2025-12-09", "count": 94}, {"date": "2025-12-10", "count": 12}, {"date": "2025-12-11", "count": 214}, {"date": "2025-12-12", "count": 33}, {"date": "2025-12-13", "count": 13}, {"date": "2025-12-14", "count": 9}, {"date": "2025-12-15", "count": 14}, {"date": "2025-12-16", "count": 28}, {"date": "2025-12-17", "count": 12}, {"date": "2025-12-18", "count": 88}, {"date": "2025-12-19", "count": 54}, {"date": "2025-12-20", "count": 31}, {"date": "2025-12-21", "count": 7}, {"date": "2025-12-22", "count": 66}, {"date": "2025-12-23", "count": 51}, {"date": "2025-12-24", "count": 15}, {"date": "2025-12-25", "count": 59}, {"date": "2025-12-26", "count": 10}, {"date": "2025-12-27", "count": 12}, {"date": "2025-12-28", "count": 12}, {"date": "2025-12-29", "count": 7}, {"date": "2025-12-30", "count": 4}, {"date": "2025-12-31", "count": 29}, {"date": "2026-01-01", "count": 17}, {"date": "2026-01-02", "count": 143}, {"date": "2026-01-03", "count": 26}, {"date": "2026-01-04", "count": 17}, {"date": "2026-01-05", "count": 57}, {"date": "2026-01-06", "count": 22}, {"date": "2026-01-07", "count": 5}, {"date": "2026-01-08", "count": 49}, {"date": "2026-01-09", "count": 216}, {"date": "2026-01-10", "count": 14}, {"date": "2026-01-11", "count": 24}, {"date": "2026-01-12", "count": 35}, {"date": "2026-01-13", "count": 33}, {"date": "2026-01-14", "count": 47}, {"date": "2026-01-15", "count": 49}, {"date": "2026-01-16", "count": 49}, {"date": "2026-01-17", "count": 8}, {"date": "2026-01-18", "count": 6}, {"date": "2026-01-19", "count": 30}, {"date": "2026-01-20", "count": 83}, {"date": "2026-01-21", "count": 27}, {"date": "2026-01-22", "count": 49}, {"date": "2026-01-23", "count": 73}, {"date": "2026-01-24", "count": 18}, {"date": "2026-01-25", "count": 52}, {"date": "2026-01-26", "count": 29}, {"date": "2026-01-27", "count": 60}, {"date": "2026-01-28", "count": 30}, {"date": "2026-01-29", "count": 113}, {"date": "2026-01-30", "count": 93}, {"date": "2026-01-31", "count": 98}, {"date": "2026-02-02", "count": 46}, {"date": "2026-02-03", "count": 80}, {"date": "2026-02-04", "count": 79}, {"date": "2026-02-05", "count": 46}, {"date": "2026-02-06", "count": 64}, {"date": "2026-02-07", "count": 12}, {"date": "2026-02-08", "count": 7}, {"date": "2026-02-09", "count": 26}, {"date": "2026-02-10", "count": 158}, {"date": "2026-02-11", "count": 33}, {"date": "2026-02-12", "count": 11}, {"date": "2026-02-13", "count": 41}, {"date": "2026-02-14", "count": 28}, {"date": "2026-02-15", "count": 4}, {"date": "2026-02-17", "count": 43}, {"date": "2026-02-18", "count": 65}, {"date": "2026-02-19", "count": 31}, {"date": "2026-02-20", "count": 13}, {"date": "2026-02-21", "count": 11}, {"date": "2026-02-22", "count": 22}, {"date": "2026-02-23", "count": 58}, {"date": "2026-02-24", "count": 39}, {"date": "2026-02-25", "count": 5}, {"date": "2026-02-26", "count": 6}, {"date": "2026-02-27", "count": 11}, {"date": "2026-02-28", "count": 18}, {"date": "2026-03-01", "count": 11}, {"date": "2026-03-02", "count": 7}, {"date": "2026-03-03", "count": 20}, {"date": "2026-03-04", "count": 87}, {"date": "2026-03-05", "count": 45}, {"date": "2026-03-06", "count": 64}, {"date": "2026-03-07", "count": 1}, {"date": "2026-03-08", "count": 11}, {"date": "2026-03-09", "count": 10}, {"date": "2026-03-10", "count": 42}, {"date": "2026-03-11", "count": 65}, {"date": "2026-03-12", "count": 12}, {"date": "2026-03-13", "count": 37}, {"date": "2026-03-14", "count": 24}, {"date": "2026-03-15", "count": 20}, {"date": "2026-03-16", "count": 22}, {"date": "2026-03-17", "count": 22}, {"date": "2026-03-18", "count": 11}, {"date": "2026-03-19", "count": 56}, {"date": "2026-03-20", "count": 28}, {"date": "2026-03-21", "count": 22}, {"date": "2026-03-22", "count": 80}, {"date": "2026-03-23", "count": 19}, {"date": "2026-03-24", "count": 17}, {"date": "2026-03-25", "count": 61}, {"date": "2026-03-26", "count": 51}, {"date": "2026-03-27", "count": 59}, {"date": "2026-03-28", "count": 6}, {"date": "2026-03-29", "count": 43}, {"date": "2026-03-30", "count": 13}, {"date": "2026-03-31", "count": 18}, {"date": "2026-04-01", "count": 16}, {"date": "2026-04-02", "count": 70}, {"date": "2026-04-03", "count": 28}, {"date": "2026-04-04", "count": 22}, {"date": "2026-04-05", "count": 20}, {"date": "2026-04-06", "count": 27}, {"date": "2026-04-07", "count": 30}, {"date": "2026-04-08", "count": 53}, {"date": "2026-04-09", "count": 43}, {"date": "2026-04-10", "count": 21}, {"date": "2026-04-11", "count": 16}, {"date": "2026-04-12", "count": 9}, {"date": "2026-04-13", "count": 20}, {"date": "2026-04-14", "count": 49}, {"date": "2026-04-15", "count": 49}, {"date": "2026-04-16", "count": 49}, {"date": "2026-04-17", "count": 81}, {"date": "2026-04-18", "count": 21}, {"date": "2026-04-19", "count": 32}, {"date": "2026-04-20", "count": 12}, {"date": "2026-04-21", "count": 60}, {"date": "2026-04-22", "count": 47}, {"date": "2026-04-23", "count": 69}, {"date": "2026-04-24", "count": 110}, {"date": "2026-04-25", "count": 43}, {"date": "2026-04-26", "count": 17}, {"date": "2026-04-27", "count": 21}, {"date": "2026-04-28", "count": 62}, {"date": "2026-04-29", "count": 18}, {"date": "2026-04-30", "count": 27}, {"date": "2026-05-01", "count": 9}, {"date": "2026-05-02", "count": 10}, {"date": "2026-05-03", "count": 11}, {"date": "2026-05-04", "count": 52}, {"date": "2026-05-05", "count": 129}, {"date": "2026-05-06", "count": 52}, {"date": "2026-05-07", "count": 47}, {"date": "2026-05-08", "count": 33}, {"date": "2026-05-09", "count": 11}, {"date": "2026-05-10", "count": 9}, {"date": "2026-05-11", "count": 16}, {"date": "2026-05-12", "count": 22}, {"date": "2026-05-13", "count": 10}, {"date": "2026-05-14", "count": 76}, {"date": "2026-05-15", "count": 61}, {"date": "2026-05-16", "count": 15}, {"date": "2026-05-17", "count": 9}, {"date": "2026-05-18", "count": 22}, {"date": "2026-05-19", "count": 11}, {"date": "2026-05-20", "count": 10}, {"date": "2026-05-21", "count": 18}, {"date": "2026-05-22", "count": 20}, {"date": "2026-05-24", "count": 1}, {"date": "2026-05-25", "count": 25}, {"date": "2026-05-26", "count": 49}], "global_top_words": [{"word": "우연", "count": 1265}, {"word": "돌곰", "count": 998}, {"word": "우연이", "count": 796}, {"word": "토토꾸", "count": 505}, {"word": "돌곰이", "count": 500}, {"word": "시에", "count": 440}, {"word": "저녁", "count": 330}, {"word": "점심", "count": 284}, {"word": "먹고", "count": 270}, {"word": "돌곰녀석", "count": 268}, {"word": "헤헷", "count": 266}, {"word": "같군", "count": 208}, {"word": "혼자", "count": 203}, {"word": "회의", "count": 197}, {"word": "미팅", "count": 193}, {"word": "미안", "count": 191}, {"word": "집에", "count": 181}, {"word": "맞맞", "count": 178}, {"word": "돌엄마", "count": 177}, {"word": "일찍", "count": 168}, {"word": "토꾸녀석", "count": 166}, {"word": "좋군", "count": 158}, {"word": "같기", "count": 157}, {"word": "뭐즤", "count": 154}, {"word": "메뉴", "count": 153}, {"word": "좋을지", "count": 151}, {"word": "알겠어", "count": 151}, {"word": "녀석", "count": 145}, {"word": "우린", "count": 142}, {"word": "하원", "count": 141}, {"word": "있으려나", "count": 135}, {"word": "먼저", "count": 134}, {"word": "가능", "count": 133}, {"word": "힝구", "count": 130}, {"word": "만원", "count": 129}, {"word": "시까지", "count": 128}, {"word": "회사", "count": 124}, {"word": "시반", "count": 120}, {"word": "낮잠", "count": 119}, {"word": "병원", "count": 119}, {"word": "말고", "count": 117}, {"word": "고맹워", "count": 113}, {"word": "먹어", "count": 112}, {"word": "소리", "count": 112}, {"word": "아내", "count": 111}, {"word": "아침에", "count": 106}, {"word": "알았어", "count": 106}, {"word": "완료", "count": 104}, {"word": "미리", "count": 103}, {"word": "우유", "count": 100}, {"word": "되려나", "count": 99}, {"word": "제발", "count": 96}, {"word": "게다", "count": 95}, {"word": "미안해", "count": 94}, {"word": "되고", "count": 93}, {"word": "분에", "count": 91}, {"word": "도착", "count": 91}, {"word": "지맹", "count": 91}, {"word": "kil", "count": 91}, {"word": "알아서", "count": 90}, {"word": "나중에", "count": 89}, {"word": "먹이고", "count": 88}, {"word": "싶기", "count": 88}, {"word": "집에서", "count": 88}, {"word": "대신", "count": 87}, {"word": "적당히", "count": 86}, {"word": "고기", "count": 85}, {"word": "우연이녀석", "count": 84}, {"word": "시쯤", "count": 84}, {"word": "에어컨", "count": 84}, {"word": "기분", "count": 83}, {"word": "빨래", "count": 82}, {"word": "아이", "count": 81}, {"word": "끝나고", "count": 81}, {"word": "사진", "count": 80}, {"word": "네이버", "count": 78}, {"word": "아까", "count": 77}, {"word": "그것", "count": 77}, {"word": "괜괜", "count": 77}, {"word": "같당", "count": 76}], "participants": [{"nick": "윤해림 (토돌방)", "total": 25984, "per_room": {"토돌방": 25984}, "per_room_ratio": {"토돌방": 1.0}, "types": {"text": 23659, "sticker": 1413, "photo": 827, "video": 56, "unsent": 29}, "top_words": [{"word": "우연", "count": 985}, {"word": "우연이", "count": 554}, {"word": "돌곰", "count": 402}, {"word": "돌곰이", "count": 381}, {"word": "시에", "count": 365}, {"word": "저녁", "count": 278}, {"word": "돌곰녀석", "count": 268}, {"word": "토토꾸", "count": 202}, {"word": "미팅", "count": 192}, {"word": "점심", "count": 188}, {"word": "먹고", "count": 177}, {"word": "헤헷", "count": 168}, {"word": "혼자", "count": 144}, {"word": "우린", "count": 118}, {"word": "회의", "count": 116}, {"word": "집에", "count": 116}, {"word": "일찍", "count": 114}, {"word": "고맹워", "count": 113}, {"word": "하원", "count": 113}, {"word": "먼저", "count": 99}, {"word": "낮잠", "count": 98}, {"word": "힝구", "count": 97}, {"word": "시까지", "count": 93}, {"word": "아내", "count": 92}, {"word": "시반", "count": 90}, {"word": "병원", "count": 90}, {"word": "분에", "count": 84}, {"word": "지맹", "count": 83}, {"word": "먹이고", "count": 82}, {"word": "미안", "count": 81}]}, {"nick": "kil9 (토돌방)", "total": 20067, "per_room": {"토돌방": 20067}, "per_room_ratio": {"토돌방": 1.0}, "types": {"text": 18005, "photo": 771, "sticker": 1236, "video": 55}, "top_words": [{"word": "돌곰", "count": 596}, {"word": "토토꾸", "count": 303}, {"word": "우연", "count": 280}, {"word": "우연이", "count": 242}, {"word": "토꾸녀석", "count": 166}, {"word": "같군", "count": 147}, {"word": "맞맞", "count": 131}, {"word": "알겠어", "count": 121}, {"word": "돌곰이", "count": 119}, {"word": "좋을지", "count": 110}, {"word": "미안", "count": 110}, {"word": "돌엄마", "count": 108}, {"word": "좋군", "count": 102}, {"word": "같기", "count": 101}, {"word": "헤헷", "count": 98}, {"word": "점심", "count": 96}, {"word": "먹고", "count": 92}, {"word": "뭐즤", "count": 91}, {"word": "회의", "count": 81}, {"word": "가능", "count": 80}, {"word": "녀석", "count": 78}, {"word": "미안해", "count": 76}, {"word": "시에", "count": 75}, {"word": "알았어", "count": 73}, {"word": "집에", "count": 65}, {"word": "우연이녀석", "count": 64}, {"word": "있으려나", "count": 62}, {"word": "쩔어", "count": 62}, {"word": "혼자", "count": 59}, {"word": "제법", "count": 56}]}, {"nick": "kil9gpt (토돌방)", "total": 36, "per_room": {"토돌방": 36}, "per_room_ratio": {"토돌방": 1.0}, "types": {"text": 36}, "top_words": [{"word": "메뉴", "count": 88}, {"word": "추천", "count": 31}, {"word": "고기리면", "count": 31}, {"word": "프랭크버거", "count": 29}, {"word": "하남돼지집", "count": 29}, {"word": "후보", "count": 29}, {"word": "알겠습니다", "count": 26}, {"word": "다음과", "count": 26}, {"word": "엽떡", "count": 26}, {"word": "쫄삼", "count": 25}, {"word": "마리앤마사", "count": 24}, {"word": "언제든지", "count": 23}, {"word": "등록된", "count": 23}, {"word": "엄지척제육", "count": 23}, {"word": "bbq", "count": 23}, {"word": "후참", "count": 23}, {"word": "엽도리", "count": 22}, {"word": "기영이숯불두마리치킨", "count": 21}, {"word": "말씀해", "count": 20}, {"word": "주세요", "count": 20}, {"word": "짬뽕지존", "count": 18}, {"word": "입니다", "count": 15}, {"word": "추천해드리겠습니다", "count": 15}, {"word": "육향냉면", "count": 15}, {"word": "도움", "count": 14}, {"word": "맛있게", "count": 12}, {"word": "드세요", "count": 12}, {"word": "겆밥", "count": 12}, {"word": "냉면", "count": 10}, {"word": "메뉴추천", "count": 10}]}]};
+
+// 1. 참가자별 메시지 수
+const partNicks = STATS.participants.map(p => p.nick);
+const partCounts = STATS.participants.map(p => p.total);
+Plotly.newPlot("chart-participants", [{
+  x: partNicks, y: partCounts, type: "bar",
+  marker: { color: "#4f46e5" },
+  hovertemplate: "%{x}<br>%{y:,}건<extra></extra>",
+}], plotlyLayout({
+  margin: { t: 20, b: 110, l: 60, r: 20 },
+  yaxis: { title: "메시지 수" },
+  xaxis: { tickangle: -30 },
+}), { displayModeBar: false, responsive: true });
+
+// 2. 일자별 시계열
+Plotly.newPlot("chart-daily", [{
+  x: STATS.daily.map(d => d.date),
+  y: STATS.daily.map(d => d.count),
+  type: "scatter", mode: "lines",
+  line: { color: "#4f46e5", width: 1.2 },
+  fill: "tozeroy", fillcolor: "rgba(79,70,229,0.08)",
+  hovertemplate: "%{x}<br>%{y:,}건<extra></extra>",
+}], plotlyLayout({
+  margin: { t: 20, b: 50, l: 60, r: 20 },
+  yaxis: { title: "메시지 수" },
+  xaxis: { title: "날짜" },
+}), { displayModeBar: false, responsive: true });
+
+// 3. 요일 × 시간대 히트맵
+const DAYS = ["월", "화", "수", "목", "금", "토", "일"];
+const HOURS = Array.from({length: 24}, (_, i) => `${i}시`);
+Plotly.newPlot("chart-heatmap", [{
+  z: STATS.heatmap,
+  x: HOURS, y: DAYS,
+  type: "heatmap", colorscale: "Blues",
+  hovertemplate: "%{y} %{x}<br>%{z:,}건<extra></extra>",
+}], plotlyLayout({
+  margin: { t: 20, b: 60, l: 50, r: 20 },
+  yaxis: { autorange: "reversed" },
+}), { displayModeBar: false, responsive: true });
+
+// 4. 어휘 top 50
+const words = STATS.global_top_words.slice(0, 50);
+Plotly.newPlot("chart-words", [{
+  x: words.map(w => w.count).reverse(),
+  y: words.map(w => w.word).reverse(),
+  type: "bar", orientation: "h",
+  marker: { color: "#10b981" },
+  hovertemplate: "%{y}: %{x:,}회<extra></extra>",
+}], plotlyLayout({
+  margin: { t: 20, b: 40, l: 90, r: 20 },
+  xaxis: { title: "등장 횟수" },
+}), { displayModeBar: false, responsive: true });
+
+
+
+// 다크/라이트 토글 — Plotly 차트 색깔도 같이 바꾸기 위해 layout 헬퍼 사용
+function plotlyLayout(extra) {
+  const dark = document.documentElement.dataset.theme === "dark";
+  return Object.assign({
+    paper_bgcolor: "rgba(0,0,0,0)",
+    plot_bgcolor: "rgba(0,0,0,0)",
+    font: { color: dark ? "#e6e6eb" : "#1f2328" },
+  }, extra);
+}
+
+// 테마 토글
+(function () {
+  const root = document.documentElement;
+  const saved = localStorage.getItem("blandai-theme");
+  if (saved) root.dataset.theme = saved;
+  else if (window.matchMedia("(prefers-color-scheme: dark)").matches) root.dataset.theme = "dark";
+
+  const btn = document.getElementById("theme-toggle");
+  btn.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    localStorage.setItem("blandai-theme", next);
+    // Plotly 차트 다시 그리기 — layout 만 갱신
+    document.querySelectorAll(".chart").forEach(div => {
+      if (div.data) {
+        Plotly.relayout(div, plotlyLayout({
+          font: { color: next === "dark" ? "#e6e6eb" : "#1f2328" },
+        }));
+      }
+    });
+  });
+})();
+
+// 검색 박스 — 카드/이벤트 단위로 필터링
+(function () {
+  const input = document.getElementById("search-box");
+  if (!input) return;
+  input.addEventListener("input", () => {
+    const q = input.value.trim().toLowerCase();
+    document.querySelectorAll("[data-search]").forEach(el => {
+      if (!q) {
+        el.classList.remove("hidden-by-search");
+      } else {
+        el.classList.toggle("hidden-by-search", !el.dataset.search.includes(q));
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
