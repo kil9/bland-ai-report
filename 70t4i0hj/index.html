@@ -4,26 +4,68 @@
 <meta charset="UTF-8">
 <title>bland-ai 리포트</title>
 <style>
-  body { background: #f7f7f8; color: #1f2328; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; margin: 0; padding: 0; line-height: 1.5; }
-  main { max-width: 720px; margin: 0 auto; padding: 64px 24px; }
-  h1 { font-size: 32px; margin: 0 0 8px; }
-  .subtitle { color: #6b7280; margin-bottom: 32px; }
-  .card { display: block; padding: 20px 24px; background: white; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 16px; text-decoration: none; color: inherit; transition: border-color 0.15s; }
-  .card:hover { border-color: #4f46e5; }
-  .card h2 { margin: 0 0 6px; font-size: 18px; }
-  .card .meta { color: #6b7280; font-size: 13px; }
-  .progress { margin-top: 32px; padding: 16px 20px; background: white; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 13px; color: #374151; }
-  .progress ul { margin: 8px 0 0; padding-left: 18px; }
-  .progress .done { color: #10b981; }
-  .progress .pending { color: #6b7280; }
-  footer { text-align: center; color: #6b7280; font-size: 12px; margin-top: 24px; }
+  :root {
+    --bg: #f7f7f8;
+    --card: #ffffff;
+    --text: #1f2328;
+    --muted: #6b7280;
+    --accent: #4f46e5;
+    --border: #e5e7eb;
+    --hero-from: #4f46e5;
+    --hero-to: #8b5cf6;
+  }
+  html[data-theme="dark"] {
+    --bg: #0f1115;
+    --card: #161922;
+    --text: #e6e6eb;
+    --muted: #9aa3af;
+    --accent: #8b87ff;
+    --border: #2a2f3a;
+    --hero-from: #6c5ce7;
+    --hero-to: #a78bfa;
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; margin: 0; padding: 0; line-height: 1.6; }
+  .topbar { display: flex; justify-content: flex-end; max-width: 760px; margin: 0 auto; padding: 16px 24px 0; }
+  .topbar button { padding: 6px 12px; border: 1px solid var(--border); border-radius: 16px; background: var(--card); color: var(--text); font-size: 13px; cursor: pointer; }
+  .topbar button:hover { border-color: var(--accent); color: var(--accent); }
+  .hero { max-width: 760px; margin: 0 auto; padding: 24px 24px 8px; }
+  .hero h1 {
+    font-size: 36px;
+    margin: 0 0 6px;
+    background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero .subtitle { color: var(--muted); font-size: 15px; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px 24px 48px; }
+  .card { display: block; padding: 22px 24px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 14px; text-decoration: none; color: inherit; transition: border-color 0.15s, transform 0.15s; }
+  .card:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .card h2 { margin: 0 0 6px; font-size: 19px; }
+  .card .meta { color: var(--muted); font-size: 13px; }
+  .progress { margin-top: 28px; padding: 18px 22px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; font-size: 13px; color: var(--text); }
+  .progress strong { font-size: 14px; }
+  .progress ul { margin: 10px 0 0; padding-left: 20px; list-style: none; }
+  .progress li { position: relative; padding-left: 4px; margin-bottom: 4px; }
+  .progress li::before { content: ""; position: absolute; left: -16px; top: 8px; width: 8px; height: 8px; border-radius: 50%; }
+  .progress li.done::before { background: #10b981; }
+  .progress li.pending::before { background: var(--muted); }
+  .progress li.done { color: var(--text); }
+  .progress li.pending { color: var(--muted); }
+  .note { margin-top: 18px; font-size: 12px; color: var(--muted); }
+  footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 24px; }
 </style>
 </head>
 <body>
-<main>
+<div class="topbar">
+  <button type="button" id="theme-toggle" title="다크/라이트">🌗</button>
+</div>
+<div class="hero">
   <h1>bland-ai 리포트</h1>
-  <p class="subtitle">LINE 채팅 로그에서 추출한 인터랙티브 리포트. 2026-05-26 16:30 갱신.</p>
-
+  <p class="subtitle">LINE 채팅 로그에서 추출한 인터랙티브 리포트 — 2026-05-26 16:51 갱신</p>
+</div>
+<main>
   
   <a class="card" href="../uuwxep2t/report-fanclub.html">
     <h2>비공인 팬클럽 채팅 리포트</h2>
@@ -41,12 +83,29 @@
     <ul>
       <li class="done">M1 — LINE 파서</li>
       <li class="done">M2 — 기본 통계 + 인터랙티브 차트</li>
-      <li class="pending">M3 — Claude 정성 분석 (참가자 페르소나·주제·타임라인)</li>
-      <li class="pending">M4 — 채팅방 보조 차트·UX 다듬기·배포 절차</li>
+      <li class="pending">M3 — Claude 정성 분석 (참가자 페르소나·주제·타임라인) — 코드 준비 완료, 호출 대기</li>
+      <li class="done">M4 — 채팅방 보조 차트·UX 다듬기·배포 절차</li>
     </ul>
   </div>
 
-  <footer>bland-ai · 2026-05-26 16:30</footer>
+  <div class="note">
+    각 리포트는 별도 URL prefix 아래 호스팅됩니다. 링크는 추측 어렵게 무작위로 부여됐고, 리포트 사이 상호 링크는 없습니다.
+  </div>
+
+  <footer>bland-ai · 2026-05-26 16:51</footer>
 </main>
+<script>
+(function () {
+  const root = document.documentElement;
+  const saved = localStorage.getItem("blandai-theme");
+  if (saved) root.dataset.theme = saved;
+  else if (window.matchMedia("(prefers-color-scheme: dark)").matches) root.dataset.theme = "dark";
+  document.getElementById("theme-toggle").addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    localStorage.setItem("blandai-theme", next);
+  });
+})();
+</script>
 </body>
 </html>
